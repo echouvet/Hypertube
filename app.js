@@ -8,6 +8,7 @@ var express = require('express')
     validator = require('validator')
     fs = require('fs')
     css = { style : fs.readFileSync('./style.css','utf8') }
+    bootstrap = { style : fs.readFileSync('./node_modules/bootstrap/dist/css/bootstrap.min.css', 'utf8') }
     eschtml = require('htmlspecialchars')
     ssn = require('express-session')
     MemoryStore = require('session-memory-store')(ssn)
@@ -33,7 +34,7 @@ server.listen(8080)
 
 app.get('/', function(req,res){
     if (req.session.profile == undefined)
-        res.redirect('/register')
+        res.redirect('/login')
     else
         res.redirect('/index')
 })
@@ -45,4 +46,7 @@ app.get('/', function(req,res){
 })
 .all('/register', function(req,res){
     eval(fs.readFileSync(__dirname + "/back/register.js")+'')
+})
+.get('*', function(req,res){
+    res.redirect('/')
 })

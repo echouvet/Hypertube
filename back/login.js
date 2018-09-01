@@ -1,5 +1,5 @@
-if (!req.body.login && !req.body.pass)
-  res.render('login.ejs', {css: css})
+if (!req.body || (!req.body.login && !req.body.pass))
+   res.render('login.ejs', {css: css})
 else if (!req.body.login || !req.body.pass)
 	res.render('login.ejs', {req: req, css: css, error: 'Empty Field'})
 else
