@@ -7,5 +7,6 @@ var users = `CREATE TABLE IF NOT EXISTS users ( \
     lastname VARCHAR(255), \
     pass VARCHAR(255), \
     email VARCHAR(255), \
-    img1 VARCHAR(255) DEFAULT 'empty.png')`
+    language VARCHAR(255), \
+    img VARCHAR(255) DEFAULT 'empty.png')`
 con.query(users, function (err) { if (err) throw err })

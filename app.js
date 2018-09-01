@@ -5,6 +5,7 @@ var express = require('express')
     mysql = require('mysql')
     mailer = require("nodemailer")
     bcrypt = require('bcrypt')
+    validator = require('validator')
     fs = require('fs')
     css = { style : fs.readFileSync('./style.css','utf8') }
     eschtml = require('htmlspecialchars')
