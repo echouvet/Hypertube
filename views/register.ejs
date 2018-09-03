@@ -4,7 +4,7 @@
 	<% include header.ejs %>
 </head>
 <body>
-	<div class="container w-25 text-center border-radius" style="background-color: #b3b3b3; padding: 25px;">
+	<div class="container w-50 text-center border-radius" style="background-color: #b3b3b3; padding: 25px;">
 		<form action="register" method="post">
 	  		<div class="form-group row">
   				<label for="first" class="col-2 col-form-label">Firstname</label>
@@ -42,13 +42,17 @@
     				<input class="form-control" type="password" name="confirmpass" id="passc" placeholder="Confirm password">
   				</div>
 			</div>
-  			<label for="lang">Preference</label>
-  			<select class="custom-select" id="lang">
-    			<option selected>Language...</option>
-    			<option value="1">Francais</option>
-    			<option value="2">English</option>
-    			<option value="3">Deutch</option>
-  			</select>
+			<div class="form-group row">
+  				<label for="lang" class="col-2 col-form-label">Preference</label>
+  				<div class="col-10">
+  				<select class="custom-select" id="lang">
+    				<option selected>Language...</option>
+    				<option value="1">Francais</option>
+    				<option value="2">English</option>
+    				<option value="3">Deutch</option>
+  				</select>
+  				</div>
+  			</div>
 			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;">Sign Up</button>
 			<a href="login" class="btn btn-link text-right">Sign In</a>
 		</form>
