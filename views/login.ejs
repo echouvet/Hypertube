@@ -27,5 +27,19 @@
 		</div>
 		<% } %>
 	</div>
+	<div class="container w-25 text-center border-radius" style="background-color: rgb(100,100,100,0.5); color:white;padding: 15px; margin-top:3em;">
+		<form action="forgot" method="post">
+			<div class="form-group">
+	  			<label for="mail" class="col-form-label">Forgot your password ?</label>
+	  				<input type="email" class="form-control" id="mail" name="mail" placeholder="Your email adress">
+	  		</div>
+			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;">Reset my password</button>
+		</form>
+		<% if (typeof error2 !== 'undefined' && error2 && error2 !== 'none')  { %>
+		<div class="alert alert-error" style="margin-bottom: 0px;">
+  			<strong>Error !</strong> <%- error2 %>
+		</div>
+		<% } %>
+	</div>
 </body>
 </html>
