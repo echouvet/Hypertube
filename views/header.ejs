@@ -1,5 +1,16 @@
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="style.css">
+<title>Hypertube</title>
 <div class="page-header">
- <h1>Hypertube</h1>
- </div>
+    <div class="container">
+    	<div class="jumbotron">
+    		<h1>Hypertube !</h1>
+    		<p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p> 
+  		</div>
+  		<% if (typeof req === 'undefined' || typeof req.ssn === 'undefined') { %>
+  		<p style="text-align: center;">You have to be logged to use Hypertube.</p>
+  		<% } %>
+    </div>
+</div>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

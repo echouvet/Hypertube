@@ -10,6 +10,7 @@ var express = require('express')
     eschtml = require('htmlspecialchars')
     ssn = require('express-session')
     MemoryStore = require('session-memory-store')(ssn)
+    bodyParser = require('body-parser')
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
         key: 'sid',
@@ -17,6 +18,8 @@ var express = require('express')
         saveUninitialized: true
     });
     app.use(sessionMiddleware);
+    app.use(express.static(__dirname)); 
+    app.use(bodyParser.urlencoded({ extended: true }))
 
 
 var con = mysql.createConnection({
