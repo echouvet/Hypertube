@@ -28,12 +28,14 @@ var login = eschtml(req.body.login)
 	{
         console.log(req.body)
         con.query('SELECT login FROM users WHERE login = ? OR email = ?', [login, email],
-        function (error, result, next) { if (error) throw error; if (result.length != 0)
+        function (error, result) { if (error) throw error; if (result.length != 0)
         	res.render('register.ejs', {error: 'Login or E-mail already exists in database'})
-        	else next();  })
-        bcrypt.hash(pass, 10, function(err, hash) { if (err) throw err
-        sql = 'INSERT INTO `users` (`login`, `firstname`, `lastname`, `pass`, `email`, `language`) VALUES (?, ?, ?, ?, ?, ?)'
-        con.query(sql, [login, firstname, lastname, hash, email, language], function (err, res) { if (err) throw err }) })
-        res.redirect('/login')
+        	else 
+            {
+            bcrypt.hash(pass, 10, function(err, hash) { if (err) throw err
+            sql = 'INSERT INTO `users` (`login`, `firstname`, `lastname`, `pass`, `email`, `language`) VALUES (?, ?, ?, ?, ?, ?)'
+            con.query(sql, [login, firstname, lastname, hash, email, language], function (err, res) { if (err) throw err }) })
+            res.redirect('/login')
+        } })
 	}
 }
