@@ -6,7 +6,7 @@
 <body style="background-image: url('img/Background.jpg');">
 	<div class="container w-50 text-center" style="background-color: rgb(100,100,100,0.5); color:white; padding: 25px; margin-top:3em;">
 		<a href="login" class="btn btn-link" style="margin-bottom: 0.5rem; ">Log-In</a>
-		<form action="register" method="post">
+		<form action="register" method="post" enctype="multipart/form-data">
 	  		<div class="form-group row">
   				<label for="first" class="col-2 col-form-label">Firstname</label>
   				<div class="col-10">
@@ -57,11 +57,10 @@
   			<div class="form-group row">
   				<label for="imgprofile" class="col-2 col-form-label" style="">Picture</label>
   				<div class="col-10">
-    				<input type="file" class="custom-file-input" id="imgprofile">
+    				<input type="file" class="custom-file-input" id="imgprofile" name="pic">
     				<label class="custom-file-label" for="imgprofile">Choose file...</label>
     			</div>
   			</div>
-
 			<button type="submit" class="btn btn-link" style="font-weight:bold; font-size: 20px; text-decoration: none;">Sign Up</button>
 			
 		</form>
@@ -71,5 +70,17 @@
 		</div>
 		<% } %>
 	</div>
+
+	
+<script>
+    $("input[type=file]").change(function () {
+  var fieldVal = $(this).val();
+  fieldVal = fieldVal.replace("C:\\fakepath\\", "");
+  if (fieldVal != undefined || fieldVal != "") {
+    $(this).next(".custom-file-label").text(fieldVal);
+  }
+});
+</script>
 </body>
+
 </html>
