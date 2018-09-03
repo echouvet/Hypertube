@@ -3,8 +3,9 @@
 <head>
 	<% include header.ejs %>
 </head>
-<body>
-	<div class="container w-50 text-center border-radius" style="background-color: #b3b3b3; padding: 25px;">
+<body style="background-image: url('img/Background.jpg');">
+	<div class="container w-50 text-center" style="background-color: rgb(100,100,100,0.5); color:white; padding: 25px; margin-top:3em;">
+		<a href="login" class="btn btn-link" style="margin-bottom: 0.5rem; ">I already have an account</a>
 		<form action="register" method="post">
 	  		<div class="form-group row">
   				<label for="first" class="col-2 col-form-label">Firstname</label>
@@ -53,8 +54,9 @@
   				</select>
   				</div>
   			</div>
-			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;">Sign Up</button>
-			<a href="login" class="btn btn-link text-right">Sign In</a>
+
+			<button type="submit" class="btn btn-link" style="font-weight:bold; font-size: 20px; text-decoration: none;">Sign Up</button>
+			
 		</form>
 		<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
 		<div class="alert alert-warning">
