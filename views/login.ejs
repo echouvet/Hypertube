@@ -7,19 +7,19 @@
 	<div class="container w-25 text-center border-radius" style="background-color: rgb(100,100,100,0.5); color:white;padding: 25px; margin-top:3em;">
 		<form action="login" method="post">
 			<div class="form-group row">
-	  			<label for="usr" class="col-2 col-form-label">Login</label>
-	  			<div class="col-10">
+	  			<label for="usr" class="col-2 col-form-label" style="margin-right: 2rem;">Login</label>
+	  			<div class="col-8">
 	  				<input type="text" class="form-control" id="usr" name="login">
 	  			</div>
 	  		</div>
 	  		<div class="form-group row">
-	  			<label for="pwd" class="col-2 col-form-label">Password</label>
-	  			<div class="col-10">
+	  			<label for="pwd" class="col-2 col-form-label" style="margin-right: 2rem;">Password</label>
+	  			<div class="col-8">
 	  				<input type="password" class="form-control" id="pwd" name="pass">
 	  			</div>
 			</div>
 			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;">Sign In</button>
-			<a href="register" class="btn btn-link text-right">Sign Up</a>
+			<a href="register" class="btn btn-link text-right">Register</a>
 		</form>
 		<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
 		<div class="alert alert-warning">
