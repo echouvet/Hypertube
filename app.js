@@ -4,6 +4,7 @@ var express = require('express')
     server = http.createServer(app);
     mysql = require('mysql')
     mailer = require("nodemailer")
+    formidable = require('formidable')
     bcrypt = require('bcrypt')
     validator = require('validator')
     fs = require('fs')

@@ -1,5 +1,10 @@
 regLow = /[a-z]/ 
 regUp = /[A-Z]/
+var form = new formidable.IncomingForm()
+
+
+
+
 if (!req.body || (!req.body.login && !req.body.pass))
 	res.render('register.ejs')
 else if (!req.body.login || !req.body.firstname || !req.body.lastname || !req.body.pass ||
@@ -7,7 +12,6 @@ else if (!req.body.login || !req.body.firstname || !req.body.lastname || !req.bo
 	res.render('register.ejs', {error: 'You must fill in every field to create an account'})
 else
 {
-        console.log(req.body)
 var login = eschtml(req.body.login)
     firstname = eschtml(req.body.firstname)
     lastname = eschtml(req.body.lastname)
@@ -26,16 +30,33 @@ var login = eschtml(req.body.login)
 		res.render('register.ejs', {error: 'Your e-mail is not valid'})
 	else
 	{
-        console.log(req.body)
         con.query('SELECT login FROM users WHERE login = ? OR email = ?', [login, email],
         function (error, result) { if (error) throw error; if (result.length != 0)
-        	res.render('register.ejs', {error: 'Login or E-mail already exists in database'})
-        	else 
+    	res.render('register.ejs', {error: 'Login or E-mail already exists in database'})
+    	else 
+        {
+            form.parse(req, function (err, field, files) { if (err) throw err;
+            if (!field || !files)
+                res.render('register.ejs', {error: 'You must upload an image to create your account'})
+            else if (files.file.type !== 'image/png' && files.file.type !== 'image/jpeg' && files.file.type !== 'image/jpg')
+                res.render('register.ejs', {error: 'Only jpeg, jpg, and png images aloud'})
+            else if (files.file.size > 5000000)
+                res.render('register.ejs', {error: 'Your image is too big'})
+            else
             {
-            bcrypt.hash(pass, 10, function(err, hash) { if (err) throw err
-            sql = 'INSERT INTO `users` (`login`, `firstname`, `lastname`, `pass`, `email`, `language`) VALUES (?, ?, ?, ?, ?, ?)'
-            con.query(sql, [login, firstname, lastname, hash, email, language], function (err, res) { if (err) throw err }) })
-            res.redirect('/login')
+                con.query('SELECT id FROM `users` DESC LIMIT 1', function(err, resid) { if (err) throw err;
+                    if (resid.length == 0)
+                        var picid = '1';
+                    else
+                        var picid = resid.id + 1;
+                var path = 'img/users/' + picid;
+                fs.readFile(files.file.path, function (err, data) { if (err) throw err; 
+                fs.writeFile(path, data, function (err) { if (err) throw err; }) });
+                bcrypt.hash(pass, 10, function(err, hash) { if (err) throw err
+                sql = 'INSERT INTO `users` (`login`, `firstname`, `lastname`, `pass`, `email`, `language`, `img`) VALUES (?, ?, ?, ?, ?, ?, ?)'
+                con.query(sql, [login, firstname, lastname, hash, email, language, path], function (err, res) { if (err) throw err }) })
+                res.redirect('/login')
+            }) } })
         } })
 	}
 }
