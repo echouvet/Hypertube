@@ -5,7 +5,7 @@ if (result.length == 0)
 	res.render('login.ejs', {error2: "Email not found in database"})
 else
 {
-	var smtpTransport = mailer.createTransport("SMTP", {
+	var smtpTransport = mailer.createTransport({
     service: "Gmail", auth: { user: "hypertube.42@gmail.com", pass: "root42" } 
 		})
 		newpass = rand.generate(10)
