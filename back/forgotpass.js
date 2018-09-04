@@ -8,7 +8,9 @@ else
 	var smtpTransport = mailer.createTransport({
     service: "Gmail", auth: { user: "42hypertube.42@gmail.com", pass: "root4242" } 
 		})
-		newpass = rand(10).gen()
+		newpass = rand({
+            length: 10
+        }).gen()
 		mail = { from: "hypertube.42@gmail.com", to: email, subject: "Reinitialisation de votre mot de passe",
         html: '<html><body><div align=center> \
         it seems that you have forgotten your hypertube password :(<BR />\

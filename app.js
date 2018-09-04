@@ -42,7 +42,10 @@ app.get('/', function(req,res){
         res.redirect('/index')
 })
 .get('/index', function(req, res) {
-    res.render('index.ejs')
+    if (req.session.profile == undefined)
+        res.render('login.ejs', {error0: "You have to be logged to use Hypertube."})
+    else
+        res.render('index.ejs')
 })
 .all('/login', function(req,res){
     eval(fs.readFileSync(__dirname + "/back/login.js")+'')

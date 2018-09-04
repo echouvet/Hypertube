@@ -1,8 +1,12 @@
+
+
 regLow = /[a-z]/ 
 regUp = /[A-Z]/
  var form = new formidable.IncomingForm();
 form.parse(req, function (err, field, files) { if (err) throw err;
-    if (!field || (!field.login && !field.pass))
+    if (req.session.profile != undefined)
+        res.render('index.ejs')
+    else if (!field || (!field.login && !field.pass))
     	res.render('register.ejs')
     else if (!field.login || !field.firstname || !field.lastname || !field.pass || !field.confirmpass || !field.mail || !files.pic)
     	res.render('register.ejs', {error: 'You must fill in every field to create an account'})

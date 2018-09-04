@@ -9,44 +9,44 @@
 		<form action="register" method="post" enctype="multipart/form-data">
 	  		<div class="form-group row">
   				<label for="first" class="col-2 col-form-label">Firstname</label>
-  				<div class="col-10">
-    				<input class="form-control" type="text" name="firstname" id="first" placeholder="First name">
+  				<div class="col-8 offset-2">
+    				<input class="form-control text-center" type="text" name="firstname" id="first" placeholder="First name">
   				</div>
 			</div>
 			<div class="form-group row">
   				<label for="last" class="col-2 col-form-label">Lastname</label>
-  				<div class="col-10">
-    				<input class="form-control" type="text" name="lastname"  id="last" placeholder="Last name">
+  				<div class="col-8 offset-2">
+    				<input class="form-control text-center" type="text" name="lastname"  id="last" placeholder="Last name">
   				</div>
 			</div>
 			<div class="form-group row">
   				<label for="mail" class="col-2 col-form-label">Email</label>
-  				<div class="col-10">
-    				<input class="form-control" type="email" name="mail" id="mail" placeholder="example@42.fr">
+  				<div class="col-8 offset-2">
+    				<input class="form-control text-center" type="email" name="mail" id="mail" placeholder="example@42.fr">
   				</div>
 			</div>
 			<div class="form-group row">
   				<label for="login" class="col-2 col-form-label">Login</label>
-  				<div class="col-10">
-    				<input class="form-control" type="text" name="login" id="login" placeholder="Username">
+  				<div class="col-8 offset-2">
+    				<input class="form-control text-center" type="text" name="login" id="login" placeholder="Username">
   				</div>
 			</div>
 			<div class="form-group row">
   				<label for="pass" class="col-2 col-form-label">Password</label>
-  				<div class="col-10">
-    				<input class="form-control" type="password" name="pass" id="pass" placeholder="Password">
+  				<div class="col-8 offset-2">
+    				<input class="form-control text-center" type="password" name="pass" id="pass" placeholder="Password">
   				</div>
 			</div>
 			<div class="form-group row">
   				<label for="passc" class="col-2 col-form-label">Confirm</label>
-  				<div class="col-10">
-    				<input class="form-control" type="password" name="confirmpass" id="passc" placeholder="Confirm password">
+  				<div class="col-8 offset-2">
+    				<input class="form-control text-center" type="password" name="confirmpass" id="passc" placeholder="Confirm password">
   				</div>
 			</div>
 			<div class="form-group row">
   				<label for="lang" class="col-2 col-form-label">Preference</label>
-  				<div class="col-10">
-  				<select class="custom-select" id="lang">
+  				<div class="col-8 offset-2">
+  				<select class="custom-select text-center" id="lang" style="text-align-last:center;">
     				<option selected>Language...</option>
     				<option value="1">Francais</option>
     				<option value="2">English</option>
@@ -56,8 +56,8 @@
   			</div>
   			<div class="form-group row">
   				<label for="imgprofile" class="col-2 col-form-label" style="">Picture</label>
-  				<div class="col-10">
-    				<input type="file" class="custom-file-input" id="imgprofile" name="pic">
+  				<div class="col-8 offset-2">
+    				<input type="file" class="custom-file-input" id="imgprofile" name="pic" accept="image/*">
     				<label class="custom-file-label" for="imgprofile">Choose file...</label>
     			</div>
   			</div>
@@ -82,5 +82,7 @@
 });
 </script>
 </body>
+
+<% include footer.ejs %>
 
 </html>
