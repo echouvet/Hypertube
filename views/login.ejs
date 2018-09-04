@@ -22,22 +22,27 @@
 			<a href="register" class="btn btn-link text-right">Register</a>
 		</form>
 		<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
-		<div class="alert alert-warning" style="margin-bottom: 0px;">
-  			<strong>Warning !</strong> <%- error %>
+		<div class="alert alert-danger" style="margin-bottom: 0px;">
+  			<strong>Error !</strong> <%- error %>
 		</div>
 		<% } %>
 	</div>
 	<div class="container w-25 text-center border-radius" style="background-color: rgb(100,100,100,0.5); color:white;padding: 15px; margin-top:3em;">
-		<form action="forgot" method="post">
+		<form action="forgotpass" method="post">
 			<div class="form-group">
 	  			<label for="mail" class="col-form-label">Forgot your password ?</label>
-	  				<input type="email" class="form-control text-center" id="mail" name="mail" placeholder="Your email adress">
+	  				<input type="email" class="form-control text-center" id="mail" name="email" placeholder="Your email adress">
 	  		</div>
 			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;">Reset my password</button>
 		</form>
 		<% if (typeof error2 !== 'undefined' && error2 && error2 !== 'none')  { %>
-		<div class="alert alert-error" style="margin-bottom: 0px;">
+		<div class="alert alert-danger" style="margin-bottom: 0px;">
   			<strong>Error !</strong> <%- error2 %>
+		</div>
+		<% } %>
+		<% if (typeof success !== 'undefined' && success && success !== 'none')  { %>
+		<div class="alert alert-success" style="margin-bottom: 0px;">
+  			<strong>Success !</strong> <%- success %>
 		</div>
 		<% } %>
 	</div>

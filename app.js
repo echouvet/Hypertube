@@ -49,6 +49,9 @@ app.get('/', function(req,res){
 .all('/register', function(req,res){
     eval(fs.readFileSync(__dirname + "/back/register.js")+'')
 })
+.post('/forgotpass', function(req, res) {
+    eval(fs.readFileSync(__dirname + "/back/forgotpass.js")+'')
+})
 .get('*', function(req,res){
     res.redirect('/')
 })

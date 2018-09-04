@@ -2,7 +2,7 @@ email = eschtml(req.body.email)
 con.query('SELECT * FROM users WHERE email = ?', [email],
 function (error, result) { if (error) throw error;
 if (result.length == 0)
-	res.render('login.ejs', {error: "Email not found in database"})
+	res.render('login.ejs', {error2: "Email not found in database"})
 else
 {
 	var smtpTransport = mailer.createTransport("SMTP", {
@@ -16,7 +16,7 @@ else
         YOUR NEW PASSWORD IS '+newpass+'<BR />\
         </div></body></html>' } 
     smtpTransport.sendMail(mail, function(error, response){
-	if (error) { res.render('login.ejs', {error: 'Error whilst sending e-mail : ' + error}); }
+	if (error) { res.render('login.ejs', {error2: 'Error whilst sending e-mail : ' + error2}); }
 	else {
 		bcrypt.hash(newpass, 10, function(err, hash) { if (err) throw err
         sql = 'UPDATE users SET pass = ? WHERE email = ?'
