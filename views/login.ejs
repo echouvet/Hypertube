@@ -6,7 +6,7 @@
 <body style="background-image: url('img/Background.jpg');">
 	<% if (typeof error0 !== 'undefined' && error0 && error0 !== 'none')  { %>
 		<div class="alert alert-danger col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
-  			<strong>Error !</strong> <%- error0 %>
+  			<strong>Error !</strong> <%- error0 + ' ' %><a href="register" class="btn btn-link" style="padding:0px;">Create an account</a>
 		</div>
 		<% } %>
 	<div class="container w-25 text-center border-radius" style="background-color: rgb(100,100,100,0.5); color:white;padding: 25px; margin-top:3em;">
@@ -24,7 +24,7 @@
 	  			</div>
 			</div>
 			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;">Sign In</button>
-			<a href="register" class="btn btn-link text-right">Register</a>
+			<a href="register" class="btn btn-link">Register</a>
 		</form>
 		<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
 		<div class="alert alert-danger" style="margin-bottom: 0px;">
@@ -36,7 +36,7 @@
 		<form action="forgotpass" method="post">
 			<div class="form-group">
 	  			<label for="mail" class="col-form-label">Forgot your password ?</label>
-	  				<input type="email" class="form-control text-center" id="mail" name="email" placeholder="Your email adress">
+	  				<input type="email" class="form-control text-center" id="mail" name="email" placeholder="Your email adress...">
 	  		</div>
 			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;">Reset my password</button>
 		</form>
