@@ -12,6 +12,7 @@ var express = require('express')
     ssn = require('express-session')
     MemoryStore = require('session-memory-store')(ssn)
     bodyParser = require('body-parser')
+    rand = require('rand-gen');
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
         key: 'sid',
