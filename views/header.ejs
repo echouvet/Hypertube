@@ -6,18 +6,25 @@
     	<div class="jumbotron col-12 " style="margin-bottom: 0px; padding: 2rem;">
     		<h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1>
     		<p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p>
-      </div>	
+      	</div>	
     	<% if (typeof profile != 'undefined') { %>
-    		<a href="/profile"><img src=<%-"img/users/" + profile.id %> width="180" height="180" style="position:absolute; top:0.5rem; right: 2vw; border-radius: 150px;"></a>
-      	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-      			<form class="form-inline" action="/search">
-        		    <input class="form-control mr-2" type="text" placeholder="Search">
-        		    <button class="btn btn-success" type="submit">Search</button>
-      			</form>
-    		</nav>
-  		<% } %>
+    		<div class="pic">
+    		<a href="/profile"><img src=<%-"img/users/" + profile.id %> width="180" height="180" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px;"></a>
+    			<div class="menu-pic bg-dark" style="position: absolute;top:196px; right: 20px;blue; width: 180px; padding: 5px; padding-top:11px; padding-bottom:11px;">
+    				<li><a class="menu-deroulant" href="/profile" style="text-decoration: none; color:white;">My profile</a></li><hr/>
+    				<li><a class="menu-deroulant" href="/list_profiles" style="text-decoration: none; color:white;">Other profiles</a></li><hr/>
+    				<li><a class="menu-deroulant" href="/logout" style="text-decoration: none; color:white;">Logout</a></li>
+    			</div>
+    		</div>
     </div>
 </div>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	<form class="form-inline" action="/search">
+	    <input class="form-control mr-2" type="text" placeholder="Search">
+	    <button class="btn btn-success" type="submit">Search</button>
+	</form>
+</nav>
+  		<% } %>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

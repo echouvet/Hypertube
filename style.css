@@ -3,3 +3,36 @@ footer {
 	bottom: 0;
     width: 100%;
 }
+
+.pic:hover .menu-pic
+{
+	display: block;
+}
+.menu-pic:hover
+{
+	display: block;
+	
+}
+
+.menu-pic
+{
+	z-index: 2;
+	display: none;
+	border: 2px solid black;
+}
+
+li
+{
+	list-style:none;
+}
+
+hr
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.menu-deroulant
+{
+
+}

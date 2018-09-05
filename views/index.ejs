@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
-<body>
+<head>
 	<% include header.ejs %>
+</head>
+<body style="background-image: url('img/Background.jpg');">
 	<% if (typeof success !== 'undefined' && success && success !== 'none')  { %>
 		<div class="alert alert-success col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
-  			<strong>Success !</strong> <%- success %>
+  			<strong>Success !</strong> <%- success + ' ' + profile.firstname + ' ' + profile.lastname %>
 		</div>
 		<% } %>
 </body>
+
 <% include footer.ejs %>
+
 </html>
