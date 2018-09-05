@@ -50,7 +50,7 @@ form.parse(req, function (err, field, files) { if (err) throw err;
                 bcrypt.hash(pass, 10, function(err, hash) { if (err) throw err
                 sql = 'INSERT INTO `users` (`login`, `firstname`, `lastname`, `pass`, `email`, `language`, `img`) VALUES (?, ?, ?, ?, ?, ?, ?)'
                 con.query(sql, [login, firstname, lastname, hash, email, language, path], function (err, res) { if (err) throw err }) })
-                res.redirect('/login') })
+                res.render('login.ejs', {success0: "Your account was successfully created !"}) })
             } })
     	}
     }

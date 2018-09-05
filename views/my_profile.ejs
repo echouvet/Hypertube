@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% include header.ejs %>
+</head>
+<body style="background-image: url('img/Background.jpg');">
+	<div class="w-50 text-center" style="background-color: rgb(100,100,100,0.5); color:white; padding: 25px; margin-top:2em;margin-left:3em;">
+		<h4 style="font-weight: bold; margin-bottom: 20px;"> Modify my account </h4>
+		<form action="my_profile" method="post" enctype="multipart/form-data">
+	  		<div class="form-group row">
+					<label for="first" class="col-2 col-form-label">Firstname</label>
+					<div class="col-8 offset-2">
+					<input class="form-control text-center" type="text" name="firstname" id="first" placeholder="<%- profile.firstname %>">
+					</div>
+			</div>
+			<div class="form-group row">
+					<label for="last" class="col-2 col-form-label">Lastname</label>
+					<div class="col-8 offset-2">
+					<input class="form-control text-center" type="text" name="lastname"  id="last" placeholder="<%- profile.lastname %>">
+					</div>
+			</div>
+			<div class="form-group row">
+					<label for="mail" class="col-2 col-form-label">Email</label>
+					<div class="col-8 offset-2">
+					<input class="form-control text-center" type="email" name="mail" id="mail" placeholder="<%- profile.email %>">
+					</div>
+			</div>
+			<div class="form-group row">
+					<label for="login" class="col-2 col-form-label">Login</label>
+					<div class="col-8 offset-2">
+					<input class="form-control text-center" type="text" name="login" id="login" placeholder="<%- profile.login %>">
+					</div>
+			</div>
+			<div class="form-group row">
+					<label for="pass" class="col-2 col-form-label">Password</label>
+					<div class="col-8 offset-2">
+					<input class="form-control text-center" type="password" name="pass" id="pass" placeholder="New password">
+					</div>
+			</div>
+			<div class="form-group row">
+					<label for="passc" class="col-2 col-form-label">Confirm</label>
+					<div class="col-8 offset-2">
+					<input class="form-control text-center" type="password" name="confirmpass" id="passc" placeholder="Confirm new password">
+					</div>
+			</div>
+			<div class="form-group row">
+					<label for="lang" class="col-2 col-form-label">Preference</label>
+					<div class="col-8 offset-2">
+						<select class="custom-select text-center" id="lang" style="text-align-last:center;">
+							<option value="1" selected><%- profile.language %></option>
+							<option value="2">English</option>
+							<option value="3">Francais</option>
+							<option value="4">Deutch</option>
+						</select>
+					</div>
+			</div>
+			<div class="form-group row">
+				<label for="imgprofile" class="col-2 col-form-label">Picture</label>
+				<div class="col-8 offset-2">
+					<input type="file" class="custom-file-input" id="imgprofile" name="pic" accept="image/*">
+					<label class="custom-file-label" for="imgprofile" style="z-index: 0;">Choose file to change...</label>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-link" style="font-weight:bold; font-size: 20px; text-decoration: none;">Update my profile !</button>
+		</form>
+	</div>
+	<img src=<%-"img/users/" + profile.id %> width="300" height="300" style="border-radius: 200px; position: absolute; right: 20vw; top: 40vh;">
+</body>
+<% include footer.ejs %>
+
+</html>

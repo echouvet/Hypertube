@@ -8,10 +8,12 @@
     		<p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p>
       	</div>	
     	<% if (typeof profile != 'undefined') { %>
+    		
     		<div class="pic">
+    			<div class="pic" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px; width: 180px; height: 190px;"></div>
     		<a href="/profile"><img src=<%-"img/users/" + profile.id %> width="180" height="180" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px;"></a>
     			<div class="menu-pic bg-dark" style="position: absolute;top:196px; right: 20px;blue; width: 180px; padding: 5px; padding-top:11px; padding-bottom:11px;">
-    				<li><a class="menu-deroulant" href="/profile" style="text-decoration: none; color:white;">My profile</a></li><hr/>
+    				<li><a class="menu-deroulant" href="/my_profile" style="text-decoration: none; color:white;">My profile</a></li><hr/>
     				<li><a class="menu-deroulant" href="/list_profiles" style="text-decoration: none; color:white;">Other profiles</a></li><hr/>
     				<li><a class="menu-deroulant" href="/logout" style="text-decoration: none; color:white;">Logout</a></li>
     			</div>

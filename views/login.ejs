@@ -8,7 +8,12 @@
 		<div class="alert alert-danger col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
   			<strong>Error !</strong> <%- error0 + ' ' %><a href="register" class="btn btn-link" style="padding:0px;">Create an account</a>
 		</div>
-		<% } %>
+	<% } %>
+	<% if (typeof success0 !== 'undefined' && success0 && success0 !== 'none')  { %>
+		<div class="alert alert-success col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
+  			<strong>Success !</strong> <%- success0 %>
+		</div>
+	<% } %>
 	<div class="container w-25 text-center border-radius" style="background-color: rgb(100,100,100,0.5); color:white;padding: 25px; margin-top:3em;">
 		<form action="login" method="post">
 			<div class="form-group row">
