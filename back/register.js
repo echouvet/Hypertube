@@ -5,7 +5,7 @@ regUp = /[A-Z]/
  var form = new formidable.IncomingForm();
 form.parse(req, function (err, field, files) { if (err) throw err;
     if (req.session.profile != undefined)
-        res.render('index.ejs')
+        res.render('index.ejs', {profile: req.session})
     else if (!field || (!field.login && !field.pass))
     	res.render('register.ejs')
     else if (!field.login || !field.firstname || !field.lastname || !field.pass || !field.confirmpass || !field.mail || !files.pic)
@@ -43,7 +43,7 @@ form.parse(req, function (err, field, files) { if (err) throw err;
                 if (resid.length == 0)
                     var picid = '1';
                 else
-                    var picid = resid.id + 1;
+                    var picid = resid[0].id + 1;
                 var path = 'img/users/' + picid;
                 fs.readFile(files.pic.path, function (err, data) { if (err) throw err; 
                 fs.writeFile(path, data, function (err) { if (err) throw err; }) });
