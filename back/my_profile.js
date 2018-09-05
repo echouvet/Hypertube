@@ -15,6 +15,8 @@ function updateuser(column, change) {
 
 if (!req.session || !req.session.profile)
 	res.redirect('/')
-else if (!req.body)
-	render('', '');
+else if (empty(req.body))
+	res.render('my_profile.ejs', {profile: req.session.profile})
+else
+	console.log(req.body)
 //il me faut du front pour continuer...

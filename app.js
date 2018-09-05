@@ -4,6 +4,7 @@ var express = require('express')
     server = http.createServer(app);
     mysql = require('mysql')
     mailer = require("nodemailer")
+    rand = require("random-key")
     formidable = require('formidable')
     bcrypt = require('bcrypt')
     validator = require('validator')
@@ -12,7 +13,7 @@ var express = require('express')
     ssn = require('express-session')
     MemoryStore = require('session-memory-store')(ssn)
     bodyParser = require('body-parser')
-    rand = require("random-key")
+    empty = require('is-empty');
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
         key: 'sid',
