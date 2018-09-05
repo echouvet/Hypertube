@@ -21,6 +21,7 @@ var login = eschtml(req.body.login)
 				{
 					req.session.profile = result[0].firstname + ' ' + result[0].lastname
 					req.session.lang = result[0].language
+               req.session.img = result[0].img
 					res.render('index.ejs', {success: 'Welcome ' + req.session.profile})
 				}
 			})

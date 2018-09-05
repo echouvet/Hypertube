@@ -3,10 +3,15 @@
 <title>Hypertube</title>
 <div class="page-header text-center">
     <div class="container-fluid" style="padding: 0px;">
-    	<div class="jumbotron col-12" style="margin-bottom: 0px; padding: 2rem;">
+    	
+    	<div class="jumbotron col-12 " style="margin-bottom: 0px; padding: 2rem;">
     		<h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1>
-    		<p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p> 
-  		</div>
+    		<p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p></div>
+    		
+    		 <% if (typeof req != 'undefined') { console.log(req.session) } %>
+    		<a href="/profile"><img src="img/users/2.jpg" width="180" height="180" style="position:absolute; top:0.5rem; right: 2vw; border-radius: 150px;"></a>
+
+  		
   		
   		<% if (1 == 2) { %>
   		<p style="text-align: center;">You have to be logged to use Hypertube.</p>
