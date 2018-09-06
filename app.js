@@ -14,6 +14,8 @@ var express = require('express')
     MemoryStore = require('session-memory-store')(ssn)
     bodyParser = require('body-parser')
     empty = require('is-empty');
+    wait = require('wait-for-stuff');
+    Promise = require('promise');
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
         key: 'sid',

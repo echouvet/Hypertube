@@ -47,40 +47,33 @@ else
                 render('error', 'File is too big'); error = 1; }
             else {
                 fs.readFile(files.pic.path, function (err, data) { if (err) throw err; 
-                fs.writeFile('img/users/' + req.session.profile.id, data, function (err) { if (err) throw err; }) });
+                    fs.writeFile('img/users/' + req.session.profile.id, data, function (err) { if (err) throw err; }) });
                 updateuser('img', 'img/users/' + req.session.profile.id) }
         }
-
-
-
-
         if (!empty(field.login) && error != 1) {
-            con.query('SELECT id FROM users WHERE login = ?', [eschtml(field.login)], function (err, result) { if (err) throw err;
-                if (result.length == 0) 
-                    updateuser('login', eschtml(field.login)) 
-                else { 
-                    render('error', 'Login already exists in database'); error = 1;} })
+            wait.for.promise(new Promise(function(resolve, reject) {
+                con.query('SELECT id FROM users WHERE login = ?', [eschtml(field.login)], function (err, result) { if (err) throw err;
+                    if (result.length == 0) 
+                        updateuser('login', eschtml(field.login)) 
+                    else { 
+                        render('error', 'Login already exists in database'); error = 1; } 
+                    resolve('test'); } )
+            }) ); console.log('GOT HERE 2 ' + error)
         }
-
-        console.log("ERROR VALUE IS " + error)
         if (!empty(field.email) && error != 1) {
             if (!validator.isEmail(field.email)) {
                 render('error', 'E-mail is not valid'); error = 1; }
-            
-
-            con.query('SELECT id FROM users WHERE email = ?', [eschtml(field.email)], function (err, result) { if (err) throw err;
-                if (result.length == 0) 
-                    updateuser('email', eschtml(field.email)) 
-                else { 
-                    render('error', 'Email already exists in database'); error = 1;} })
-        
-
-
+            wait.for.promise(new Promise(function(resolve, reject) {
+                con.query('SELECT id FROM users WHERE email = ?', [eschtml(field.email)], function (err, result) { if (err) throw err;
+                    if (result.length == 0) 
+                        updateuser('email', eschtml(field.email)) 
+                    else { 
+                        render('error', 'Email already exists in database'); error = 1; } 
+                    resolve('test'); })
+            }) )
         }
         if (error != 1)
-        {
             render('success', 'Your profile was successfully updated')
-        }
     }
     })
 }
