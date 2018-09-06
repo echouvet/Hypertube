@@ -22,7 +22,7 @@
 			<div class="form-group row">
 					<label for="mail" class="col-2 col-form-label">Email</label>
 					<div class="col-8 offset-2">
-					<input class="form-control text-center" type="email" name="mail" id="mail" placeholder="<%- profile.email %>">
+					<input class="form-control text-center" type="email" name="email" id="mail" placeholder="<%- profile.email %>">
 					</div>
 			</div>
 			<div class="form-group row">
@@ -63,6 +63,16 @@
 			</div>
 			<button type="submit" class="btn btn-link" style="font-weight:bold; font-size: 20px; text-decoration: none;">Update my profile !</button>
 		</form>
+	<% if (typeof success !== 'undefined' && success && success !== 'none')  { %>
+		<div class="alert alert-success col-4 offset-4 text-center" style="">
+  			<strong>Success !</strong> <%- success %>
+		</div>
+	<% } %>
+	<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
+		<div class="alert alert-danger col-4 offset-4 text-center" style="">
+  			<strong>Error !</strong> <%- error %>
+		</div>
+	<% } %>
 	</div>
 	<img src=<%-"img/users/" + profile.id %> width="300" height="300" style="border-radius: 200px; position: absolute; right: 20vw; top: 40vh;">
 </body>
