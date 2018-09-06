@@ -58,7 +58,7 @@ else
                     else { 
                         render('error', 'Login already exists in database'); error = 1; } 
                     resolve('test'); } )
-            }) ); console.log('GOT HERE 2 ' + error)
+            }) );
         }
         if (!empty(field.email) && error != 1) {
             if (!validator.isEmail(field.email)) {
