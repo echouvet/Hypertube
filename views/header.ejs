@@ -3,15 +3,19 @@
 <title>Hypertube</title>
 <div class="page-header text-center">
     <div class="container-fluid" style="padding: 0px;">
-    	<div class="jumbotron col-12 " style="margin-bottom: 0px; padding: 2rem;">
-    		<h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1>
-    		<p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p>
+    	<div class="jumbotron" style="margin-bottom: 0px; padding: 2rem;">
+            <div class="col-10">
+    		  <h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1>
+    		  <p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p>
+            </div>
       	</div>	
     	<% if (typeof profile != 'undefined') { %>
-    		
     		<div class="pic">
     			<div class="pic" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px; width: 180px; height: 190px;"></div>
     		<a href="/profile"><img src=<%-"img/users/" + profile.id %> width="180" height="180" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px;"></a>
+
+
+
     			<div class="menu-pic bg-dark" style="position: absolute;top:196px; right: 20px;blue; width: 180px; padding: 5px; padding-top:11px; padding-bottom:11px;">
     				<li><a class="menu-deroulant" href="/my_profile" style="text-decoration: none; color:white;">My profile</a></li><hr/>
     				<li><a class="menu-deroulant" href="/list_profiles" style="text-decoration: none; color:white;">Other profiles</a></li><hr/>
@@ -20,7 +24,7 @@
     		</div>
     </div>
 </div>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<nav class="navbar bg-dark">
 	<form class="form-inline" action="/search">
 	    <input class="form-control mr-2" type="text" placeholder="Search">
 	    <button class="btn btn-success" type="submit">Search</button>

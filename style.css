@@ -4,6 +4,11 @@ footer {
     width: 100%;
 }
 
+body {
+	background-image: url('img/Background.jpg'); 
+	margin-bottom: 20vh;
+}
+
 .pic:hover .menu-pic
 {
 	display: block;
