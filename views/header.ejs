@@ -4,11 +4,16 @@
 <div class="page-header text-center">
     <div class="container-fluid" style="padding: 0px;">
     	<div class="jumbotron" style="margin-bottom: 0px; padding: 2rem;">
-            <div class="col-10">
-    		  <h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1>
-    		  <p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p>
-            </div>
-      	</div>	
+            <% if (typeof profile != 'undefined') { %>
+                <div class="col-10">
+        		  <h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1>
+        		  <p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p>
+                </div>
+            <% } else { %>
+                  <h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1>
+                  <p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p>
+            <% } %>
+      	</div>
     	<% if (typeof profile != 'undefined') { %>
     		<div class="pic">
     			<div class="pic" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px; width: 180px; height: 190px;"></div>
