@@ -65,6 +65,12 @@ app.use(function(req, res, next) {
 .all('/my_profile', function(req, res) {
     eval(fs.readFileSync(__dirname + "/back/my_profile.js")+'')
 })
+.get('/other_profiles', function(req, res) {
+    con.query('SELECT * FROM USERS WHERE id <> ? ORDER BY id DESC', [req.session.profile.id], 
+    function(err, result) {
+        res.render('other_profiles.ejs', {profile: req.session.profile, users: result})
+    })
+})
 .get('/index', function(req, res) {
     res.render('index.ejs', {profile: req.session.profile})
 })
