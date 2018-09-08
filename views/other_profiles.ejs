@@ -4,8 +4,12 @@
 	<% include header.ejs %>
 </head>
 <body>
+<<<<<<< HEAD
+	<div class="container-fluid text-center" style="background-color: rgb(230,230,230,0.5); color:white; padding: 10px; padding-top: 10px; margin-top:1rem;">
+=======
 	<% if (typeof users != 'undefined') { %>
 	<div class="container-fluid text-center" style="background-color: rgb(230,230,230,0.5); color:white; padding: 25px; padding-top: 10px; margin-top:1rem;">
+>>>>>>> f378c82369acc1c1ec1affb96defce28a097d709
 		<div class="container-fluid d-flex">
 			<div class="col-2 inf">Login</div><hr class="hr2"><div class="col-3 inf">Firstname</div><hr class="hr2"><div class="col-3 inf">Lastname</div>
 			<hr class="hr2"><div class="col-2 inf">Language</div><hr class="hr2"><div class="col-2 inf">Picture</div>
@@ -15,7 +19,7 @@
 			<div class="col-2 marginforpic"><%- users[i].login %></div><div class="col-3 marginforpic"><%- users[i].firstname %></div>
 			<div class="col-3 marginforpic"><%- users[i].lastname %></div>
 			<div class="col-2 marginforpic"><%- users[i].language %></div>
-			<div class="col-2"><img src=<%- users[i].img %> width="40" height="40" style="border-radius: 20px;"></div>
+			<div class="col-2"><img src=<%- users[i].img %> width="40" height="40" style="border-radius: 20px;" alt=" Isn't on the server."></div>
 		</div>
 		<% i++; } } else { %>
 		<div class="container text-center" style="background-color: rgb(230,230,230,0.5);padding:15px;margin-top:1rem;">

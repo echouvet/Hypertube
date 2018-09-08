@@ -48,11 +48,11 @@
 			<div class="form-group row">
 					<label for="lang" class="col-2 col-form-label">Preference</label>
 					<div class="col-8 offset-2">
-						<select class="custom-select text-center" id="lang" style="text-align-last:center;">
-							<option value="1" selected><%- profile.language %></option>
-							<option value="2">English</option>
-							<option value="3">Francais</option>
-							<option value="4">Deutch</option>
+						<select class="custom-select text-center" name=lang id="lang" style="text-align-last:center;">
+							<option value="<%- profile.language %>" selected><%- profile.language %></option>
+							<option value="English">English</option>
+							<option value="Francais">Francais</option>
+							<option value="Deutch">Deutch</option>
 						</select>
 					</div>
 			</div>
@@ -66,12 +66,12 @@
 			<button type="submit" class="btn btn-link" style="font-weight:bold; font-size: 20px; text-decoration: none;">Update my profile !</button>
 		</form>
 	<% if (typeof success !== 'undefined' && success && success !== 'none')  { %>
-		<div class="alert alert-success col-4 offset-4 text-center" style="">
+		<div class="alert alert-success col-10 offset-1 text-center" style="">
   			<strong>Success !</strong> <%- success %>
 		</div>
 	<% } %>
 	<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
-		<div class="alert alert-danger col-4 offset-4 text-center" style="">
+		<div class="alert alert-danger col-10 offset-1 text-center" style="">
   			<strong>Error !</strong> <%- error %>
 		</div>
 	<% } %>
