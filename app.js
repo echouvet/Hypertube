@@ -15,6 +15,7 @@ var express = require('express')
     bodyParser = require('body-parser')
     empty = require('is-empty');
     wait = require('wait-for-stuff');
+    fetch = require('node-fetch');
     Promise = require('promise');
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
@@ -63,6 +64,9 @@ app.use(function(req, res, next) {
 //toutes pages ou faut etre log faut mettre dessous ceci
 .get('/logout', function(req, res) {
     req.session.destroy(); req.session = 0; res.redirect('/');
+})
+.all('/search', function(req, res) {
+    eval(fs.readFileSync(__dirname + "/back/search.js")+'')
 })
 .all('/my_profile', function(req, res) {
     eval(fs.readFileSync(__dirname + "/back/my_profile.js")+'')

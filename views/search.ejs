@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% include header.ejs %>
+</head>
+<body>
+	<% if (typeof result !== 'undefined' && result && result !== 'none')  { %>
+		<div class="alert alert-success col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
+  			<%- '<strong>' + count + '</strong>' + ' results found for "' + decodeURI(q) + '".' %>
+		</div>
+		<div class="col-11" style="background-color: rgb(120,120,120,0.3); color:white; padding: 10px; margin:auto; margin-top:1em; justify-content: center;">
+			<% var i = 0; while (result[i]) { %>
+				<div class="col-3 text-center" style="margin:10px 30px 10px 30px; padding: 0px; display: inline-block; justify-content: center; border: 2px solid black; box-shadow: 1px 1px 5px; overflow: scroll; max-height: 350px; vertical-align: top; background-color: rgb(102, 0, 0)">
+						<h5><i><%- result[i].title %></i></h5>
+						<div style="background-color: rgb(204, 204, 204); padding: 2px;">
+							<p style="margin-bottom: 3px;"><i>Downloads : </i><b><%- result[i].downloads %></b></p>
+							<p style="margin-bottom: 3px;"><i>This month : </i><b><%- result[i].month %></b></p>
+							<p style="margin-bottom: 3px;"><i>This week : </i><b><%- result[i].week %></b></p>
+							</div>
+						<div style="background-color: rgb(26, 26, 26); padding: 5px;">
+							<p style="margin-bottom: 5px;"><i><b>Description :</b></i></p>
+							<%- result[i].description %>
+						</div>
+				</div>
+			<% i++; } %>
+		</div>
+	<% } else { %>
+		<div class="col-8 offset-2 text-center" style="background-color: rgb(230,230,230,0.5);padding:15px;margin-top:1rem;">
+			<h3 style="font-weight: bold;"><i>Something went wrong.</i></h3>
+		</div>
+	<% } %>
+	
+</body>
+
+<% include footer.ejs %>
+
+</html>
