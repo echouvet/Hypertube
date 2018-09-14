@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 <title>Hypertube</title>
 <div class="page-header text-center">
     <div class="container-fluid" style="padding: 0px;">
@@ -16,8 +16,8 @@
       	</div>
     	<% if (typeof profile != 'undefined') { %>
     		<div class="pic">
-    			<div class="pic" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px; width: 180px; height: 190px;"></div>
-    		<a href="/profile"><img src=<%-"img/users/" + profile.id %> width="180" height="180" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px;"></a>
+    			<div class="pic" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px; width: 180px; height: 200px;"></div>
+    		<a href="/profile"><img src=<%-"/img/users/" + profile.id %> width="180" height="180" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px;"></a>
 
 
 
@@ -30,10 +30,18 @@
     </div>
 </div>
 <nav class="navbar bg-dark">
-	<form class="form-inline" action="/search" method="post">
-	    <input class="form-control mr-2" type="text" placeholder="Search" name="query">
-	    <button class="btn btn-success" type="submit">Search</button>
-	</form>
+    <div class="col-12" style="display: inline-flex;">
+    	<form class="form-inline" action="/search" method="post">
+    	    <input class="form-control mr-2" type="text" placeholder="Search" name="query">
+    	    <button class="btn btn-success" type="submit">Search</button>
+    	</form>
+        <div class="form-control bg-dark col-2 adv-search" style="color:white;text-align: center;margin-left: 1vw;">Advanced Search
+            <div class="adv-search col-12" style="position:absolute; left:0; top:0px;z-index: 3;  height:50px;"></div>
+            <div class="search col-12 bg-dark" style="position:absolute; left:0; top:45px;">
+                <label>Ah bah non apparemment il faut pas faire de Advanced Search donc j'ai fais ca pour rien ... Oops. Peut-etre trouvera-t-on une utilitee a cette jolie Div ... </label>
+            </div>
+        </div>
+    </div>
 </nav>
   		<% } %>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -16,6 +16,8 @@ var express = require('express')
     empty = require('is-empty');
     wait = require('wait-for-stuff');
     fetch = require('node-fetch');
+    WebTorrent = require('webtorrent')
+
     Promise = require('promise');
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
@@ -38,6 +40,10 @@ con.connect(function(err) { if (err) throw err
 })
 
 server.listen(8080)
+
+// function getTorrent(id, title) {
+
+//     }
 
 app.get('/', function(req,res){
     if (req.session.profile == undefined)
@@ -67,6 +73,17 @@ app.use(function(req, res, next) {
 })
 .all('/search', function(req, res) {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
+})
+.get('/search/:id/:title', function(req, res) {
+    var id = req.params.id; var client = new WebTorrent();
+    var torrentURI = 'https://archive.org/download/' + id + '/' + id + '_archive.torrent'
+        client.add(torrentURI, { path: 'torrents' }, function (torrent) {
+            console.log('Client is downloading ...')
+            var file = torrent.files.find(function (file) {
+                return (file.path.endsWith('.mp4'))
+            })
+            res.render('cinema.ejs', {profile: req.session.profile, path: file.path, title:req.params.title})
+        })
 })
 .all('/my_profile', function(req, res) {
     eval(fs.readFileSync(__dirname + "/back/my_profile.js")+'')

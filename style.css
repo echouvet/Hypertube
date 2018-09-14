@@ -9,6 +9,21 @@ body {
 	margin-bottom: 20vh;
 }
 
+.adv-search:hover .search
+{
+	display: block;
+}
+.search:hover
+{
+	display: block;
+}
+.search
+{
+	z-index: 2;
+	display: none;
+	border: 2px solid black;
+}
+
 .pic:hover .menu-pic
 {
 	display: block;
@@ -18,7 +33,6 @@ body {
 	display: block;
 	
 }
-
 .menu-pic
 {
 	z-index: 2;

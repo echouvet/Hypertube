@@ -8,28 +8,32 @@
 		<div class="alert alert-success col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
   			<%- '<strong>' + count + '</strong>' + ' results found for "' + decodeURI(q) + '".' %>
 		</div>
-		<div class="col-11" style="background-color: rgb(120,120,120,0.3); color:white; padding: 10px; margin:auto; margin-top:1em; justify-content: center;">
-			<% var i = 0; while (result[i]) { %>
-				<div class="col-3 text-center" style="margin:10px 30px 10px 30px; padding: 0px; display: inline-block; justify-content: center; border: 2px solid black; box-shadow: 1px 1px 5px; overflow: scroll; max-height: 350px; vertical-align: top; background-color: rgb(102, 0, 0)">
+		<div class="col-11" style="background-color: rgb(120,120,120,0.3); color:white; padding: 10px; margin:auto; margin-top:1em; justify-content: center; text-align: center;">
+			<% var i = 0; while (result[i]) { var title = result[i].title.replace("/",'_'); %>
+				<a href="/search/<%- result[i].identifier + '/' + title %>" style="color:white;" ><div class="col-3 text-center" id="<%- i %>" style="margin:10px 2vw 10px 2vw; padding: 5px; display: inline-block; justify-content: center; border: 2px solid black; box-shadow: 1px 1px 5px; overflow: scroll; max-height: 350px; vertical-align: top; background-color: rgb(102, 0, 0)">
 						<h5><i><%- result[i].title %></i></h5>
-						<div style="background-color: rgb(204, 204, 204); padding: 2px;">
+						<div style="background-color: rgb(204, 204, 204); padding: 2px; color:grey;">
+							<% if (result[i].avg_rating) { %>
+							<p style="margin-bottom: 3px;"><i>Rating : </i><b><%- result[i].avg_rating %> / 5.00</b></p> <% } %>
+							<% if (result[i].language) { %>
+							<p style="margin-bottom: 3px;"><i>Language : </i><b><%- result[i].language %></b></p> <% } %>
+							<p style="margin-bottom: 3px;"><i>Publicdate : </i><b><%- result[i].publicdate %></b></p>
 							<p style="margin-bottom: 3px;"><i>Downloads : </i><b><%- result[i].downloads %></b></p>
 							<p style="margin-bottom: 3px;"><i>This month : </i><b><%- result[i].month %></b></p>
 							<p style="margin-bottom: 3px;"><i>This week : </i><b><%- result[i].week %></b></p>
-							</div>
+						</div>
 						<div style="background-color: rgb(26, 26, 26); padding: 5px;">
 							<p style="margin-bottom: 5px;"><i><b>Description :</b></i></p>
 							<%- result[i].description %>
 						</div>
-				</div>
+				</div></a>
 			<% i++; } %>
 		</div>
 	<% } else { %>
 		<div class="col-8 offset-2 text-center" style="background-color: rgb(230,230,230,0.5);padding:15px;margin-top:1rem;">
-			<h3 style="font-weight: bold;"><i>Something went wrong.</i></h3>
+			<h3 style="font-weight: bold;"><i>No result found.</i></h3>
 		</div>
 	<% } %>
-	
 </body>
 
 <% include footer.ejs %>
