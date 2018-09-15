@@ -15,7 +15,7 @@
 		</div>
 		<div class="col-11" style="background-color: rgb(120,120,120,0.3); color:white; padding: 10px; margin:auto; margin-top:1em; justify-content: center; text-align: center;">
 			<% var i = 0; while (result[i]) { var title = result[i].title.replace("/",'_'); %>
-				<a href="/search/<%- result[i].identifier + '/' + title %>" style="color:white;" ><div class="col-3 text-center" id="<%- i %>" style="margin:10px 2vw 10px 2vw; padding: 5px; display: inline-block; justify-content: center; border: 2px solid black; box-shadow: 1px 1px 5px; overflow: scroll; max-height: 350px; vertical-align: top; background-color: rgb(102, 0, 0)">
+				<a href="/search/<%- result[i].identifier + '/' + title %>" style="color:white;" ><div class="col-3 text-center" id="<%- i %>" style="margin:10px 2vw 10px 2vw; padding: 5px; display: inline-block; justify-content: center; border: 2px solid black; box-shadow: 1px 1px 5px; overflow-y: auto; max-height: 350px; vertical-align: top; background-color: rgb(102, 0, 0)">
 						<h5><i><%- result[i].title %></i></h5>
 						<div style="background-color: rgb(204, 204, 204); padding: 2px; color:grey;">
 							<% if (result[i].avg_rating) { %>
