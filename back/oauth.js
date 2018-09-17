@@ -23,7 +23,7 @@ var headers = {
                     var resp = JSON.parse(body)
                     req.session.profile = resp;
                     req.session.profile.img = resp.avatar_url;
-                    res.render('index.ejs', {profile:req.session.profile, success:"Succes login with your github account"})
+                    res.render('index.ejs', {profile:req.session.profile, success:"Success login with your github account"})
                 }
                 else
     				res.render('index.ejs', {error:"something went wrong"})

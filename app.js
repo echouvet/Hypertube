@@ -42,29 +42,6 @@ con.connect(function(err) { if (err) throw err
 
 server.listen(8080)
 
-function OauthLogin(code) {
-  var XHR = new XMLHttpRequest();
-  var urlEncodedData = "";
-  var urlEncodedDataPairs = [];
-  var client_secret = "fd8d61c5967a2fc42f734e4d408cab58521d72b9";
-  var client_id = "64b33bf122900dfa0966";
-  var redirectURI = "http://localhost:8080/oauthtoken";
-
-    urlEncodedDataPairs.push(encodeURIComponent("code") + '=' + encodeURIComponent(code));
-    urlEncodedDataPairs.push(encodeURIComponent("client_id") + '=' + encodeURIComponent(client_id));
-    urlEncodedDataPairs.push(encodeURIComponent("client_secret") + '=' + encodeURIComponent(client_secret));
-    urlEncodedDataPairs.push(encodeURIComponent("redirect_uri") + '=' + encodeURIComponent(redirectURI));
-    urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
-
-
-  XHR.open('POST', 'https://github.com/login/oauth/access_token');
-
-  XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-  XHR.send(urlEncodedData);
-}
-
-
 app.get('/', function(req,res){
     if (req.session.profile == undefined)
         res.redirect('/login')
