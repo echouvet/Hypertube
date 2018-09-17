@@ -19,8 +19,9 @@ var login = eschtml(req.body.login)
 					res.render('login.ejs', {error: 'Wrong Password'})
 				else
 				{
+					console.log(result[0])
 					req.session.profile = result[0]
-					res.render('index.ejs', {success: 'Welcome ', profile: req.session.profile})
+					res.render('index.ejs', {success: 'Welcome '+ profile.firstname + ' ' + profile.lastname, profile: req.session.profile})
 				}
 			})
 		}

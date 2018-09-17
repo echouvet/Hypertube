@@ -82,35 +82,7 @@ app.get('/', function(req,res){
 })
 // login with github
 .get('/oauth', function(req, res) {
-    var headers = {
-        'Accept' : 'application/json',
-        'User-Agent':       'Super Agent/0.0.1',
-        'Content-Type':     'application/x-www-form-urlencoded'
-    }
-    var options = {
-        url: 'https://github.com/login/oauth/access_token',
-        method: 'POST',
-        headers: headers,
-        form: {'code': req.query.code, 'client_id': '64b33bf122900dfa0966', 'client_secret' : 'fd8d61c5967a2fc42f734e4d408cab58521d72b9'}
-    }
-    request(options, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            var resp = JSON.parse(body)
-            var options = {
-                url: 'https://api.github.com/user',
-                method: 'GET',
-                headers: headers,
-                qs: {'access_token': resp.access_token}
-            }
-            request(options, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    var resp = JSON.parse(body)
-                    req.session.profile = resp;
-                    req.session.profile.img = resp.avatar_url;
-                    res.render('index.ejs', {profile:req.session.profile})
-                }
-            })
-    } })
+    eval(fs.readFileSync(__dirname + "/back/oauth.js")+'')
 })
 //toutes pages ou pas besoin d'etre log, en haut
 app.use(function(req, res, next) {
