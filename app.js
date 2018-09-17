@@ -17,6 +17,7 @@ var express = require('express')
     wait = require('wait-for-stuff');
     fetch = require('node-fetch');
     WebTorrent = require('webtorrent')
+    request = require('request');
 
     Promise = require('promise');
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
@@ -41,9 +42,28 @@ con.connect(function(err) { if (err) throw err
 
 server.listen(8080)
 
-// function getTorrent(id, title) {
+function OauthLogin(code) {
+  var XHR = new XMLHttpRequest();
+  var urlEncodedData = "";
+  var urlEncodedDataPairs = [];
+  var client_secret = "fd8d61c5967a2fc42f734e4d408cab58521d72b9";
+  var client_id = "64b33bf122900dfa0966";
+  var redirectURI = "http://localhost:8080/oauthtoken";
 
-//     }
+    urlEncodedDataPairs.push(encodeURIComponent("code") + '=' + encodeURIComponent(code));
+    urlEncodedDataPairs.push(encodeURIComponent("client_id") + '=' + encodeURIComponent(client_id));
+    urlEncodedDataPairs.push(encodeURIComponent("client_secret") + '=' + encodeURIComponent(client_secret));
+    urlEncodedDataPairs.push(encodeURIComponent("redirect_uri") + '=' + encodeURIComponent(redirectURI));
+    urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+
+
+  XHR.open('POST', 'https://github.com/login/oauth/access_token');
+
+  XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+  XHR.send(urlEncodedData);
+}
+
 
 app.get('/', function(req,res){
     if (req.session.profile == undefined)
@@ -59,6 +79,38 @@ app.get('/', function(req,res){
 })
 .post('/forgotpass', function(req, res) {
     eval(fs.readFileSync(__dirname + "/back/forgotpass.js")+'')
+})
+// login with github
+.get('/oauth', function(req, res) {
+    var headers = {
+        'Accept' : 'application/json',
+        'User-Agent':       'Super Agent/0.0.1',
+        'Content-Type':     'application/x-www-form-urlencoded'
+    }
+    var options = {
+        url: 'https://github.com/login/oauth/access_token',
+        method: 'POST',
+        headers: headers,
+        form: {'code': req.query.code, 'client_id': '64b33bf122900dfa0966', 'client_secret' : 'fd8d61c5967a2fc42f734e4d408cab58521d72b9'}
+    }
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var resp = JSON.parse(body)
+            var options = {
+                url: 'https://api.github.com/user',
+                method: 'GET',
+                headers: headers,
+                qs: {'access_token': resp.access_token}
+            }
+            request(options, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var resp = JSON.parse(body)
+                    req.session.profile = resp;
+                    req.session.profile.img = resp.avatar_url;
+                    res.render('index.ejs', {profile:req.session.profile})
+                }
+            })
+    } })
 })
 //toutes pages ou pas besoin d'etre log, en haut
 app.use(function(req, res, next) {
