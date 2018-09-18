@@ -36,8 +36,12 @@
   			<strong>Error !</strong> <%- error %>
 		</div>
 		<% } %>
-		<a href="https://github.com/login/oauth/authorize?scope=read:user&client_id=64b33bf122900dfa0966&redirect_uri=http://localhost:8080/oauth">
-		<button type="button" class="btn button-dark">Connect with GitHub</button></a>
+	</div>
+	<div class="container text-center" style="background-color: rgb(100,100,100,0.5); color:white;padding: 5px; margin-top:1em;">
+	<a href="https://github.com/login/oauth/authorize?scope=read:user&client_id=64b33bf122900dfa0966&redirect_uri=http://localhost:8080/oauth">
+		<button type="button" class="btn button-dark bg-dark">Connect with GitHub</button></a>
+		<a href="https://api.intra.42.fr/oauth/authorize?scope=public&client_id=8f7f61588b5208b39c354a41e3981495710c178f7de7af8c62906f588e55c623&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth42&response_type=code">
+		<button type="button" class="btn button-dark bg-dark">Connect with 42</button></a>
 	</div>
 	<div class="container text-center border-radius" style="background-color: rgb(100,100,100,0.5); color:white;padding: 15px; margin-top:3em;">
 		<form action="forgotpass" method="post">

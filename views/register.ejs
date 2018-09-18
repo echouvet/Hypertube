@@ -5,8 +5,8 @@
 </head>
 <body>
     <a href="login" class="btn btn-link" style="margin-bottom: 0.5rem; margin-top: 1rem; ">Log-In</a>
-    <div class="col-12" style="display: inline-flex;">
-	<div class="col-5 offset-1 text-center" style="background-color: rgb(100,100,100,0.5); color:white; padding: 25px; margin-top:1rem;">
+    <!-- <div class="col-12" style="display: inline-flex;"> -->
+	<div class="container text-center" style="background-color: rgb(100,100,100,0.5); color:white; padding: 25px; margin-top:1rem;">
 		<form action="register" method="post" enctype="multipart/form-data">
 	  		<div class="form-group row">
   				<label for="first" class="col-2 col-form-label">Firstname</label>
@@ -70,7 +70,7 @@
 		</div>
 		<% } %>
 	</div>
-  <div class="col-4 text-center" style="background-color: rgb(100,100,100,0.5); color:white; padding: 25px; margin-top:1rem; margin-left: 3rem; ">
+  <!-- <div class="col-4 text-center" style="background-color: rgb(100,100,100,0.5); color:white; padding: 25px; margin-top:1rem; margin-left: 3rem; ">
     <h3>Create with GitHub</h3>
     <form action="/oauth" method="post" enctype="multipart/form-data">
         <div class="form-group row">
@@ -108,8 +108,8 @@
         <strong>Error !</strong> <%- error2 %>
     </div>
     <% } %>
-  </div>
-</div>
+  </div> -->
+<!-- </div> -->
 <script>
     $("input[type=file]").change(function () {
   var fieldVal = $(this).val();

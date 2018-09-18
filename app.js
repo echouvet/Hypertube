@@ -61,6 +61,9 @@ app.get('/', function(req,res){
 .get('/oauth', function(req, res) {
     eval(fs.readFileSync(__dirname + "/back/oauth.js")+'')
 })
+.get('/oauth42', function(req, res) {
+    eval(fs.readFileSync(__dirname + "/back/oauth42.js")+'')
+})
 //toutes pages ou pas besoin d'etre log, en haut
 app.use(function(req, res, next) {
     if (req.session.profile == undefined)
