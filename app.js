@@ -16,7 +16,6 @@ var express = require('express')
     empty = require('is-empty');
     wait = require('wait-for-stuff');
     fetch = require('node-fetch');
-    WebTorrent = require('webtorrent')
     request = require('request');
 
     Promise = require('promise');
@@ -79,15 +78,10 @@ app.use(function(req, res, next) {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
 })
 .get('/search/:id/:title', function(req, res) {
-    var id = req.params.id; var client = new WebTorrent();
+    var id = req.params.id;
     var torrentURI = 'https://archive.org/download/' + id + '/' + id + '_archive.torrent'
-        client.add(torrentURI, { path: 'torrents' }, function (torrent) {
-            console.log('Client is downloading ...')
-            var file = torrent.files.find(function (file) {
-                return (file.path.endsWith('.mp4'))
-            })
-            res.render('cinema.ejs', {profile: req.session.profile, path: file.path, title:req.params.title})
-        })
+    
+    res.render('cinema.ejs', {profile: req.session.profile, path: file.path, title:req.params.title})
 })
 .all('/my_profile', function(req, res) {
     eval(fs.readFileSync(__dirname + "/back/my_profile.js")+'')
