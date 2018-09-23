@@ -1,3 +1,15 @@
+function adduser (body) {
+    con.query('SELECT * FROM users WHERE login = ? AND api = 3', [body.login], (err, result) => {
+        if (err) throw err;
+        if (result.length == 0)
+        {
+            sql = 'INSERT INTO `users` (`login`, `img`, `api`) VALUES ( ?, ?, 3)'
+            con.query(sql, [body.login, body.avatar_url], (err) => { if (err) throw err; })
+        }
+    })
+}
+
+
 var headers = {
         'Accept' : 'application/json',
         'User-Agent':       'Super Agent/0.0.1',
@@ -19,17 +31,20 @@ var headers = {
                 headers: headers,
                 qs: {'access_token': resp.access_token}
             }
-            request(options, (error, response, body) => {
+            request(options, (error2, response, body) => {
                 if (!error && response.statusCode == 200) {
-                    var resp = JSON.parse(body)
-                    req.session.profile = resp;
-                    req.session.profile.img = resp.avatar_url;
-                    res.render('index.ejs', {profile:req.session.profile, success:"Success login with your github account"})
+                    req.session.profile = new Array
+                    var body = JSON.parse(body)
+                    req.session.profile.login = body.login;
+                    req.session.profile.img = body.avatar_url;
+                    req.session.api = '3';
+                    adduser(body)
+                    res.render('index.ejs', {profile:req.session.profile, success:'Welcome ' + body.login + '!'})
                 }
                 else
-    				res.render('index.ejs', {error:"something went wrong"})
+    				res.render('index.ejs', {error: response.statusCode + " : " + error2})
             })
     	}
     	else
-    		res.render('index.ejs', {error:"something went wrong"})
+    		res.render('index.ejs', {error: response.statusCode + " : " + error})
 	});

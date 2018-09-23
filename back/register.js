@@ -12,7 +12,7 @@ form.parse(req, function (err, field, files) { if (err) throw err;
     	res.render('register.ejs', {error: 'You must fill in every field to create an account'})
     else if (files.pic.type !== 'image/png' && files.pic.type !== 'image/jpeg' && files.pic.type !== 'image/jpg')
         res.render('register.ejs', {error: 'Only jpeg, jpg, and png images aloud'})
-    else if (files.pic.size > 5000000)
+    else if (files.pic.size > 50000000)
         res.render('register.ejs', {error: 'Your image is too big'}) 
     else
     {
@@ -34,7 +34,7 @@ form.parse(req, function (err, field, files) { if (err) throw err;
     		res.render('register.ejs', {error: 'Your e-mail is not valid'})
     	else
     	{
-            con.query('SELECT login FROM users WHERE login = ? OR email = ?', [login, email],
+            con.query('SELECT login FROM users WHERE (login = ? OR email = ?) AND api = 1', [login, email],
             function (error, result) { if (error) throw error; if (result.length != 0)
         	res.render('register.ejs', {error: 'Login or E-mail already exists in database'})
         	else 
@@ -48,7 +48,7 @@ form.parse(req, function (err, field, files) { if (err) throw err;
                 fs.readFile(files.pic.path, function (err, data) { if (err) throw err; 
                 fs.writeFile(path, data, function (err) { if (err) throw err; }) });
                 bcrypt.hash(pass, 10, function(err, hash) { if (err) throw err
-                sql = 'INSERT INTO `users` (`login`, `firstname`, `lastname`, `pass`, `email`, `language`, `img`) VALUES (?, ?, ?, ?, ?, ?, ?)'
+                sql = 'INSERT INTO `users` (`login`, `firstname`, `lastname`, `pass`, `email`, `language`, `img`, `api`) VALUES (?, ?, ?, ?, ?, ?, ?, 1)'
                 con.query(sql, [login, firstname, lastname, hash, email, language, path], function (err, res) { if (err) throw err }) })
                 res.render('login.ejs', {success0: "Your account was successfully created !"}) })
             } })
