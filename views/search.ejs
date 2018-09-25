@@ -6,12 +6,12 @@
 <body>
 	<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
 		<div class="alert alert-danger col-4 offset-4 text-center" style="margin-top:1rem;">
-  			<strong>Error !</strong> <%- error %>
+  			<strong>Error !</strong> <%- __(error) %>
 		</div>
 	<% } %>
 	<% if (typeof result !== 'undefined' && result && result !== 'none')  { %>
 		<div class="alert alert-success col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
-  			<%- '<strong>' + count + '</strong>' + ' results found for "' + decodeURI(q) + '".' %>
+  			<%- '<strong>' + count + '</strong>' + ' results found for "' + decodeURI(q) + '".' %><!--  WTF ARE THESE QUOTES? faut traduire ceci xD -->
 		</div>
 		<div class="container-fluid" style="background-color: rgb(10,10,10,0.4); color:white; padding: 0px; margin:auto; margin-top:1em; justify-content: center; text-align: center;">
 			<% var i = 0; while (result[i]) { var title = result[i].title.replace("/",'_'); %>
@@ -20,22 +20,22 @@
 						<img src="https://archive.org/services/img/<%- result[i].identifier %>"" alt="torrent miniature" class="col-12" style="padding:0"></a>
 						<div style="background-color: #e9ecef; padding: 2px; color:black;">
 							<% if (result[i].avg_rating) { %>
-							<p style="margin-bottom: 3px;"><i>Rating : </i><b><%- result[i].avg_rating %> / 5.00</b></p> <% } %>
+							<p style="margin-bottom: 3px;"><i><%= __("Rating : ") %></i><b><%- result[i].avg_rating %> / 5.00</b></p> <% } %>
 							<% if (result[i].language) { %>
-							<p style="margin-bottom: 3px;"><i>Language : </i><b><%- result[i].language %></b></p> <% } %>
+							<p style="margin-bottom: 3px;"><i><%= __("Language : ") %> </i><b><%- result[i].language %></b></p> <% } %>
 							<% if (result[i].date) { %>
-							<p style="margin-bottom: 3px;"><i>Date : </i><b><%- result[i].date %></b></p> <% } %>
+							<p style="margin-bottom: 3px;"><i></i><b><%- result[i].date %></b></p> <% } %>
 							<% if (result[i].publicdate) { %>
-							<p style="margin-bottom: 3px;"><i>Publicdate : </i><b><%- result[i].publicdate %></b></p><% } %>
+							<p style="margin-bottom: 3px;"><i><%= __("Publicdate : ") %> </i><b><%- result[i].publicdate %></b></p><% } %>
 							<% if (result[i].downloads) { %>
-							<p style="margin-bottom: 3px;"><i>Downloads : </i><b><%- result[i].downloads %></b></p><% } %>
+							<p style="margin-bottom: 3px;"><i><%= __("Downloads : ") %> </i><b><%- result[i].downloads %></b></p><% } %>
 							<% if (result[i].month) { %>
-							<p style="margin-bottom: 3px;"><i>This month : </i><b><%- result[i].month %></b></p><% } %>
+							<p style="margin-bottom: 3px;"><i><%= __("This month : ") %></i><b><%- result[i].month %></b></p><% } %>
 							<% if (result[i].week) { %>
-							<p style="margin-bottom: 3px;"><i>This week : </i><b><%- result[i].week %></b></p><% } %>
+							<p style="margin-bottom: 3px;"><i><%= __("This week : ") %> </i><b><%- result[i].week %></b></p><% } %>
 						</div>
 						<div style="background-color: rgb(26, 26, 26); padding: 5px;">
-							<p style="margin-bottom: 5px;"><i><b>Description :</b></i></p>
+							<p style="margin-bottom: 5px;"><i><b><%= __("Description : ") %></b></i></p>
 							<div><%- result[i].description %></div>
 						</div>
 				</div>
@@ -43,7 +43,7 @@
 		</div>
 	<% } else { %>
 		<div class="col-8 offset-2 text-center" style="background-color: rgb(230,230,230,0.5);padding:15px;margin-top:1rem;">
-			<h3 style="font-weight: bold;"><i>No result found.</i></h3>
+			<h3 style="font-weight: bold;"><i><%= __("No result found. ") %></i></h3>
 		</div>
 	<% } %>
 </body>

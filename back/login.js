@@ -20,7 +20,7 @@ var login = eschtml(req.body.login)
 				else
 				{
 					req.session.profile = result[0]
-					res.render('index.ejs', {success: 'Welcome '+ req.session.profile.firstname + ' ' + req.session.profile.lastname, profile: req.session.profile})
+					res.render('index.ejs', {success: req.i18n.__('Welcome ') + req.session.profile.firstname + ' ' + req.session.profile.lastname, profile: req.session.profile})
 				}
 			})
 		}

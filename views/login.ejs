@@ -6,59 +6,59 @@
 <body>
 	<% if (typeof error0 !== 'undefined' && error0 && error0 !== 'none')  { %>
 		<div class="alert alert-danger col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
-  			<strong>Error !</strong> <%- error0 + ' ' %><a href="register" class="btn btn-link" style="padding:0px;">Create an account</a>
+  			<strong>Error !</strong> <%- __(error0) + ' ' %><a href="register" class="btn btn-link" style="padding:0px;">Create an account</a>
 		</div>
 	<% } %>
 	<% if (typeof success0 !== 'undefined' && success0 && success0 !== 'none')  { %>
 		<div class="alert alert-success col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
-  			<strong>Success !</strong> <%- success0 %>
+  			<strong>Success !</strong> <%- __(success0) %>
 		</div>
 	<% } %>
 	<div class="container text-center border-radius" style="background-color: rgb(100,100,100,0.5); color:white;padding: 25px; margin-top:3em;">
 		<form action="login" method="post">
 			<div class="form-group row">
-	  			<label for="usr" class="col-2 col-form-label">Login</label>
+	  			<label for="usr" class="col-2 col-form-label"><%= __("Login")%></label>
 	  			<div class="col-9 offset-1">
 	  				<input type="text" class="form-control text-center" id="usr" name="login" placeholder="Your login...">
 	  			</div>
 	  		</div>
 	  		<div class="form-group row">
-	  			<label for="pwd" class="col-2 col-form-label">Password</label>
+	  			<label for="pwd" class="col-2 col-form-label"><%= __("Password")%></label>
 	  			<div class="col-9 offset-1">
 	  				<input type="password" class="form-control text-center" id="pwd" name="pass" placeholder="Your password...">
 	  			</div>
 			</div>
-			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;">Log In</button>
-			<a href="register" class="btn btn-link">Register</a>
+			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;"><%= __("Log In")%></button>
+			<a href="register" class="btn btn-link"><%= __("Register")%></a>
 		</form>
 		<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
 		<div class="alert alert-danger" style="margin-bottom: 0px;">
-  			<strong>Error !</strong> <%- error %>
+  			<strong>Error !</strong> <%- __(error) %>
 		</div>
 		<% } %>
 	</div>
 	<div class="container text-center" style="background-color: rgb(100,100,100,0.5); color:white;padding: 5px; margin-top:1em;">
 	<a href="https://github.com/login/oauth/authorize?scope=read:user&client_id=64b33bf122900dfa0966&redirect_uri=http://localhost:8080/oauth">
-		<button type="button" class="btn button-dark bg-dark">Connect with GitHub</button></a>
+		<button type="button" class="btn button-dark bg-dark"><%= __("Connect with GitHub")%></button></a>
 		<a href="https://api.intra.42.fr/oauth/authorize?client_id=e9d8c67e741dc42f8076e26764e96751113a2956434b46baa131d0739f784127&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth42&response_type=code">
-		<button type="button" class="btn button-dark bg-dark">Connect with 42</button></a>
+		<button type="button" class="btn button-dark bg-dark"><%= __("Connect with 42")%></button></a>
 	</div>
 	<div class="container text-center border-radius" style="background-color: rgb(100,100,100,0.5); color:white;padding: 15px; margin-top:3em;">
 		<form action="forgotpass" method="post">
 			<div class="form-group">
-	  			<label for="mail" class="col-form-label">Forgot your password ?</label>
+	  			<label for="mail" class="col-form-label"><%= __("Forgot your password ?")%></label>
 	  				<input type="email" class="form-control text-center" id="mail" name="email" placeholder="Your email adress...">
 	  		</div>
-			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;">Reset my password</button>
+			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;"><%= __("Reset my password")%></button>
 		</form>
 		<% if (typeof error2 !== 'undefined' && error2 && error2 !== 'none')  { %>
 		<div class="alert alert-danger" style="margin-bottom: 0px;">
-  			<strong>Error !</strong> <%- error2 %>
+  			<strong>Error !</strong> <%- __(error2) %>
 		</div>
 		<% } %>
 		<% if (typeof success !== 'undefined' && success && success !== 'none')  { %>
 		<div class="alert alert-success" style="margin-bottom: 0px;">
-  			<strong>Success !</strong> <%- success %>
+  			<strong>Success !</strong> <%- __(success) %>
 		</div>
 		<% } %>
 	</div>

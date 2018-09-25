@@ -18,7 +18,7 @@ if (!empty(query) && query !== "undefined")
 	fetch('https://archive.org/services/search/v1/scrape?count=500&sorts=' + sorts + '&fields=identifier%2Cdownloads%2Ctitle%2Cmediatype%2Clanguage%2Cmonth%2Cweek%2Cpublicdate%2Cdescription%2Cavg_rating%2Cformat%2Cdate&q=title%3A(' + query + ')')
     	.catch(error => console.log(error))
     	.then(res => res.json())
-    	.then(function(json) {
+    	.then((json) => {
 			var i = 0;
 			while (json.items[i])
 			{

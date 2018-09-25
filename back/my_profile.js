@@ -75,10 +75,9 @@ else
                 }) )
             }
         }
-        console.log(update)
         if (req.session.profile.api !== 1 && error === '' && files.pic.size !== 0)
             res.render('my_profile.ejs', {error: 'You can only update your language preference whilst not using a local account', profile: req.session.profile})
-        else if (update == 0)
+        else if (update == 0 && error === '')
             res.render('my_profile.ejs', {error: 'You must input something to update', profile: req.session.profile})
         else if (error === '')
             res.render('my_profile.ejs', {success: 'Your profile was successfully updated', profile: req.session.profile})

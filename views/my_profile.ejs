@@ -10,69 +10,69 @@
 	<div class="container text-center" style="background-color: rgb(100,100,100,0.5); color:white; padding: 25px; margin-top:1em;">
 		<form action="my_profile" method="post" enctype="multipart/form-data">
 	  		<div class="form-group row">
-					<label for="first" class="col-2 col-form-label">Firstname</label>
+					<label for="first" class="col-2 col-form-label"><%= __("Firstname:") %></label>
 					<div class="col-8 offset-2">
 					<input class="form-control text-center" type="text" name="firstname" id="first" placeholder="<%- profile.firstname %>">
 					</div>
 			</div>
 			<div class="form-group row">
-					<label for="last" class="col-2 col-form-label">Lastname</label>
+					<label for="last" class="col-2 col-form-label"><%= __("Lastname:") %></label>
 					<div class="col-8 offset-2">
 					<input class="form-control text-center" type="text" name="lastname"  id="last" placeholder="<%- profile.lastname %>">
 					</div>
 			</div>
 			<div class="form-group row">
-					<label for="mail" class="col-2 col-form-label">Email</label>
+					<label for="mail" class="col-2 col-form-label"><%= __("Email:") %></label>
 					<div class="col-8 offset-2">
 					<input class="form-control text-center" type="email" name="email" id="mail" placeholder="<%- profile.email %>">
 					</div>
 			</div>
 			<div class="form-group row">
-					<label for="login" class="col-2 col-form-label">Login</label>
+					<label for="login" class="col-2 col-form-label"><%= __("Login:") %></label>
 					<div class="col-8 offset-2">
 					<input class="form-control text-center" type="text" name="login" id="login" placeholder="<%- profile.login %>">
 					</div>
 			</div>
 			<div class="form-group row">
-					<label for="pass" class="col-2 col-form-label">Password</label>
+					<label for="pass" class="col-2 col-form-label"><%= __("Password:") %></label>
 					<div class="col-8 offset-2">
-					<input class="form-control text-center" type="password" name="pass" id="pass" placeholder="New password">
+					<input class="form-control text-center" type="password" name="pass" id="pass" placeholder="<%= __("New Password:") %>">
 					</div>
 			</div>
 			<div class="form-group row">
-					<label for="passc" class="col-2 col-form-label">Confirm</label>
+					<label for="passc" class="col-2 col-form-label"><%= __("Confirm:") %></label>
 					<div class="col-8 offset-2">
-					<input class="form-control text-center" type="password" name="confirmpass" id="passc" placeholder="Confirm new password">
+					<input class="form-control text-center" type="password" name="confirmpass" id="passc" placeholder="<%= __("Confirm Password:") %>">
 					</div>
 			</div>
 			<div class="form-group row">
-					<label for="lang" class="col-2 col-form-label">Preference</label>
+					<label for="lang" class="col-2 col-form-label"><%= __("Preference:") %></label>
 					<div class="col-8 offset-2">
 						<select class="custom-select text-center" name=lang id="lang" style="text-align-last:center;">
 							<option value="<%- profile.language %>" selected><%- profile.language %></option>
-							<option value="English">English</option>
-							<option value="Francais">Francais</option>
-							<option value="Deutch">Deutch</option>
+							<option value="en">English</option>
+							<option value="fr">Francais</option>
+							<option value="de">Deutsche</option>
 						</select>
 					</div>
 			</div>
 			<div class="form-group row">
-				<label for="imgprofile" class="col-2 col-form-label">Picture</label>
+				<label for="imgprofile" class="col-2 col-form-label"><%= __("Picture:") %></label>
 				<div class="col-8 offset-2">
 					<input type="file" class="custom-file-input" id="imgprofile" name="pic" accept="image/*">
-					<label class="custom-file-label" for="imgprofile" style="z-index: 0; ">Choose file to change...</label>
+					<label class="custom-file-label" for="imgprofile" style="z-index: 0; "><%= __("Choose file to update :") %></label>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-link" style="font-weight:bold; font-size: 20px; text-decoration: none;">Update my profile !</button>
+			<button type="submit" class="btn btn-link" style="font-weight:bold; font-size: 20px; text-decoration: none;"><%= __("Update my profile !") %></button>
 		</form>
 	<% if (typeof success !== 'undefined' && success && success !== 'none')  { %>
 		<div class="alert alert-success col-10 offset-1 text-center" style="">
-  			<strong>Success !</strong> <%- success %>
+  			<strong><%= __("Success!") %></strong> <%- __(success) %>
 		</div>
 	<% } %>
 	<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
 		<div class="alert alert-danger col-10 offset-1 text-center" style="">
-  			<strong>Error !</strong> <%- error %>
+  			<strong><%= __("Error!") %></strong> <%- __(error) %>
 		</div>
 	<% } %>
 	</div>
@@ -87,5 +87,4 @@
 </script>
 </body>
 <% include footer.ejs %>
-
 </html>

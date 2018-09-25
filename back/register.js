@@ -1,12 +1,10 @@
-
-
 regLow = /[a-z]/ 
 regUp = /[A-Z]/
  var form = new formidable.IncomingForm();
 form.parse(req, function (err, field, files) { if (err) throw err;
     if (req.session.profile != undefined)
         res.render('index.ejs', {profile: req.session})
-    else if (!field || (!field.login && !field.pass))
+    else if (!field || (!field.login && !field.firstname && !field.lastname && !field.pass && !field.confirmpass && !field.mail && !files.pic))
     	res.render('register.ejs')
     else if (!field.login || !field.firstname || !field.lastname || !field.pass || !field.confirmpass || !field.mail || !files.pic)
     	res.render('register.ejs', {error: 'You must fill in every field to create an account'})
@@ -21,11 +19,8 @@ form.parse(req, function (err, field, files) { if (err) throw err;
         lastname = eschtml(field.lastname)
         pass = eschtml(field.pass)
         email = eschtml(field.mail)
-        //faudra voir comment on gere les langues
-        if (field.language)
-        	language = eschtml(field.language)
-        else
-        	language = 'en'
+        language = eschtml(field.lang)
+        //faudra verif que la langue c bien une langue existante et qui marche chez nous
         if (pass.length < 5 || pass.search(regLow) == -1 || pass.search(regUp) == -1)
     		res.render('register.ejs', {error: 'Password must be minimum 6 characters long and must contain an uppercase and a lowercase'})
     	else if (field.pass !== field.confirmpass)

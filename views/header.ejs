@@ -7,11 +7,11 @@
             <% if (typeof profile != 'undefined') { %>
                 <div class="col-10">
         		  <h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1>
-        		  <p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p>
+        		  <p><%= __("Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !") %></p>
                 </div>
             <% } else { %>
                   <h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1>
-                  <p>Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !</p>
+                  <p><%= __("Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !") %> </p>
             <% } %>
       	</div>
     	<% if (typeof profile != 'undefined') { %>
@@ -22,9 +22,9 @@
 
 
     			<div class="menu-pic bg-dark" style="position: absolute;top:218px; right: 33px;blue; width: 180px; padding: 5px; padding-top:11px; padding-bottom:11px;">
-    				<li><a class="menu-deroulant" href="/my_profile" style="text-decoration: none; color:white;">My profile</a></li><hr/>
-    				<li><a class="menu-deroulant" href="/other_profiles" style="text-decoration: none; color:white;">Other profiles</a></li><hr/>
-    				<li><a class="menu-deroulant" href="/logout" style="text-decoration: none; color:white;">Logout</a></li>
+    				<li><a class="menu-deroulant" href="/my_profile" style="text-decoration: none; color:white;"><%= __("My profile") %></a></li><hr/>
+    				<li><a class="menu-deroulant" href="/other_profiles" style="text-decoration: none; color:white;"><%= __("Other profiles") %></a></li><hr/>
+    				<li><a class="menu-deroulant" href="/logout" style="text-decoration: none; color:white;"><%= __("Logout") %></a></li>
     			</div>
     		</div>
     </div>
@@ -34,17 +34,17 @@
     	<form class="form-inline" action="/search" method="post">
     	    <input class="form-control mr-2" type="text" placeholder="Search" name="query">
     	    
-            <button class="btn btn-success adv-search" type="submit">Search
+            <button class="btn btn-success adv-search" type="submit"><%= __("Search")  %>
             <div class="adv-search col-12" style="position:absolute;height:20px;width: 80px;"></div>
     	   <div class="search col-12" style="position:absolute; top:45px; width: 200px;">
             <div>
-                <label>Sort by (default:Title)</label><hr style="margin:2px 2px 2px 2px;" />
-                <label for="downloads_desc">Downloads desc<input type="radio" id="downloads_desc" name="sort" value="d1" style="margin-left:15px;"></label>
-                <label for="downloads_asc">Downloads asc<input type="radio" id="downloads_asc" name="sort" value="d2" style="margin-left:15px;"></label>
-                <label for="rating_desc">Rating desc<input type="radio" id="rating_desc" value="r1" name="sort" style="margin-left:15px;"></label>
-                <label for="rating_asc">Rating asc<input type="radio" id="rating_asc" value="r2" name="sort" style="margin-left:15px;"></label>
-                <label for="date_desc">Date desc<input type="radio" id="date_desc" value="date1" name="sort" style="margin-left:15px;"></label>
-                <label for="date_asc">Date asc<input type="radio" id="date_asc" value="date2" name="sort" style="margin-left:15px;"></label>
+                <label><%= __("Sort by (default:Title)") %></label><hr style="margin:2px 2px 2px 2px;" />
+                <label for="downloads_desc"><%= __("Downloads desc") %><input type="radio" id="downloads_desc" name="sort" value="d1" style="margin-left:15px;"></label>
+                <label for="downloads_asc"><%= __("Downloads asc") %><input type="radio" id="downloads_asc" name="sort" value="d2" style="margin-left:15px;"></label>
+                <label for="rating_desc"><%= __("Rating desc") %><input type="radio" id="rating_desc" value="r1" name="sort" style="margin-left:15px;"></label>
+                <label for="rating_asc"><%= __("Rating asc") %><input type="radio" id="rating_asc" value="r2" name="sort" style="margin-left:15px;"></label>
+                <label for="date_desc"><%= __("Date desc") %><input type="radio" id="date_desc" value="date1" name="sort" style="margin-left:15px;"></label>
+                <label for="date_asc"><%= __("Date asc") %><input type="radio" id="date_asc" value="date2" name="sort" style="margin-left:15px;"></label>
             </div>
         </div></button>
         </form>
