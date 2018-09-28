@@ -37,11 +37,13 @@
 		</div>
 		<% } %>
 	</div>
-	<div class="container text-center" style="background-color: rgb(100,100,100,0.5); color:white;padding: 5px; margin-top:1em;">
+	<div class="container text-center" style="padding: 5px; margin-top:0.5em;">
 	<a href="https://github.com/login/oauth/authorize?scope=read:user&client_id=64b33bf122900dfa0966&redirect_uri=http://localhost:8080/oauth">
-		<button type="button" class="btn button-dark bg-dark"><%= __("Connect with GitHub")%></button></a>
+		<button type="button" class="btn button-dark bg-dark" style="color:#e9ecef;">Connect with GitHub</button></a>
 		<a href="https://api.intra.42.fr/oauth/authorize?client_id=e9d8c67e741dc42f8076e26764e96751113a2956434b46baa131d0739f784127&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth42&response_type=code">
-		<button type="button" class="btn button-dark bg-dark"><%= __("Connect with 42")%></button></a>
+		<button type="button" class="btn button-dark bg-dark" style="color:#e9ecef;">Connect with 42</button></a>
+		<a href="https://graph.facebook.com/oauth/authorize?client_id=271023080199498&redirect_uri=http://localhost:8080/oauthfacebook">
+		<button type="button" class="btn button-dark bg-dark" style="color:#e9ecef;">Connect with Facebook</button></a>
 	</div>
 	<div class="container text-center border-radius" style="background-color: rgb(100,100,100,0.5); color:white;padding: 15px; margin-top:3em;">
 		<form action="forgotpass" method="post">
