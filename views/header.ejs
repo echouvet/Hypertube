@@ -6,11 +6,11 @@
     	<div class="jumbotron" style="margin-bottom: 0px; padding: 1rem;">
             <% if (typeof profile != 'undefined') { %>
                 <div class="col-10">
-        		  <h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1>
+        		  <a href="/" style="text-decoration: none; color:black;"><h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1></a>
         		  <p><%= __("Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !") %></p>
                 </div>
             <% } else { %>
-                  <h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1>
+                  <a href="/" style="text-decoration: none; color:black;"><h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1></a>
                   <p><%= __("Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !") %> </p>
             <% } %>
       	</div>
@@ -51,7 +51,23 @@
        
     </div>
 </nav>
-  		<% } %>
+  		<% } else { %>
+        <nav class="navbar bg-dark">
+    <div class="col-12" style="display: inline-flex;">
+        <div>
+    <a href="login" class="btn btn-link" style="text-decoration: none;"><%= __("Log In")%></a>
+            <a href="register" class="btn btn-link" style="text-decoration: none;"><%= __("Register")%></a>
+    <a href="https://github.com/login/oauth/authorize?scope=read:user&client_id=64b33bf122900dfa0966&redirect_uri=http://localhost:8080/oauth">
+        <button type="button" class="btn button-dark bg-dark" style="color:#e9ecef;">Connect with GitHub</button></a>
+        <a href="https://api.intra.42.fr/oauth/authorize?client_id=e9d8c67e741dc42f8076e26764e96751113a2956434b46baa131d0739f784127&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth42&response_type=code">
+        <button type="button" class="btn button-dark bg-dark" style="color:#e9ecef;">Connect with 42</button></a>
+        <a href="https://graph.facebook.com/oauth/authorize?client_id=271023080199498&redirect_uri=http://localhost:8080/oauthfacebook">
+        <button type="button" class="btn button-dark bg-dark" style="color:#e9ecef;">Connect with Facebook</button></a>
+    </div>
+       
+    </div>
+</nav>
+        <% } %>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
