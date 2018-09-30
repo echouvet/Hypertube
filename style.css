@@ -41,7 +41,7 @@ body {
 {
 	z-index: 2;
 	display: none;
-	border: 2px solid black;
+	border: 1px solid black;
 }
 
 li
