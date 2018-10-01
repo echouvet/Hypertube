@@ -19,7 +19,8 @@ var login = eschtml(req.body.login)
 					res.render('login.ejs', {error: 'Wrong Password'})
 				else
 				{
-					req.session.profile = result[0]
+					req.session.profile = result[0];
+					req.i18n.setLocale(result[0].language);
 					res.render('index.ejs', {success: req.i18n.__('Welcome ') + req.session.profile.firstname + ' ' + req.session.profile.lastname, profile: req.session.profile})
 				}
 			})

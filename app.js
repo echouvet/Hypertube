@@ -19,6 +19,7 @@ var express = require('express')
     request = require('request');
     Promise = require('promise');
     i18n = require('i18n-2');
+    PirateBay = require('thepiratebay');
 
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
@@ -49,9 +50,31 @@ server.listen(8080)
 
 
 app.use((req, res, next) => {
-    if (req.session && req.session.profile && req.session.profile.language !== '' && req.session.profile.language !== undefined)
-        req.i18n.setLocale(req.session.profile.language);
-    next();
+    // oui ceci est moche, mais necessaire. Demandez a Eloi si y'a un doubt
+    if (req.session && req.session.profile)
+    {
+        if (empty(req.session.profile.id)) {
+            con.query('SELECT * FROM users WHERE login = ? AND api = ?', [req.session.profile.login, req.session.profile.api], 
+                (err, result) => {  if (err) throw err;
+                req.session.profile.id = result[0].id; 
+                if (result[0].language !== 0)
+                {
+                    req.session.profile.language = result[0].language
+                    req.i18n.setLocale(req.session.profile.language);
+                }
+                next();
+            })
+        }
+        else if (!empty(req.session.profile.language))
+        {
+            req.i18n.setLocale(req.session.profile.language);
+            next();
+        }
+        else
+            next();
+    }
+    else
+        next();
 })
 .get('/', (req,res) => {
     if (req.session.profile == undefined)

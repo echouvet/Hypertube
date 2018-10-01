@@ -1,4 +1,21 @@
 var query = eschtml(encodeURI(req.body.query))
+
+// POUR ELOI CI DESSOUS, JARRIVE
+
+// const searchResults = await PirateBay.search(req.body.query, {
+//   category: 'video',
+//   orderBy: 'name',
+//   sortBy: 'desc'
+// })
+// .then(results => console.log(results))
+// .catch(err => console.log(err))
+
+// const searchResults = await PirateBay.topTorrents(200)
+// console.log(searchResults)
+
+// const cat = await PirateBay.getCategories()
+// console.log(cat)
+
 if (!empty(query) && query !== "undefined")
 {
 	if (req.body.sort == "d1")

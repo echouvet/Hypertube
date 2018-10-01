@@ -5,18 +5,18 @@ function updateuser(column, change) {
         {
             error = ' You can only update your language preference whilst not using a local account'
             return ;
-        } 
+        }
     }
     var sql = 'UPDATE users SET ' + column + ' = ? WHERE id = ?'
     con.query(sql, [change, req.session.profile.id], function (err) { if (err) throw err })
     req.session.profile[column] = change;
-    update = 1 + column;
+    update = 1;
 }
 
 var error = '';
 update = 0;
 if (!req.session || !req.session.profile)
-	res.redirect('/')
+    res.redirect('/')
 else
 {
     var form = new formidable.IncomingForm();
@@ -29,8 +29,13 @@ else
             updateuser('firstname', eschtml(field.firstname))
         if (!empty(field.lastname))
             updateuser('lastname', eschtml(field.lastname))
-        if (!empty(field.lang) && field.lang !== req.session.profile.language)
-            updateuser('language', eschtml(field.lang))
+        if (!empty(field.lang))
+        {
+            if (field.lang == req.session.profile.language)
+                error = 'Your current language is already ' + eschtml(field.lang)
+            else
+                updateuser('language', eschtml(field.lang))
+        }
         if (!empty(field.pass) && error === '') {
             var regLow = /[a-z]/; var regUp = /[A-Z]/;
             if (field.pass.length < 5 || field.pass.search(regLow) == -1 || field.pass.search(regUp) == -1) {

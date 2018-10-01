@@ -42,9 +42,9 @@ var headers = {
                     res.render('index.ejs', {profile:req.session.profile, success: req.i18n.__('Welcome ') + body.login + '!'})
                 }
                 else
-    				res.render('index.ejs', {error: response.statusCode + " : " + error2})
+                    res.render('index.ejs', {error: response.statusCode + " : " + error2})
             })
-    	}
-    	else
-    		res.render('index.ejs', {error: response.statusCode + " : " + error})
-	});
+        }
+        else
+            res.render('index.ejs', {error: response.statusCode + " : " + error})
+    });

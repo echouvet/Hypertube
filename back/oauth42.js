@@ -43,7 +43,7 @@ request.post({
                 req.session.profile.firstname = body.first_name
                 req.session.profile.lastname = body.last_name
                 req.session.profile.img = body.image_url
-                req.session.api = '2';
+                req.session.profile.api = '2';
                 res.render('index.ejs', {profile:req.session.profile, success: req.i18n.__("Welcome ") + body.displayname + "!"})
             }
         })
