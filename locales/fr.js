@@ -65,7 +65,9 @@
 	"You can only update your language preference whilst not using a local account": "Vous ne pouvez pas mettre à jour votre profile si vous n'utilisez pas un compte local",
 	"There aren't any profiles to show.": "Il n'y a pas d'autre profile à montrer.",
 	"Your account was successfully created !": "Votre compte a été créé avec succès !",
-	"Wrong Password": "Mauvais mot de pass"
-	"Year :":"Année :"
-	"Runtime : ":"Durée :"
+	"Wrong Password": "Mauvais mot de passe",
+	"Year :": "Année :",
+	"Runtime : ": "Durée :",
+	"Year : ": "Year : ",
+	"Genres : ": "Genres : "
 }

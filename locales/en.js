@@ -58,5 +58,6 @@
 	"Your email adress...": "Your email adress...",
 	"Year : ": "Year : ",
 	"Genres : ": "Genres : ",
-	"Runtime : ": "Runtime : "
+	"Runtime : ": "Runtime : ",
+	"Your current language is already fr": "Your current language is already fr"
 }
