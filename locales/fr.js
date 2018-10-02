@@ -66,4 +66,6 @@
 	"There aren't any profiles to show.": "Il n'y a pas d'autre profile à montrer.",
 	"Your account was successfully created !": "Votre compte a été créé avec succès !",
 	"Wrong Password": "Mauvais mot de pass"
+	"Year :":"Année :"
+	"Runtime : ":"Durée :"
 }

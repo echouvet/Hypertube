@@ -32,25 +32,33 @@ if (!empty(query) && query !== "undefined")
 		var sorts = "date%20asc";
 	else
 		var sorts = "title%20desc";
-	fetch('https://archive.org/services/search/v1/scrape?count=500&sorts=' + sorts + '&fields=identifier%2Cdownloads%2Ctitle%2Cmediatype%2Clanguage%2Cmonth%2Cweek%2Cpublicdate%2Cdescription%2Cavg_rating%2Cformat%2Cdate&q=title%3A(' + query + ')')
-    	.catch(error => console.log(error))
-    	.then(res => res.json())
-    	.then((json) => {
-			var i = 0;
-			while (json.items[i])
-			{
-				var j = 0;
-				while (json.items[i].format[j] != "Archive BitTorrent" && json.items[i].format[j])
-					j++;
-				if (json.items[i].mediatype != "movies" || json.items[i].format[j] != "Archive BitTorrent")
-				{
-					json.items.splice(i, 1);
-					i--;
-				}
-				i++;
-			}
-			res.render('search.ejs', {profile:req.session.profile, result:json.items, count:i, q:query})
-    	});	
+	fetch('https://yts.am/api/v2/list_movies.json?query_term=' + query)
+	.catch(error => console.log(error))
+	.then(res => res.json())
+	.then((json) => { console.log(json)
+		var movies = new Array();
+		var count = json.data.movie_count;
+		var i = 0;
+		while (json.data.movies[i])
+		{
+			movies.push({
+				id: json.data.movies[i].id, 
+				title: json.data.movies[i].title, 
+				year: json.data.movies[i].year, 
+				rating: json.data.movies[i].rating,
+				genres: json.data.movies[i].genres,
+				synopsis: json.data.movies[i].synopsis,
+				language: json.data.movies[i].language,
+				cover: json.data.movies[i].medium_cover_image,
+				background: json.data.movies[i].background_image,
+				runtime: json.data.movies[i].runtime,
+				torrents: json.data.movies[i].torrents
+			});
+			i++;
+		}
+		
+		res.render('search.ejs', {profile:req.session.profile, movies:movies, count:count, q:query})
+	})
 }
 else
 	res.render('search.ejs', {profile:req.session.profile, error: "Something went wrong"})

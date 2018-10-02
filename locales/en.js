@@ -55,5 +55,8 @@
 	"Picture": "Picture",
 	"Your login...": "Your login...",
 	"Your password...": "Your password...",
-	"Your email adress...": "Your email adress..."
+	"Your email adress...": "Your email adress...",
+	"Year : ": "Year : ",
+	"Genres : ": "Genres : ",
+	"Runtime : ": "Runtime : "
 }
