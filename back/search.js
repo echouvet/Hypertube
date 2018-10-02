@@ -1,20 +1,34 @@
 var query = eschtml(encodeURI(req.body.query))
 
-// POUR ELOI CI DESSOUS, JARRIVE
+async function searchpiratebay(query, callback) {
+	let result = new Array;
+	if (empty(query))
+	{
+		result = await PirateBay.topTorrents(200).catch(err => console.log('Piratebay Error: ' + err))
+	}
+	else
+	{
+		result = await PirateBay.search(query, {
+	    	category: 'video',
+			orderBy: 'name',
+			sortBy: 'desc'
+  		}).catch(err => console.log('Piratebay Error: ' + err))
+	}
+  	const piratemovies = result.map(elem => {
+  		elem.name = elem.name.replace(/\./g, ' ');
+  		return({
+			id: elem.id,
+			title: elem.name,
+	        year: elem.uploadDate,
+	        size: elem.size,
+	        link: elem.link,
+	        category: elem.subcategory.name,
+	   		magnet: elem.magnetLink
+		})});
+	return callback(piratemovies)
+}
 
-// const searchResults = await PirateBay.search(req.body.query, {
-//   category: 'video',
-//   orderBy: 'name',
-//   sortBy: 'desc'
-// })
-// .then(results => console.log(results))
-// .catch(err => console.log(err))
 
-// const searchResults = await PirateBay.topTorrents(200)
-// console.log(searchResults)
-
-// const cat = await PirateBay.getCategories()
-// console.log(cat)
 
 if (!empty(query) && query !== "undefined")
 {
@@ -49,15 +63,21 @@ if (!empty(query) && query !== "undefined")
 				genres: json.data.movies[i].genres,
 				synopsis: json.data.movies[i].synopsis,
 				language: json.data.movies[i].language,
-				cover: json.data.movies[i].medium_cover_image,
+				cover: json.data.movies[i].large_cover_image,
 				background: json.data.movies[i].background_image,
 				runtime: json.data.movies[i].runtime,
 				torrents: json.data.movies[i].torrents
 			});
 			i++;
 		}
+		searchpiratebay(req.body.query, (piratemovies) => { 
+			
+			movies = movies.concat(piratemovies)
+			count += piratemovies.length;
+			
+			res.render('search.ejs', {profile:req.session.profile, movies:movies, count:count, q:query})
+		 });
 		
-		res.render('search.ejs', {profile:req.session.profile, movies:movies, count:count, q:query})
 	})
 }
 else
