@@ -49,7 +49,7 @@ if (!empty(query) && query !== "undefined")
 	fetch('https://yts.am/api/v2/list_movies.json?query_term=' + query)
 	.catch(error => console.log(error))
 	.then(res => res.json())
-	.then((json) => { console.log(json)
+	.then((json) => {
 		var movies = new Array();
 		var count = json.data.movie_count;
 		var i = 0;
