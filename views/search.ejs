@@ -14,10 +14,17 @@
   			<%- '<strong>' + count + '</strong>' + ' moviess found for "' + decodeURI(q) + '".' %><!--  WTF ARE THESE QUOTES? faut traduire ceci xD -->
 		</div>
 		<div class="container-fluid" style="background-color: rgb(10,10,10,0.4); color:white; padding: 0px; margin:auto; margin-top:1em; justify-content: center; text-align: center;">
+<<<<<<< HEAD
 			<% var i = 0; while (movies[i]) { var title = movies[i].title.toString().replace("/",'_'); %>
 				<a href="/search/<%- movies[i].identifier + '/' + title %>" style="color:#e9ecef; text-decoration: none;" ><div class="col-2 text-center" id="<%- i %>" style="margin:1vh 0.5vw 1vh 0.5vw; padding: 1px;border-radius: 4px; display: inline-block; justify-content: center; border: 2px solid black; box-shadow: 1px 1px 5px; overflow-y: auto; max-height: 300px; vertical-align: top; background-color: black;">
 						<h5><i><%- movies[i].title %></i></h5>
 						<img src=<%- movies[i].cover %> alt="torrent miniature" class="col-12" style="padding:0"></a>
+=======
+			<% var i = 0; while (result[i]) { var title = result[i].title.toString().replace("/",'_'); %>
+				<a href="/search/<%- result[i].identifier + '/' + title %>" style="color:#e9ecef; text-decoration: none;" ><div class="col-2 text-center" id="<%- i %>" style="margin:2vh 2vh 2vh 2vh; padding: 1px;border-radius: 4px; display: inline-block; justify-content: center; border: 2px solid black; box-shadow: 1px 1px 5px; overflow-y: auto; max-height: 300px; vertical-align: top; background-color: black;">
+						<h5 style="min-height: 48px;"><i><%- result[i].title %></i></h5>
+						<img src="https://archive.org/services/img/<%- result[i].identifier %>"" alt="torrent miniature" class="col-12" style="padding:0"></a>
+>>>>>>> e2ff298c9b63c686a07a98fe5231c3323c2ef9d9
 						<div style="background-color: #e9ecef; padding: 2px; color:black;">
 							<% if (movies[i].rating) { %>
 							<p style="margin-bottom: 3px;"><i><%= __("Rating : ") %></i><b><%- movies[i].rating %></b></p> <% } %>
