@@ -1,4 +1,7 @@
-var query = eschtml(encodeURI(req.body.query))
+var id = req.params.id;
+
+
+var query = eschtml(encodeURI(req.params.title));
 async function searchpiratebay(query, callback) {
 	let result = new Array;
 	if (empty(query))
@@ -78,9 +81,31 @@ if (!empty(query) && query !== "undefined")
 				
 			});
 		}
-		res.render('search.ejs', {profile:req.session.profile, movies:movies, count:count, q:query})
+		var torrentURI = movies[0].torrents[0].url;
+
+		magnetLink(torrentURI, (err, link) => {
+			if (err) throw err;
+			var magnet = link;
+			console.log(link);
+			magnet = link+movies[0].torrents[0].hash
+			const engine = torrentStream(magnet, {
+				tmp: '/tmp/hypertube/tmp/upload',
+				path: '/tmp/hypertube/tmp/films/'+movies[0].title});
+			engine.on('ready', () => {
+				console.log(engine.files)
+				engine.files.forEach(function(file) {
+					var stream = file.createReadStream();
+				})
+			})
+			engine.on('download', (chunck) => {
+				console.log(chunck);
+			})
+		})
+		console.log(JSON.stringify(movies));
+		res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, movie: movies, path: '/tmp/films/Avengers: Infinity War/Avengers Infinity War (2018) [BluRay] [3D] [HSBS] [YTS.AM]/Avengers.Infinity.War.2018.3D.HSBS.BluRay.x264-[YTS.AM].mp4'})
+		
 		
 	})
 }
 else
-	res.render('search.ejs', {profile:req.session.profile, error: "Something went wrong"})
+	res.render('cinema.ejs', {profile:req.session.profile, movie: movies, error: "Something went wrong"})
