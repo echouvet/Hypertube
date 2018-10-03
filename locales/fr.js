@@ -68,6 +68,6 @@
 	"Wrong Password": "Mauvais mot de passe",
 	"Year :": "Année :",
 	"Runtime : ": "Durée :",
-	"Year : ": "Year : ",
+	"Year : ": "Année : ",
 	"Genres : ": "Genres : "
 }
