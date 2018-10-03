@@ -53,30 +53,35 @@ if (!empty(query) && query !== "undefined")
 		var movies = new Array();
 		var count = json.data.movie_count;
 		var i = 0;
-		while (json.data.movies[i])
+		if (json.data.movie_count != 0)
 		{
-			movies.push({
-				id: json.data.movies[i].id, 
-				title: json.data.movies[i].title, 
-				year: json.data.movies[i].year, 
-				rating: json.data.movies[i].rating,
-				genres: json.data.movies[i].genres,
-				synopsis: json.data.movies[i].synopsis,
-				language: json.data.movies[i].language,
-				cover: json.data.movies[i].large_cover_image,
-				background: json.data.movies[i].background_image,
-				runtime: json.data.movies[i].runtime,
-				torrents: json.data.movies[i].torrents
-			});
-			i++;
+			while (json.data.movies[i])
+			{
+				movies.push({
+					id: json.data.movies[i].id, 
+					title: json.data.movies[i].title, 
+					year: json.data.movies[i].year, 
+					rating: json.data.movies[i].rating,
+					genres: json.data.movies[i].genres,
+					synopsis: json.data.movies[i].synopsis,
+					language: json.data.movies[i].language,
+					cover: json.data.movies[i].large_cover_image,
+					background: json.data.movies[i].background_image,
+					runtime: json.data.movies[i].runtime,
+					torrents: json.data.movies[i].torrents
+				});
+				i++;
+			}
 		}
-		searchpiratebay(req.body.query, (piratemovies) => { 
+		
+
+		// searchpiratebay(req.body.query, (piratemovies) => { 
 			
-			movies = movies.concat(piratemovies)
-			count += piratemovies.length;
+		// 	movies = movies.concat(piratemovies)
+		// 	count += piratemovies.length;
 			
 			res.render('search.ejs', {profile:req.session.profile, movies:movies, count:count, q:query})
-		 });
+		 // });
 		
 	})
 }
