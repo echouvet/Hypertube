@@ -44,7 +44,7 @@ request.post({
                 req.session.profile.lastname = body.last_name
                 req.session.profile.img = body.image_url
                 req.session.profile.api = '2';
-                res.render('index.ejs', {profile:req.session.profile, success: req.i18n.__("Welcome ") + body.displayname + "!"})
+                res.redirect('/index')
             }
         })
     } 

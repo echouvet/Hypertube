@@ -27,6 +27,14 @@ body {
 	border-radius: 10px;
 	padding: 4px;
 }
+.divhov
+{
+	background-color: rgb(0,0,0,0.2);
+}
+.divhov:hover
+{
+	background-color: rgb(100,100,100,0.4);
+}
 
 .pic:hover .menu-pic
 {
@@ -42,6 +50,35 @@ body {
 	z-index: 2;
 	display: none;
 	border: 1px solid black;
+}
+.listfilm1
+{
+	margin:1vh 0.5vw 1vh 0.5vw; 
+	padding: 1px;
+	border-radius: 4px; 
+	display: inline-block; 
+	justify-content: center; 
+	border: 2px solid black; 
+	box-shadow: 1px 1px 5px; 
+	overflow-y: auto; 
+	max-height: 420px; 
+	vertical-align: top; 
+	background-color: black;
+}
+
+.listfilm2
+{
+	margin:1vh 0.5vw 1vh 0.5vw; 
+	padding: 1px;
+	border-radius: 4px; 
+	display: inline-block; 
+	justify-content: center; 
+	border: 2px solid black; 
+	box-shadow: 1px 1px 5px; 
+	overflow-y: auto; 
+	max-height: 300px; 
+	vertical-align: top; 
+	background-color: black;
 }
 
 li

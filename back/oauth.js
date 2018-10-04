@@ -39,7 +39,7 @@ var headers = {
                     req.session.profile.img = body.avatar_url;
                     req.session.profile.api = '3';
                     adduser(body)
-                    res.render('index.ejs', {profile:req.session.profile, success: req.i18n.__('Welcome ') + body.login + '!'})
+                    res.redirect('/index')
                 }
                 else
                     res.render('index.ejs', {error: response.statusCode + " : " + error2})

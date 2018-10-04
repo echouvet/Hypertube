@@ -28,9 +28,9 @@
 	"Login": "Pseudo",
 	"Firstname": "Prénom",
 	"Lastname": "Nom",
-	"Language": "Langage",
+	"Language": "Language",
 	"Picture": "Photo",
-	"Error!": "Erreur!",
+	"Error!": "Erreur !",
 	"Your email adress...": "Votre adresse email...",
 	"Your login...": "Votre pseudo...",
 	"Your password...": "Votre mot de passe...",
@@ -68,6 +68,9 @@
 	"Wrong Password": "Mauvais mot de passe",
 	"Year :": "Année :",
 	"Runtime : ": "Durée :",
-	"Year : ": "Year : ",
-	"Genres : ": "Genres : "
+	"Year : ": "Année : ",
+	"Genres : ": "Genres : ",
+	"1_capital_and_6_characters": "1_capital_et_6_caractères",
+	"Your current language is already fr": "Your current language is already fr",
+	"401 : invalid_grant": "401 : invalid_grant"
 }

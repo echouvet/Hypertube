@@ -14,7 +14,7 @@
   			<strong>Success !</strong> <%- __(success0) %>
 		</div>
 	<% } %>
-	<div class="container text-center border-radius" style="background-color: rgb(100,100,100,0.5); color:white;padding: 25px; margin-top:3em;">
+	<div class="container text-center border-radius divhov" style=" color:white;padding: 25px; margin-top:3em;">
 		<form action="login" method="post">
 			<div class="form-group row">
 	  			<label for="usr" class="col-2 col-form-label"><%= __("Login")%></label>
@@ -28,7 +28,7 @@
 	  				<input type="password" class="form-control text-center" id="pwd" name="pass" placeholder="<%= __("Your password...")%>">
 	  			</div>
 			</div>
-			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;"><%= __("Log In")%></button>
+			<button type="submit" class="btn button-dark bg-primary" style="font-weight:bold; text-decoration: none;"><%= __("Log In")%></button>
 		</form>
 		<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
 		<div class="alert alert-danger" style="margin-bottom: 0px;">
@@ -36,13 +36,14 @@
 		</div>
 		<% } %>
 	</div>
-	<div class="container text-center border-radius" style="background-color: rgb(100,100,100,0.5); color:white;padding: 15px; margin-top:3em;">
+	<button type="submit" class="btn button-dark bg-secondary" onclick="afficher_masquer('forgot');" style="margin-top:2em;"><i><%= __("Forgot your password ?")%></i></button>
+	<div class="col-6 offset-3 text-center border-radius divhov" id="forgot" style="color:white;padding: 15px; padding-top:0px; margin-top:0em; display: none;">
 		<form action="forgotpass" method="post">
 			<div class="form-group">
-	  			<label for="mail" class="col-form-label"><%= __("Forgot your password ?")%></label>
+	  			<label for="mail" class="col-form-label"></label>
 	  				<input type="email" class="form-control text-center" id="mail" name="email" placeholder="<%= __("Your email adress...")%>">
 	  		</div>
-			<button type="submit" class="btn btn-link" style="font-weight:bold; text-decoration: none;"><%= __("Reset my password")%></button>
+			<button type="submit" class="btn button-dark bg-primary" style="font-weight:bold; text-decoration: none;"><%= __("Reset my password")%></button>
 		</form>
 		<% if (typeof error2 !== 'undefined' && error2 && error2 !== 'none')  { %>
 		<div class="alert alert-danger" style="margin-bottom: 0px;">
@@ -55,6 +56,17 @@
 		</div>
 		<% } %>
 	</div>
+	<script>
+		function afficher_masquer(id)
+		{
+  			if (document.getElementById(id).style.display == 'none')
+    			document.getElementById(id).style.display = 'block';
+  			else
+  			{
+      			document.getElementById(id).style.display = 'none';
+  			}
+		}
+	</script>
 </body>
 <% include footer.ejs %>
 </html>
