@@ -72,17 +72,17 @@ if (!empty(query) && query !== "undefined")
 					runtime: json.data.movies[i].runtime,
 					torrents: json.data.movies[i].torrents
 				});
+				if (movies[i].id == id)
+				{
+					break;
+				}
 				i++;
 			}
-			searchpiratebay(req.body.query, (piratemovies) => { 
-				
-				movies = movies.concat(piratemovies)
-				count += piratemovies.length;
-				
-			});
+			console.log(movies[i]);
+			movies = movies[i];
 		}
-		var torrentURI = movies[0].torrents[0].url;
-		console.log(torrentURI)
+		var torrentURI = movies.torrents[0].url;
+		console.log(JSON.stringify(movies))
 		var i = 0;
 		function getQuality()
 		{
@@ -90,9 +90,9 @@ if (!empty(query) && query !== "undefined")
 			{
 				params = req.params.quality;
 				if (params) {
-					while (movies[0].torrents[i] && movies[0].torrents[i].quality != params)
+					while (movies.torrents[i] && movies.torrents[i].quality != params)
 						i++;
-					if (movies[0].torrents[i].quality == params)
+					if (movies.torrents[i].quality == params)
 						return (i);
 					else
 						i = 0;
@@ -104,13 +104,13 @@ if (!empty(query) && query !== "undefined")
 			return (i);
 		}
 		var i = getQuality(req.params.quality);
-		torrentURI = movies[0].torrents[i].url
-		console.log(movies[0].torrents)
+		torrentURI = movies.torrents[i].url
+		console.log(movies.torrents)
 		magnetLink(torrentURI, (err, link) => {
 			
 			if (err) throw err;
 			var magnet = link;
-			console.log(movies[0].torrents[i]);
+			console.log(movies.torrents[i]);
 			console.log(magnet)
 			const engine = torrentStream(magnet, {
 				tmp: '/tmp/hypertube/tmp/upload',
@@ -120,12 +120,12 @@ if (!empty(query) && query !== "undefined")
 					if ((file.name.substr(file.name.length - 3) == 'mkv' || file.name.substr(file.name.length - 3) == 'mp4' ||
 					file.name.substr(file.name.length - 3) == 'avi'))
 					{
-						con.query('SELECT path FROM movies WHERE hash = ?', [movies[0].torrents[i].hash], (err, rows) => {
+						con.query('SELECT path FROM movies WHERE hash = ?', [movies.torrents[i].hash], (err, rows) => {
 							if (err) throw err;
 							if (rows[0] == undefined)
 							{
 								var sql = 'INSERT INTO movies(hash, path) VALUES ?';
-								var values = [  [movies[0].torrents[i].hash, file.path]  ];
+								var values = [  [movies.torrents[i].hash, file.path]  ];
 								con.query(sql, [values], (err, result) => {
 									if (err) throw err;
 								})
@@ -140,19 +140,19 @@ if (!empty(query) && query !== "undefined")
 				console.log(chunck);
 			})
 		})
-		con.query('SELECT * FROM movies WHERE hash = ?', [movies[0].torrents[i].hash], (err, rows) => {
+		con.query('SELECT * FROM movies WHERE hash = ?', [movies.torrents[i].hash], (err, rows) => {
 			if (err) throw err;
 			if (rows[0] == undefined)
 			{
 				console.log("fdsfoisjfosij")
-				res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, movie: movies[0], path: '/tmp'})
+				res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, movie: movies, path: '/tmp'})
 				
 			}
 			else
 			{
 				path = '/tmp/films/'+rows[0].path;
 				console.log(path);
-				res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, movie: movies[0], path: path})
+				res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, movie: movies, path: path})
 			}
 		})
 	})
