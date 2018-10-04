@@ -82,29 +82,79 @@ if (!empty(query) && query !== "undefined")
 			});
 		}
 		var torrentURI = movies[0].torrents[0].url;
-
+		console.log(torrentURI)
+		var i = 0;
+		function getQuality()
+		{
+			if (req.params.quality)
+			{
+				params = req.params.quality;
+				if (params) {
+					while (movies[0].torrents[i] && movies[0].torrents[i].quality != params)
+						i++;
+					if (movies[0].torrents[i].quality == params)
+						return (i);
+					else
+						i = 0;
+				}
+				return (i)
+			}
+			else
+				i = 0;
+			return (i);
+		}
+		var i = getQuality(req.params.quality);
+		torrentURI = movies[0].torrents[i].url
+		console.log(movies[0].torrents)
 		magnetLink(torrentURI, (err, link) => {
+			
 			if (err) throw err;
 			var magnet = link;
-			console.log(link);
-			magnet = link+movies[0].torrents[0].hash
+			console.log(movies[0].torrents[i]);
+			console.log(magnet)
 			const engine = torrentStream(magnet, {
 				tmp: '/tmp/hypertube/tmp/upload',
-				path: '/tmp/hypertube/tmp/films/'+movies[0].title});
+				path: '/tmp/hypertube/tmp/films/'});
 			engine.on('ready', () => {
-				console.log(engine.files)
 				engine.files.forEach(function(file) {
-					var stream = file.createReadStream();
+					if ((file.name.substr(file.name.length - 3) == 'mkv' || file.name.substr(file.name.length - 3) == 'mp4' ||
+					file.name.substr(file.name.length - 3) == 'avi'))
+					{
+						con.query('SELECT path FROM movies WHERE hash = ?', [movies[0].torrents[i].hash], (err, rows) => {
+							if (err) throw err;
+							if (rows[0] == undefined)
+							{
+								var sql = 'INSERT INTO movies(hash, path) VALUES ?';
+								var values = [  [movies[0].torrents[i].hash, file.path]  ];
+								con.query(sql, [values], (err, result) => {
+									if (err) throw err;
+								})
+							}
+							
+						})
+						var stream = file.createReadStream();
+					}
 				})
 			})
 			engine.on('download', (chunck) => {
 				console.log(chunck);
 			})
 		})
-		console.log(JSON.stringify(movies));
-		res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, movie: movies, path: '/tmp/films/Avengers: Infinity War/Avengers Infinity War (2018) [BluRay] [3D] [HSBS] [YTS.AM]/Avengers.Infinity.War.2018.3D.HSBS.BluRay.x264-[YTS.AM].mp4'})
-		
-		
+		con.query('SELECT * FROM movies WHERE hash = ?', [movies[0].torrents[i].hash], (err, rows) => {
+			if (err) throw err;
+			if (rows[0] == undefined)
+			{
+				console.log("fdsfoisjfosij")
+				res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, movie: movies[0], path: '/tmp'})
+				
+			}
+			else
+			{
+				path = '/tmp/films/'+rows[0].path;
+				console.log(path);
+				res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, movie: movies[0], path: path})
+			}
+		})
 	})
 }
 else
