@@ -20,7 +20,7 @@
 		</div>
 		<div class="container-fluid" style="background-color: rgb(10,10,10,0.4); color:white; padding: 0px; margin:auto; margin-top:1em; justify-content: center; text-align: center;">
 			<% var i = 0; while (movies[i]) { var title = movies[i].title.toString().replace("/",'_'); %>
-				<a href="/search/<%- movies[i].identifier + '/' + title %>" style="color:#e9ecef; text-decoration: none;" >
+				<a href="/search/<%- movies[i].id + '/' + title %>" style="color:#e9ecef; text-decoration: none;" >
 					<div class="col-2 text-center listfilm1" id="<%- i %>">
 						<img src=<%- movies[i].cover %> alt="torrent miniature" class="col-12" style="padding:0"></a>
 						<div style="background-color: #e9ecef; padding: 2px; color:black;">
