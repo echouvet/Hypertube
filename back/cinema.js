@@ -74,12 +74,12 @@ if (!empty(query) && query !== "undefined")
 				});
 				if (movies[i].id == id)
 				{
+					movies = movies[i];
 					break;
 				}
 				i++;
 			}
 			console.log(movies[i]);
-			movies = movies[i];
 		}
 		var torrentURI = movies.torrents[0].url;
 		console.log(JSON.stringify(movies))

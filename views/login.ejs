@@ -6,7 +6,7 @@
 <body>
 	<% if (typeof error0 !== 'undefined' && error0 && error0 !== 'none')  { %>
 		<div class="alert alert-danger col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
-  			<strong>Error !</strong> <%- __(error0) + ' ' %><a href="register" class="btn btn-link" style="padding:0px;">Create an account</a>
+  			<strong>Error !</strong> <%- __(error0) + ' ' %><a href="/register" class="btn btn-link" style="padding:0px;">Create an account</a>
 		</div>
 	<% } %>
 	<% if (typeof success0 !== 'undefined' && success0 && success0 !== 'none')  { %>
@@ -15,7 +15,7 @@
 		</div>
 	<% } %>
 	<div class="container text-center border-radius divhov" style=" color:white;padding: 25px; margin-top:3em;">
-		<form action="login" method="post">
+		<form action="/login" method="post">
 			<div class="form-group row">
 	  			<label for="usr" class="col-2 col-form-label"><%= __("Login")%></label>
 	  			<div class="col-9 offset-1">

@@ -7,7 +7,7 @@
 	
 	<div class="alert alert-light col-6 offset-3 text-center" style="margin-top: 1rem;">Your are looking "<%- path %>""<b style="color:black;"><i><%- title %></i></b>"</div>
 	<div class="text-center">
-	<video id="player" controls autoplay name="media" style="width: 90vw;"><source src="<%-path%>" type="video/mp4"></video>
+	<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;"><source src="<%-path%>" type="video/mp4"></video>
 	</div>
 	<div>
 		<% movie.torrents.forEach(function(element) { %>
