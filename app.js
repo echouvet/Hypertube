@@ -20,6 +20,10 @@ var express = require('express')
     Promise = require('promise');
     i18n = require('i18n-2');
     PirateBay = require('thepiratebay');
+    parseTorrent = require('parse-torrent');
+    torrentStream = require('torrent-stream');
+    magnetLink = require('magnet-link');
+    reqAjax = require('ajax-request');
 
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
@@ -113,9 +117,12 @@ app.use((req, res, next) => {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
 })
 .get('/search/:id/:title', (req, res) =>  {
-    var id = req.params.id;
-    var torrentURI = 'https://archive.org/download/' + id + '/' + id + '_archive.torrent'
-    res.render('cinema.ejs', {profile: req.session.profile, path: file.path, title:req.params.title})
+    eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
+    // res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, link: torrentURI})
+})
+.get('/search/:id/:title/:quality', (req, res) =>  {
+    eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
+    // res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, link: torrentURI})
 })
 .all('/my_profile', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/my_profile.js")+'')
