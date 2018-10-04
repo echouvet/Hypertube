@@ -7,7 +7,7 @@
 	<div class="container text-center" style="margin-top: 1rem;">
 		<img style="border-radius:200px;" src=<%- profile.img %> width="250" height="250">
 	</div>
-	<div class="container text-center" style="background-color: rgb(100,100,100,0.5); color:white; padding: 25px; margin-top:1em;">
+	<div class="container text-center divhov" style="color:white; padding: 25px; margin-top:1em;">
 		<form action="my_profile" method="post" enctype="multipart/form-data">
 	  		<div class="form-group row">
 					<label for="first" class="col-2 col-form-label"><%= __("Firstname:") %></label>
@@ -36,7 +36,7 @@
 			<div class="form-group row">
 					<label for="pass" class="col-2 col-form-label"><%= __("Password:") %></label>
 					<div class="col-8 offset-2">
-					<input class="form-control text-center" type="password" name="pass" id="pass" placeholder="<%= __("New Password:") %>">
+					<input class="form-control text-center" data-toggle="tooltip" title=<%= __("1_capital_and_6_characters") %> type="password" name="pass" id="pass" placeholder="<%= __("New Password:") %>">
 					</div>
 			</div>
 			<div class="form-group row">
@@ -59,23 +59,24 @@
 			<div class="form-group row">
 				<label for="imgprofile" class="col-2 col-form-label"><%= __("Picture:") %></label>
 				<div class="col-8 offset-2">
-					<input type="file" class="custom-file-input" id="imgprofile" name="pic" accept="image/*">
+					<input type="file" class="custom-file-input" data-toggle="tooltip" title="png/jpg/jpeg" id="imgprofile" name="pic" accept="image/*">
 					<label class="custom-file-label" for="imgprofile" style="z-index: 0; "><%= __("Choose file to update :") %></label>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-link" style="font-weight:bold; font-size: 20px; text-decoration: none;"><%= __("Update my profile !") %></button>
+			<button type="submit" class="btn button-dark bg-primary" style="font-weight:bold; font-size: 20px; text-decoration: none;"><%= __("Update my profile !") %></button>
 		</form>
 	<% if (typeof success !== 'undefined' && success && success !== 'none')  { %>
-		<div class="alert alert-success col-10 offset-1 text-center" style="">
+		<div class="alert alert-success col-10 offset-1 text-center" style="margin-top:1em;">
   			<strong><%= __("Success!") %></strong> <%- __(success) %>
 		</div>
 	<% } %>
 	<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
-		<div class="alert alert-danger col-10 offset-1 text-center" style="">
+		<div class="alert alert-danger col-10 offset-1 text-center" style="margin-top:1em;">
   			<strong><%= __("Error!") %></strong> <%- __(error) %>
 		</div>
 	<% } %>
 	</div>
+
 <script>
     $("input[type=file]").change(function () {
   var fieldVal = $(this).val();
@@ -83,6 +84,9 @@
   if (fieldVal != undefined || fieldVal != "") {
     $(this).next(".custom-file-label").text(fieldVal);
   }
+});
+    $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
 });
 </script>
 </body>

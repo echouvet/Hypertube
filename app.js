@@ -127,7 +127,7 @@ app.use((req, res, next) => {
     })
 })
 .get('/index', (req, res) =>  {
-    res.render('index.ejs', {profile: req.session.profile})
+    eval(fs.readFileSync(__dirname + "/back/topfilms.js")+'')
 })
 .get('*', (req,res) => {
     res.redirect('/')

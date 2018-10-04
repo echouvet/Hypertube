@@ -4,7 +4,7 @@
 	<% include header.ejs %>
 </head>
 <body>
-	<div class="container text-center" style="background-color: rgb(100,100,100,0.5); color:white; padding: 25px; margin-top:3rem;">
+	<div class="container text-center divhov" style="color:white; padding: 25px; margin-top:3rem;">
 		<form action="register" method="post" enctype="multipart/form-data">
 	  		<div class="form-group row">
   				<label for="first" class="col-2 col-form-label"><%= __("Firstname") %></label>
@@ -33,7 +33,7 @@
 			<div class="form-group row">
   				<label for="pass" class="col-2 col-form-label"><%= __("Password") %></label>
   				<div class="col-8 offset-2">
-    				<input class="form-control text-center" type="password" name="pass" id="pass" placeholder="Password">
+    				<input class="form-control text-center" data-toggle="tooltip" title=<%= __("1_capital_and_6_characters") %> type="password" name="pass" id="pass" placeholder="Password">
   				</div>
 			</div>
 			<div class="form-group row">
@@ -55,11 +55,11 @@
   			<div class="form-group row">
   				<label for="imgprofile" class="col-2 col-form-label" style=""><%= __("Picture") %></label>
   				<div class="col-8 offset-2">
-    				<input type="file" class="custom-file-input" id="imgprofile" name="pic" accept="image/*">
+    				<input type="file" class="custom-file-input" data-toggle="tooltip" title="png/jpg/jpeg" id="imgprofile" name="pic" accept="image/*">
     				<label class="custom-file-label" for="imgprofile" style="z-index: 0;">Choose file...</label>
     			</div>
   			</div>
-			<button type="submit" class="btn btn-link" style="font-weight:bold; font-size: 20px; text-decoration: none;"><%= __("Sign Up Now !") %></button>
+			<button type="submit" class="btn button-dark bg-primary" style="font-weight:bold; font-size: 20px; text-decoration: none;"><%= __("Sign Up Now !") %></button>
 			
 		</form>
 		<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
@@ -75,6 +75,9 @@
   if (fieldVal != undefined || fieldVal != "") {
     $(this).next(".custom-file-label").text(fieldVal);
   }
+});
+    $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
 });
 </script>
 </body>
