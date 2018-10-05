@@ -71,6 +71,13 @@
 	"Year : ": "Année : ",
 	"Genres : ": "Genres : ",
 	"1_capital_and_6_characters": "1_capital_et_6_caractères",
-	"Your current language is already fr": "Your current language is already fr",
-	"401 : invalid_grant": "401 : invalid_grant"
+	"Your current language is already fr": "Votre language est déjà fr",
+	"401 : invalid_grant": "401 : invalid_grant",
+	"Downloads": "Téléchargements",
+	"Likes": "Likes",
+	"Year": "Année",
+	"Date added": "Date d'ajout",
+	"Rating": "Note",
+	"Peers": "Peers",
+	"Seeds": "Seeds"
 }

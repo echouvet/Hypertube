@@ -67,5 +67,13 @@
 	"1_capital_and_6_characters": "1_capital_and_6_characters",
 	"Your current language is already en": "Your current language is already en",
 	"No movies found. ": "No movies found. ",
-	"401 : null": "401 : null"
+	"401 : null": "401 : null",
+	"Downloads": "Downloads",
+	"Likes": "Likes",
+	"Year": "Year",
+	"Date added": "Date added",
+	"Rating=": "Rating=",
+	"Peers": "Peers",
+	"Seeds": "Seeds",
+	"Rating": "Rating"
 }

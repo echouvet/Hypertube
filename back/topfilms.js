@@ -1,5 +1,5 @@
 
-	fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating&limit=20')
+	fetch('https://yts.ag/api/v2/list_movies.json?sort_by=rating&limit=20')
 	.catch(error => console.log(error))
 	.then(res => res.json())
 	.then((json) => {
@@ -17,7 +17,7 @@
 					genres: json.data.movies[i].genres,
 					synopsis: json.data.movies[i].synopsis,
 					language: json.data.movies[i].language,
-					cover: json.data.movies[i].large_cover_image,
+					cover: json.data.movies[i].medium_cover_image,
 					background: json.data.movies[i].background_image,
 					runtime: json.data.movies[i].runtime,
 					torrents: json.data.movies[i].torrents

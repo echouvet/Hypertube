@@ -31,21 +31,31 @@ async function searchpiratebay(query, callback) {
 
 if (!empty(query) && query !== "undefined")
 {
-	if (req.body.sort == "d1")
-		var sorts = "downloads%20desc";
-	else if (req.body.sort == "d2")
-		var sorts = "downloads%20asc";
-	else if (req.body.sort == "r1")
-		var sorts = "avg_rating%20desc";
-	else if (req.body.sort == "r2")
-		var sorts = "avg_rating%20asc";
-	else if (req.body.sort == "date1")
-		var sorts = "date%20desc";
-	else if (req.body.sort == "date2")
-		var sorts = "date%20asc";
-	else
-		var sorts = "title%20desc";
-	fetch('https://yts.am/api/v2/list_movies.json?query_term=' + query)
+	switch (req.body.sort) {
+    case '0':
+        var sort = "download_count";
+        break;
+    case '1':
+        var sort = "like_count";
+        break;
+    case '2':
+        var sort = "year";
+        break;
+    case '3':
+        var sort = "date_added";
+        break;
+    case '4':
+        var sort = "rating";
+        break;
+    case '5':
+        var sort = "peers";
+        break;
+    case '6':
+        var sort = "seeds";
+    default:
+    	var sort = "title";
+	}
+	fetch('https://yts.ag/api/v2/list_movies.json?query_term=' + query + '&sort_by=' + sort)
 	.catch(error => console.log(error))
 	.then(res => res.json())
 	.then((json) => {
@@ -64,7 +74,7 @@ if (!empty(query) && query !== "undefined")
 					genres: json.data.movies[i].genres,
 					synopsis: json.data.movies[i].synopsis,
 					language: json.data.movies[i].language,
-					cover: json.data.movies[i].large_cover_image,
+					cover: json.data.movies[i].medium_cover_image,
 					background: json.data.movies[i].background_image,
 					runtime: json.data.movies[i].runtime,
 					torrents: json.data.movies[i].torrents

@@ -37,14 +37,15 @@
             <button class="btn btn-success adv-search" type="submit"><%= __("Search")  %>
             <div class="adv-search col-12" style="position:absolute;height:20px;width: 80px;"></div>
     	   <div class="search col-12" style="position:absolute; top:45px; width: 200px;">
-            <div>
+            <div style="text-align: left;">
                 <label><%= __("Sort by (default:Title)") %></label><hr style="margin:2px 2px 2px 2px;" />
-                <label for="downloads_desc"><%= __("Downloads desc") %><input type="radio" id="downloads_desc" name="sort" value="d1" style="margin-left:15px;"></label>
-                <label for="downloads_asc"><%= __("Downloads asc") %><input type="radio" id="downloads_asc" name="sort" value="d2" style="margin-left:15px;"></label>
-                <label for="rating_desc"><%= __("Rating desc") %><input type="radio" id="rating_desc" value="r1" name="sort" style="margin-left:15px;"></label>
-                <label for="rating_asc"><%= __("Rating asc") %><input type="radio" id="rating_asc" value="r2" name="sort" style="margin-left:15px;"></label>
-                <label for="date_desc"><%= __("Date desc") %><input type="radio" id="date_desc" value="date1" name="sort" style="margin-left:15px;"></label>
-                <label for="date_asc"><%= __("Date asc") %><input type="radio" id="date_asc" value="date2" name="sort" style="margin-left:15px;"></label>
+                <label for="downloads"><%= __("Downloads") %><input type="radio" id="downloads" name="sort" value="0" style="margin-left:15px;"></label>
+                <label for="likes"><%= __("Likes") %><input type="radio" id="likes" name="sort" value="1" style="margin-left:15px;"></label>
+                <label for="year"><%= __("Year") %><input type="radio" id="year" name="sort" value="2" style="margin-left:15px;"></label>
+                <label for="date"><%= __("Date added") %><input type="radio" id="date" value="3" name="sort" style="margin-left:15px;"></label>
+                <label for="rating"><%= __("Rating") %><input type="radio" id="rating" value="4" name="sort" style="margin-left:15px;"></label>
+                <label for="peers"><%= __("Peers") %><input type="radio" id="peers" value="5" name="sort" style="margin-left:15px;"></label>
+                <label for="seeds"><%= __("Seeds") %><input type="radio" id="seeds" value="6" name="sort" style="margin-left:15px;"></label>
             </div>
         </div></button>
         </form>
