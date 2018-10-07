@@ -15,10 +15,10 @@
 		</div>
 		<div class="container-fluid" style="background-color: rgb(10,10,10,0.4); color:white; padding: 0px; margin:auto; margin-top:1em; justify-content: center; text-align: center;">
 			<% var i = 0; while (movies[i]) { var title = movies[i].title.toString().replace("/",'_'); %>
-				<a href="/search/<%- movies[i].id + '/' + title %>" style="color:#e9ecef; text-decoration: none;" >
+				<a onclick="thismovie(<%-i%>)" style="cursor:pointer; color:#e9ecef; text-decoration: none;" >
 					<div class="col-2 text-center listfilm2" id="<%- i %>">
 						<h5><i><%- movies[i].title %></i></h5>
-						<img src=<%- movies[i].cover %> alt="torrent miniature" class="col-12" style="padding:0"></a>
+						<img src=<%- movies[i].cover %> alt="torrent miniature" class="col-12" style="padding:0"> 
 						<div style="background-color: #e9ecef; padding: 2px; color:black;">
 							<% if (movies[i].rating) { %>
 							<p style="margin-bottom: 3px;"><i><%= __("Rating : ") %></i><b><%- movies[i].rating %></b></p> <% } %>
@@ -40,7 +40,7 @@
 							<p style="margin-bottom: 5px;"><i><b><%= __("Description : ") %></b></i></p>
 							<div><%- movies[i].synopsis %></div>
 						</div>
-				</div>
+					</div></a>
 			<% i++; } %>
 		</div>
 	<% } else { %>
@@ -53,3 +53,15 @@
 <% include footer.ejs %>
 
 </html>
+<script src="back/resources/jquery-3.3.1.min.js"></script>
+<script>
+function thismovie(i)
+{
+	var movies = <%- JSON.stringify(movies) %>
+	$.ajax({
+	    url: "/cinema",
+	    type: "POST",
+	    data: {movie : movies[i]}
+	});
+}
+</script>

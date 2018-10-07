@@ -116,13 +116,11 @@ app.use((req, res, next) => {
 .all('/search', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
 })
-.get('/search/:id/:title', (req, res) =>  {
+.post('/cinema', (req, res) =>  {
     eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
-    // res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, link: torrentURI})
 })
-.get('/search/:id/:title/:quality', (req, res) =>  {
+.get('/cinema/:quality', (req, res) =>  {
     eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
-    // res.render('cinema.ejs', {profile: req.session.profile, title:req.params.title, link: torrentURI})
 })
 .all('/my_profile', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/my_profile.js")+'')
@@ -134,7 +132,8 @@ app.use((req, res, next) => {
     })
 })
 .get('/index', (req, res) =>  {
-    eval(fs.readFileSync(__dirname + "/back/topfilms.js")+'')
+    eval(fs.readFileSync(__dirname + "/back/search.js")+'')
+   // eval(fs.readFileSync(__dirname + "/back/topfilms.js")+'')
 })
 .get('*', (req,res) => {
     res.redirect('/')

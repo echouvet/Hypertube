@@ -75,5 +75,6 @@
 	"Rating=": "Rating=",
 	"Peers": "Peers",
 	"Seeds": "Seeds",
-	"Rating": "Rating"
+	"Rating": "Rating",
+	"401 : invalid_grant": "401 : invalid_grant"
 }

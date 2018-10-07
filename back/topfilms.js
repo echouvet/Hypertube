@@ -1,5 +1,5 @@
 
-	fetch('https://yts.ag/api/v2/list_movies.json?sort_by=rating&limit=20')
+	fetch('https://yts.re/api/v2/list_movies.json?sort_by=rating&limit=20')
 	.catch(error => console.log(error))
 	.then(res => res.json())
 	.then((json) => {

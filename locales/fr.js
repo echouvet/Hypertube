@@ -79,5 +79,6 @@
 	"Date added": "Date d'ajout",
 	"Rating": "Note",
 	"Peers": "Peers",
-	"Seeds": "Seeds"
+	"Seeds": "Seeds",
+	"No movies found. ": "No movies found. "
 }
