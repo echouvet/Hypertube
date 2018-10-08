@@ -133,8 +133,7 @@ app.use((req, res, next) => {
 })
 .get('/index', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
-   // eval(fs.readFileSync(__dirname + "/back/topfilms.js")+'')
 })
 .get('*', (req,res) => {
-    res.redirect('/')
+    res.render('error.ejs', {profile: req.session.profile})
 })

@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% include header.ejs %>
+</head>
+<body>
+	<div class="alert alert-danger col-4 offset-4 text-center" style="margin-top:2em;"><%= __("Error : ") %>
+		<b><% if (typeof msg != "undefined") { %><%= msg %><% } else { %>Page not found <% } %></b></div>
+</body>

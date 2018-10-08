@@ -35,6 +35,18 @@ body {
 {
 	background-color: rgb(100,100,100,0.4);
 }
+.hid
+{
+	display: none;
+}
+.listfilm1:hover .hid
+{
+		display: block;
+}
+.hid:hover .hidpic
+{
+	display: none;
+}
 
 .pic:hover .menu-pic
 {
@@ -61,7 +73,7 @@ body {
 	border: 2px solid black; 
 	box-shadow: 1px 1px 5px; 
 	overflow-y: auto; 
-	max-height: 420px; 
+	max-height: 10vw; 
 	vertical-align: top; 
 	background-color: black;
 }

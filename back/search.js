@@ -85,7 +85,7 @@ else
     default:
     	var sort = "title";
 	}
-	fetch('https://yts.ag/api/v2/list_movies.json?query_term=' + query + '&sort_by=' + sort)
+	fetch('https://yts.am/api/v2/list_movies.json?query_term=' + query + '&sort_by=' + sort)
 	.catch(error => console.log(error))
 	.then(res => res.json())
 	.then((json) => {

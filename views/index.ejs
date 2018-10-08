@@ -23,26 +23,28 @@
 				<a href="/search/<%- movies[i].id + '/' + title %>" style="color:#e9ecef; text-decoration: none;" >
 					<div class="col-2 text-center listfilm1" id="<%- i %>">
 						<img src=<%- movies[i].cover %> alt="torrent miniature" class="col-12" style="padding:0"></a>
-						<div style="background-color: #e9ecef; padding: 2px; color:black;">
-							<% if (movies[i].rating) { %>
-							<p style="margin-bottom: 3px;"><i><%= __("Rating : ") %></i><b><%- movies[i].rating %></b></p> <% } %>
-							<% if (movies[i].language) { %>
-							<p style="margin-bottom: 3px;"><i><%= __("Language : ") %> </i><b><%- movies[i].language %></b></p> <% } %>
-							<% if (movies[i].year) { %>
-							<p style="margin-bottom: 3px;"><i><%= __("Year : ") %></i><b><%- movies[i].year %></b></p> <% } %>
-							<% if (movies[i].genres) { %>
-							<p style="margin-bottom: 3px;"><i><%= __("Genres : ") %> </i><b>
-								<% var j = 0; while (movies[i].genres[j]) {  if (movies[i].genres[j+1]) { %>
-								<%- movies[i].genres[j] + ', ' %><% } else { %><%- movies[i].genres[j] %><% } j++; } %></b></p>
-							<% } %>
-							<% if (movies[i].runtime) { %>
-							<p style="margin-bottom: 3px;"><i><%= __("Runtime : ") %> </i><b><%- movies[i].runtime + ' min' %></b></p><% } %>
-							<% if (movies[i].downloads) { %>
-							<p style="margin-bottom: 3px;"><i><%= __("Downloads : ") %> </i><b><%- movies[i].downloads %></b></p><% } %>
-						</div>
-						<div style="background-color: rgb(26, 26, 26); padding: 5px;">
-							<p style="margin-bottom: 5px;"><i><b><%= __("Description : ") %></b></i></p>
-							<div><%- movies[i].synopsis %></div>
+						<div class="hid">
+							<div style="background-color: #e9ecef; padding: 2px; color:black;">
+								<% if (movies[i].rating) { %>
+								<p style="margin-bottom: 3px;"><i><%= __("Rating : ") %></i><b><%- movies[i].rating %></b></p> <% } %>
+								<% if (movies[i].language) { %>
+								<p style="margin-bottom: 3px;"><i><%= __("Language : ") %> </i><b><%- movies[i].language %></b></p> <% } %>
+								<% if (movies[i].year) { %>
+								<p style="margin-bottom: 3px;"><i><%= __("Year : ") %></i><b><%- movies[i].year %></b></p> <% } %>
+								<% if (movies[i].genres) { %>
+								<p style="margin-bottom: 3px;"><i><%= __("Genres : ") %> </i><b>
+									<% var j = 0; while (movies[i].genres[j]) {  if (movies[i].genres[j+1]) { %>
+									<%- movies[i].genres[j] + ', ' %><% } else { %><%- movies[i].genres[j] %><% } j++; } %></b></p>
+								<% } %>
+								<% if (movies[i].runtime) { %>
+								<p style="margin-bottom: 3px;"><i><%= __("Runtime : ") %> </i><b><%- movies[i].runtime + ' min' %></b></p><% } %>
+								<% if (movies[i].downloads) { %>
+								<p style="margin-bottom: 3px;"><i><%= __("Downloads : ") %> </i><b><%- movies[i].downloads %></b></p><% } %>
+							</div>
+							<div style="background-color: rgb(26, 26, 26); padding: 5px;">
+								<p style="margin-bottom: 5px;"><i><b><%= __("Description : ") %></b></i></p>
+								<div><%- movies[i].synopsis %></div>
+							</div>
 						</div>
 				</div>
 			<% i++; } %>
