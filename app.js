@@ -86,6 +86,9 @@ app.use((req, res, next) => {
     else
         res.redirect('/index')
 })
+.get('/error/:msg', (req,res) => {
+    res.render('error.ejs', {msg: req.param.msg})
+})
 .all('/login', (req,res) => {
     eval(fs.readFileSync(__dirname + "/back/login.js")+'')
 })
@@ -135,5 +138,5 @@ app.use((req, res, next) => {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
 })
 .get('*', (req,res) => {
-    res.render('error.ejs', {profile: req.session.profile})
+    res.redirect('/')    
 })
