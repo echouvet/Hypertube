@@ -73,7 +73,7 @@ body {
 	border: 2px solid black; 
 	box-shadow: 1px 1px 5px; 
 	overflow-y: auto; 
-	max-height: 10vw; 
+	max-height: 25vw; 
 	vertical-align: top; 
 	background-color: black;
 }
@@ -88,7 +88,7 @@ body {
 	border: 2px solid black; 
 	box-shadow: 1px 1px 5px; 
 	overflow-y: auto; 
-	max-height: 300px; 
+	max-height: 25vw; 
 	vertical-align: top; 
 	background-color: black;
 }

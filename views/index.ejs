@@ -20,9 +20,10 @@
 		</div>
 		<div class="container-fluid" style="background-color: rgb(10,10,10,0.4); color:white; padding: 0px; margin:auto; margin-top:1em; justify-content: center; text-align: center;">
 			<% var i = 0; while (movies[i]) { var title = movies[i].title.toString().replace("/",'_'); %>
-				<a href="/search/<%- movies[i].id + '/' + title %>" style="color:#e9ecef; text-decoration: none;" >
+				<a onclick="thismovie(<%-i%>)" style="cursor:pointer; color:#e9ecef; text-decoration: none;" >
 					<div class="col-2 text-center listfilm1" id="<%- i %>">
 						<img src=<%- movies[i].cover %> alt="torrent miniature" class="col-12" style="padding:0"></a>
+						<h5 style="padding-top:4px;"><i><%- movies[i].title %></i></h5>
 						<div class="hid">
 							<div style="background-color: #e9ecef; padding: 2px; color:black;">
 								<% if (movies[i].rating) { %>
@@ -50,6 +51,18 @@
 			<% i++; } %>
 		</div>
 	<% } %>
+<script src="back/resources/jquery-3.3.1.min.js"></script>
+<script>
+function thismovie(i)
+{
+	var movies = <%- JSON.stringify(movies) %>
+	$.ajax({
+	    url: "/cinema",
+	    type: "POST",
+	    data: {movie : movies[i]}
+	});
+}
+</script>
 </body>
 
 <% include footer.ejs %>

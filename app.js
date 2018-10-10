@@ -24,6 +24,8 @@ var express = require('express')
     torrentStream = require('torrent-stream');
     magnetLink = require('magnet-link');
     reqAjax = require('ajax-request');
+    archive = require('archive.org');
+
 
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),

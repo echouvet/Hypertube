@@ -80,5 +80,7 @@
 	"Rating": "Note",
 	"Peers": "Peers",
 	"Seeds": "Seeds",
-	"No movies found. ": "No movies found. "
+	"No movies found. ": "No movies found. ",
+	"Author : ":"Auteur : ",
+	"Search on ": "Chercher sur "
 }

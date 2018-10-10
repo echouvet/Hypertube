@@ -3,40 +3,41 @@
 <title>Hypertube</title>
 <div class="page-header text-center">
     <div class="container-fluid" style="padding: 0px;">
-    	<div class="jumbotron" style="margin-bottom: 0px; padding: 1rem;">
+        <div class="jumbotron" style="margin-bottom: 0px; padding: 1rem;">
             <% if (typeof profile != 'undefined') { %>
                 <div class="col-10">
-        		  <a href="/" style="text-decoration: none; color:black;"><h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1></a>
-        		  <p><%= __("Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !") %></p>
+                  <a href="/" style="text-decoration: none; color:black;"><h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1></a>
+                  <p><%= __("Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !") %></p>
                 </div>
             <% } else { %>
                   <a href="/" style="text-decoration: none; color:black;"><h1 style="font-weight: bold; font-size: 70px;">Hypertube !</h1></a>
                   <p><%= __("Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !") %> </p>
             <% } %>
-      	</div>
-    	<% if (typeof profile != 'undefined') { %>
-    		<div class="pic">
-    			<div class="pic" style="position:absolute; top:0.5rem; right: 10px; border-radius: 100px; width: 230px; height: 210px; z-index: 4;"></div>
-    		<a href="/profile"><img src=<%- profile.img %> width="200" height="200" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px;z-index: 3;"></a>
+        </div>
+        <% if (typeof profile != 'undefined') { %>
+            <div class="pic">
+                <div class="pic" style="position:absolute; top:0.5rem; right: 10px; border-radius: 100px; width: 230px; height: 210px; z-index: 4;"></div>
+            <a href="/profile"><img src=<%- profile.img %> width="200" height="200" style="position:absolute; top:0.5rem; right: 20px; border-radius: 100px;z-index: 3;"></a>
 
 
 
-    			<div class="menu-pic bg-dark" style="position: absolute;top:218px; right: 33px;blue; width: 180px; padding: 5px; padding-top:11px; padding-bottom:11px;">
-    				<li><a class="menu-deroulant" href="/my_profile" style="text-decoration: none; color:white;"><%= __("My profile") %></a></li><hr/>
-    				<li><a class="menu-deroulant" href="/other_profiles" style="text-decoration: none; color:white;"><%= __("Other profiles") %></a></li><hr/>
-    				<li><a class="menu-deroulant" href="/logout" style="text-decoration: none; color:white;"><%= __("Logout") %></a></li>
-    			</div>
-    		</div>
+                <div class="menu-pic bg-dark" style="position: absolute;top:218px; right: 33px;blue; width: 180px; padding: 5px; padding-top:11px; padding-bottom:11px;">
+                    <li><a class="menu-deroulant" href="/my_profile" style="text-decoration: none; color:white;"><%= __("My profile") %></a></li><hr/>
+                    <li><a class="menu-deroulant" href="/other_profiles" style="text-decoration: none; color:white;"><%= __("Other profiles") %></a></li><hr/>
+                    <li><a class="menu-deroulant" href="/logout" style="text-decoration: none; color:white;"><%= __("Logout") %></a></li>
+                </div>
+            </div>
     </div>
 </div>
 <nav class="navbar bg-dark">
     <div class="col-12" style="display: inline-flex;">
-    	<form class="form-inline" action="/search" method="post">
-    	    <input class="form-control mr-2" type="text" placeholder="<%= __("Search..")  %>" name="query">
-    	    
-            <button class="btn btn-success adv-search" type="submit"><%= __("Search")  %>
-            <div class="adv-search col-12" style="position:absolute;height:20px;width: 80px;"></div>
-    	   <div class="search col-12" style="position:absolute; top:45px; width: 200px;">
+        <form class="form-inline" action="/search" method="post">
+            <input class="form-control mr-2" type="text" placeholder="<%= __("Search..")  %>" name="query">
+            <button class="btn btn-dark adv-search" type="submit" value="tpb" name="srch"><%= __("Search on ")%>ThePirateBays</button>
+            <button class="btn btn-dark adv-search" type="submit" value="arc" name="srch"><%= __("Search on ")%>archive.org</button>
+            <button class="btn btn-dark adv-search" type="submit" value="yts" name="srch"><%= __("Search on ")%>YTS
+            <div class="adv-search col-12" style="position:absolute;height:20px;width: 150px;"></div>
+           <div class="search col-12" style="position:absolute; top:45px; width: 200px;">
             <div style="text-align: left;">
                 <label><%= __("Sort by (default:Title)") %></label><hr style="margin:2px 2px 2px 2px;" />
                 <label for="downloads"><%= __("Downloads") %><input type="radio" id="downloads" name="sort" value="0" style="margin-left:15px;"></label>
@@ -52,7 +53,7 @@
        
     </div>
 </nav>
-  		<% } else { %>
+        <% } else { %>
         <nav class="navbar bg-dark">
     <div class="col-12" style="display: inline-flex;">
         <div>

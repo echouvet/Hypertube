@@ -2,6 +2,7 @@ function render(movies, query)
 {
 	res.render('search.ejs', {profile:req.session.profile, movies:movies, count:movies.length, q:query})
 }
+
 function	mapyts(data){
 	var movies = new Array();
 	if (data.movie_count != 0)
@@ -27,6 +28,7 @@ function	mapyts(data){
 	}
 	return (movies)
 }
+
 function yts(query){
 	var ytsquery = encodeURI(query)
 	if (empty(query) || query === "undefined") {
@@ -35,7 +37,7 @@ function yts(query){
 		.then(res => res.json())
 		.then((json) => {
 			var movies = mapyts(json.data)
-	    	render(movies, query)
+	    	res.render('index.ejs', {profile:req.session.profile, movies:movies})
 		})
 	}
 	else
@@ -73,9 +75,10 @@ function yts(query){
 		})
 	}
 }
+
 async function thepiratebay(query, callback) {
 	let result = new Array;
-	if (empty(query))
+	if (empty(query) || query === "undefined")
 		result = await PirateBay.topTorrents(200).catch(err => console.log('Piratebay Error: ' + err))
 	else
 	{
@@ -99,19 +102,51 @@ async function thepiratebay(query, callback) {
 	return callback(piratemovies)
 }
 
-var query = eschtml(req.body.query)
-switch (req.body.srch) {
-    case 'tpb' :  
-	    thepiratebay(query, (movies) => { render(movies, query) });
-	    break;
-    case 'arc' : 
-	    res.redirect('/'); //ici faut faire archive.org
-	    break;
-    case 'yts' : 
-	    yts(query);
-	    break;
+function archiveorg(query) {
+	archive.search({q: query}, function(err, res) {
+		var i = 0;
+		var movies = new Array();
+		while (res.response.docs[i])
+		{
+			if (res.response.docs[i].mediatype == "movies") {
+				movies.push({
+					id: res.response.docs[i].identifier, 
+					title: res.response.docs[i].title, 
+					year: res.response.docs[i].year,
+					rating: res.response.docs[i].avg_rating,
+					genres: res.response.docs[i].subject,
+					synopsis: res.response.docs[i].description,
+					language: res.response.docs[i].language,
+					cover: 'https://archive.org/services/img/' + res.response.docs[i].identifier,
+					background: 'https://archive.org/services/img/' + res.response.docs[i].identifier,
+					creator: res.response.docs[i].creator,
+					downloads: res.response.docs[i].downloads
+				});
+			}
+			i++;
+		}
+		render(movies, query)
+	});
 }
 
-
-
-
+if (empty(req.body.query) || req.body.query === "undefined") {
+	thepiratebay(query, (movies) => { res.render('index.ejs', {profile:req.session.profile, movies: movies}) })
+	// Cette ligne en temps normal est : yts(query); Mais quand yts est down, on utilise ThePirateBays pour eviter
+}
+else
+{
+	var query = eschtml(req.body.query)
+	switch (req.body.srch) {
+	    case 'tpb' :  
+		    thepiratebay(query, (movies) => { render(movies, query) });
+		    break;
+	    case 'arc' : 
+	    	archiveorg(query);
+		    break;
+	    case 'yts' : 
+		    yts(query);
+		    break;
+		default :
+			yts(query);
+	}
+}
