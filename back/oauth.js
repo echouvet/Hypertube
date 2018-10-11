@@ -42,10 +42,10 @@ var headers = {
                     res.redirect('/index')
                 }
                 else
-                    res.redirect('/error')
+                    res.redirect('/error/' + response.statusCode + " : " + error)
             })
         }
         else
-            res.redirect('/error');
+            res.redirect('/error/' + response.statusCode + " : " + error2);
             // res.render('index.ejs', {error: response.statusCode + " : " + error})
     });

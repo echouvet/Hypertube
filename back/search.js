@@ -8,23 +8,21 @@ function	mapyts(data){
 	if (data.movie_count != 0)
 	{
 		var i = 0;
-		while (data.movies[i])
-		{
-			movies.push({
-				id: data.movies[i].id, 
-				title: data.movies[i].title, 
-				year: data.movies[i].year, 
-				rating: data.movies[i].rating,
-				genres: data.movies[i].genres,
-				synopsis: data.movies[i].synopsis,
-				language: data.movies[i].language,
-				cover: data.movies[i].large_cover_image,
-				background: data.movies[i].background_image,
-				runtime: data.movies[i].runtime,
-				torrents: data.movies[i].torrents
-			});
-			i++;
-		}
+		movies = data.movies.map(elem => {
+			return ({
+				id: elem.id, 
+				title: elem.title, 
+				year: elem.year, 
+				rating: elem.rating,
+				genres: elem.genres,
+				synopsis: elem.synopsis,
+				language: elem.language,
+				cover: elem.large_cover_image,
+				background: elem.background_image,
+				runtime: elem.runtime,
+				torrents: elem.torrents
+			})
+		})
 	}
 	return (movies)
 }
@@ -137,7 +135,7 @@ switch (req.body.srch) {
     	archiveorg(query);
 	    break;
     case 'yts' :
-	    isReachable('yts.am').then(r => {
+	    isReachable('https://yts.am/api/v2/list_movies.json').then(r => {
     	if (r == true) 
     		yts(query);
     	else
@@ -145,7 +143,7 @@ switch (req.body.srch) {
     })
 	    break;
 	default :
-		isReachable('yts.am').then(r => {
+		isReachable('https://yts.am/api/v2/list_movies.json').then(r => {
     	if (r == true) 
     		yts(query);
     	else

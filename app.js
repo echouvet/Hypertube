@@ -25,7 +25,7 @@ var express = require('express')
     magnetLink = require('magnet-link');
     reqAjax = require('ajax-request');
     archive = require('archive.org');
-
+    isReachable = require('is-reachable');
 
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
