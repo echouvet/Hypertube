@@ -34,10 +34,9 @@ async function yts(query){
 		try {
 			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating&limit=20');
 			let movies = await fetching.json();
-			render(mapyts(movies.data), query)
-		} catch (err) {console.log(err); res.redirect('/error/' + err); }
+			render(mapyts(movies.data), query);
+		} catch (err) {res.redirect('/error/' + err);}
 	}
-
 	else
 	{
 		var ytsquery = encodeURI(query)
@@ -65,13 +64,11 @@ async function yts(query){
 	    default:
 	    	var sort = "title";
 		}
-		fetch('https://yts.am/api/v2/list_movies.json?query_term=' + ytsquery + '&sort_by=' + sort)
-		.catch(error => res.redirect('/error/' + error))
-		.then(res => res.json())
-		.then((json) => {
-			var movies = mapyts(json.data)
-			render(movies, query)
-		})
+		try {
+			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?query_term=' + ytsquery + '&sort_by=' + sort);
+			let movies = await fetching.json();
+			render(mapyts(movies.data), query)
+		} catch (err) {res.redirect('/error/' + err); }
 	}
 }
 
@@ -134,11 +131,24 @@ switch (req.body.srch) {
 	    thepiratebay(query, (movies) => { render(movies, query) });
 	    break;
     case 'arc' :
+    if (empty(query))
+    	thepiratebay(query, (movies) => { render(movies, query) });
+    else
     	archiveorg(query);
 	    break;
     case 'yts' :
-	    yts(query);
+	    isReachable('yts.am').then(r => {
+    	if (r == true) 
+    		yts(query);
+    	else
+    		thepiratebay(query, (movies) => { render(movies, query) });
+    })
 	    break;
 	default :
-		yts(query);
+		isReachable('yts.am').then(r => {
+    	if (r == true) 
+    		yts(query);
+    	else
+    		thepiratebay(query, (movies) => { render(movies, query) });
+    })
 }
