@@ -29,13 +29,11 @@ else
 	
 	if (!empty(movies.torrents))
 	{
-		console.log('Vous etes vrmt des mrdes')
 		var hash = movies.torrents[i].hash
 		var torrentURI = movies.torrents[i].url
 	}
 	else
 	{
-		console.log("PUTAIN")
 		//les 2 lignes ci-dessous sont mauvaise (LUCIEN HELP PLS xD) ps: console.log(movies) pour plus d'infos
 		var hash = movies.magnet
 		var torrentURI = movies.link
