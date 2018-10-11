@@ -29,11 +29,13 @@ else
 	
 	if (!empty(movies.torrents))
 	{
+		console.log('Vous etes vrmt des mrdes')
 		var hash = movies.torrents[i].hash
 		var torrentURI = movies.torrents[i].url
 	}
 	else
 	{
+		console.log("PUTAIN")
 		//les 2 lignes ci-dessous sont mauvaise (LUCIEN HELP PLS xD) ps: console.log(movies) pour plus d'infos
 		var hash = movies.magnet
 		var torrentURI = movies.link
@@ -69,14 +71,14 @@ else
 		if (err) throw err;
 		if (rows[0] == undefined)
 		{
-			res.redirect('/')
+			// res.redirect('/')
 			res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: '/tmp'})
 			
 		}
 		else
 		{
 			path = '/tmp/films/'+rows[0].path;
-			res.redirect('/')
+			// res.redirect('/')
 			res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path})
 		}
 	})	
