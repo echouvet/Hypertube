@@ -29,19 +29,19 @@ function	mapyts(data){
 	return (movies)
 }
 
-function yts(query){
-	var ytsquery = encodeURI(query)
+async function yts(query){
+	var fetching = new Array;
 	if (empty(query) || query === "undefined") {
-		fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating&limit=20')
-		.catch(error => res.redirect('/error/' + error))
-		.then(res => res.json())
-		.then((json) => {
-			var movies = mapyts(json.data)
-	    	res.render('index.ejs', {profile:req.session.profile, movies:movies})
-		})
+		fetching = await fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating&limit=20').catch(error => res.redirect('/error/' + error)) 
+		console.log(fetching.json())
+		movies = await fetching.json();
+		var newmovies = mapyts(JSON.stringify(movies))
+		render(newmovies, query)
 	}
+
 	else
 	{
+		var ytsquery = encodeURI(query)
 		switch (req.body.sort) {
 	    case '0':
 	        var sort = "download_count";
@@ -129,24 +129,17 @@ function archiveorg(query) {
 	});
 }
 
-if (empty(req.body.query) || req.body.query === "undefined") {
-	thepiratebay(query, (movies) => { res.render('index.ejs', {profile:req.session.profile, movies: movies}) })
-	// Cette ligne en temps normal est : yts(query); Mais quand yts est down, on utilise ThePirateBays pour eviter
-}
-else
-{
-	var query = eschtml(req.body.query)
-	switch (req.body.srch) {
-	    case 'tpb' :  
-		    thepiratebay(query, (movies) => { render(movies, query) });
-		    break;
-	    case 'arc' : 
-	    	archiveorg(query);
-		    break;
-	    case 'yts' : 
-		    yts(query);
-		    break;
-		default :
-			yts(query);
-	}
+var query = eschtml(req.body.query)
+switch (req.body.srch) {
+    case 'tpb' :
+	    thepiratebay(query, (movies) => { render(movies, query) });
+	    break;
+    case 'arc' :
+    	archiveorg(query);
+	    break;
+    case 'yts' :
+	    yts(query);
+	    break;
+	default :
+		yts(query);
 }
