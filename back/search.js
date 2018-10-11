@@ -30,13 +30,12 @@ function	mapyts(data){
 }
 
 async function yts(query){
-	var fetching = new Array;
 	if (empty(query) || query === "undefined") {
-		fetching = await fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating&limit=20').catch(error => res.redirect('/error/' + error)) 
-		console.log(fetching.json())
-		movies = await fetching.json();
-		var newmovies = mapyts(JSON.stringify(movies))
-		render(newmovies, query)
+		try {
+			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating&limit=20');
+			let movies = await fetching.json();
+			render(mapyts(movies.data), query)
+		} catch (err) {console.log(err); res.redirect('/error/' + err); }
 	}
 
 	else
