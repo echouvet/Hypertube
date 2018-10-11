@@ -1,5 +1,7 @@
 function render(movies, query)
 {
+	if (empty(query))
+		query = 'Top Films';
 	res.render('search.ejs', {profile:req.session.profile, movies:movies, count:movies.length, q:query})
 }
 
@@ -7,7 +9,6 @@ function	mapyts(data){
 	var movies = new Array();
 	if (data.movie_count != 0)
 	{
-		var i = 0;
 		movies = data.movies.map(elem => {
 			return ({
 				id: elem.id, 
@@ -98,29 +99,52 @@ async function thepiratebay(query, callback) {
 
 function archiveorg(query) {
 	archive.search({q: query}, function(err, res) {
-		var i = 0;
-		var movies = new Array();
-		while (res.response.docs[i])
-		{
-			if (res.response.docs[i].mediatype == "movies") {
-				movies.push({
-					id: res.response.docs[i].identifier, 
-					title: res.response.docs[i].title, 
-					year: res.response.docs[i].year,
-					rating: res.response.docs[i].avg_rating,
-					genres: res.response.docs[i].subject,
-					synopsis: res.response.docs[i].description,
-					language: res.response.docs[i].language,
-					cover: 'https://archive.org/services/img/' + res.response.docs[i].identifier,
-					background: 'https://archive.org/services/img/' + res.response.docs[i].identifier,
-					creator: res.response.docs[i].creator,
-					downloads: res.response.docs[i].downloads
-				});
-			}
-			i++;
-		}
+		var movies = new Array;
+		movies = res.response.docs.filter(elem => {
+			if (elem.mediatype == "movies")
+				return true;
+			else
+				return false;
+		}).map(elem => {
+				return({
+					id: elem.identifier,
+					title: elem.title,
+					year: elem.year,
+					rating: elem.avg_rating,
+					genres: elem.subject,
+					synopsis: elem.description,
+					language: elem.language,
+					cover: 'https://archive.org/services/img/' + elem.identifier,
+					background: 'https://archive.org/services/img/' + elem.identifier,
+					creator: elem.creator,
+					downloads: elem.downloads
+		})});
 		render(movies, query)
 	});
+}
+
+function toparchive() {
+	fetch('https://archive.org/services/search/v1/scrape?debug=false&xvar=production&total_only=false&count=100&sorts=avg_rating%20desc&fields=identifier\
+		%2Ctitle%2Cyear%2Cavg_rating%2Csubject%2Cdescription%2Clanguage%2Ccreator%2Cdownloads%2Cmediatype&q=mediatype%3A(movies)')
+	.catch(error => console.log(error))
+	.then(res => res.json())
+	.then (json => {
+		var movies = new Array;
+		movies = json.items.map(elem => {
+			return ({
+									id: elem.identifier,
+					title: elem.title,
+					year: elem.year,
+					rating: elem.avg_rating,
+					genres: elem.subject,
+					synopsis: elem.description,
+					language: elem.language,
+					cover: 'https://archive.org/services/img/' + elem.identifier,
+					background: 'https://archive.org/services/img/' + elem.identifier,
+					creator: elem.creator,
+					downloads: elem.downloads
+			})})
+		render(movies, '') });
 }
 
 var query = eschtml(req.body.query)
@@ -130,12 +154,12 @@ switch (req.body.srch) {
 	    break;
     case 'arc' :
     if (empty(query))
-    	thepiratebay(query, (movies) => { render(movies, query) });
+    	toparchive();
     else
     	archiveorg(query);
 	    break;
     case 'yts' :
-	    isReachable('https://yts.am/api/v2/list_movies.json').then(r => {
+	    isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 2000}).then(r => {
     	if (r == true) 
     		yts(query);
     	else
@@ -143,8 +167,8 @@ switch (req.body.srch) {
     })
 	    break;
 	default :
-		isReachable('https://yts.am/api/v2/list_movies.json').then(r => {
-    	if (r == true) 
+		isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 2000}).then(r => {
+    	if (r == true)
     		yts(query);
     	else
     		thepiratebay(query, (movies) => { render(movies, query) });
