@@ -1,8 +1,8 @@
 {
-	"Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !": "Hypertube est le dernier projet de la branche web à 42. On l'a concu en nodeJS et Bootstrap. Amusez vous bien!",
+	"Hypertube is the last project of the 42's web branch. We did it with nodeJS and Bootstrap. Have fun !": "Hypertube est le dernier projet de la branche web à 42. On l'a conçu en nodeJS et Bootstrap. Amusez vous bien !",
 	"My profile": "Mon profile",
 	"Other profiles": "Autres profiles",
-	"Logout": "Déconnecter",
+	"Logout": "Déconnexion",
 	"Search": "Recherche",
 	"Search..": "Chercher..",
 	"Sort by (default:Title)": "Trier par (defaut:Titre)",
@@ -80,7 +80,9 @@
 	"Rating": "Note",
 	"Peers": "Peers",
 	"Seeds": "Seeds",
-	"No movies found. ": "No movies found. ",
-	"Author : ":"Auteur : ",
-	"Search on ": "Chercher sur "
+	"No movies found. ": "Pas de films trouvés. ",
+	"Author : ": "Auteur : ",
+	"Search on ": "Chercher sur ",
+	"Top movies": "Top films",
+	"results found for": "résultats trouvés pour"
 }
