@@ -4,8 +4,8 @@
 	<% include header.ejs %>
 </head>
 <body>
-	
-	<div class="alert alert-light col-6 offset-3 text-center" style="margin-top: 1rem;">Your are looking "<b style="color:black;"><i><%- decodeURI(title) %></i></b>"</div>
+		<h3 class="col-6 offset-3 text-center" style="margin-top: 1rem; color:white">You are looking</h3>
+		<h2 class="titre text-center" class="text-center">"<b><i><%- decodeURI(title) %></i></b>"</h2>
 	<div class="text-center">
 		<div class="quality"> Choose your quality :
 		<% if (movie.torrents) { movie.torrents.forEach(function(element) { %>
@@ -38,9 +38,53 @@
                 }
 				});
 			</script>
+
 	</div>
-	
-	
+	<div class="col-10 offset-1 infos">
+		<img src="<%- movie.cover %>" alt="Cover torrent img">
+		<div style="background-color: rgb(128, 128, 128);" class="col">
+			<h1 style="text-align: center; margin-top:1rem;"><%- movie.title %></h1><hr/>
+			<div class="col-10 offset-1" style="margin-top:2em; margin-bottom:2em;">
+							<% if (movie.rating) { %>
+							<h5 style="margin-bottom: 3px;"><i><%= __("Rating : ") %></i><b><%- movie.rating %></b></h5> <% } %>
+							<% if (movie.language) { %>
+							<h5 style="margin-bottom: 3px;"><i><%= __("Language : ") %> </i><b><%- movie.language %></b></h5> <% } %>
+							<% if (movie.year) { %>
+							<h5 style="margin-bottom: 3px;"><i><%= __("Year : ") %></i><b><%- movie.year %></b></h5> <% } %>
+							<% if (movie.genres) { %>
+							<h5 style="margin-bottom: 3px;"><i><%= __("Genres : ") %> </i><b>
+								<% var j = 0; while (movie.genres[j]) {  if (movie.genres[j+1]) { %>
+								<%- movie.genres[j] + ', ' %><% } else { %><%- movie.genres[j] %><% } j++; } %></b></h5>
+							<% } %>
+							<% if (movie.runtime) { %>
+							<h5 style="margin-bottom: 3px;"><i><%= __("Runtime : ") %> </i><b><%- movie.runtime + ' min' %></b></h5><% } %>
+							<% if (movie.downloads) { %>
+							<h5 style="margin-bottom: 3px;"><i><%= __("Downloads : ") %> </i><b><%- movie.downloads %></b></h5><% } %>
+							<% if (movie.creator) { %>
+							<h5 style="margin-bottom: 3px;"><i><%= __("Author : ") %></i><b><%- movie.creator %></b></h5> 
+							<% } %>
+							<% if (movie.uploaddate) { %>
+							<h5 style="margin-bottom: 3px;"><i><%= __("Upload date : ") %></i><b><%- movie.uploaddate %></b></h5> 
+							<% } %>
+						</div><hr/>
+						<% if (movie.synopsis) { %>
+							<div style="padding: 5px;">
+								<h4 style="margin-bottom: 5px; text-align: center;"><i><b><%= __("Description : ") %></b></i></h4>
+								<div><%- movie.synopsis %></div>
+							</div>
+						<% } %>
+		</div>
+	</div>
+	<div class="col-10 offset-1 comments" style="border: 1px solid green;">
+		<h1 style="margin:1rem;">Comments</h1><hr/>
+		<div style="border: 1px solid black;" class="container">
+			Here there are the comments
+		</div>
+		<div style="display: inline-flex; padding-bottom:0.5rem; padding-top: 0.5rem;" class="col-12">
+				<input type="text" class="form-control text-center col-10" placeholder="<%= __("Your comment...")%>">
+				<input type="submit" class="text-center col-2" value="send">
+		</div>
+	</div>
 </body>
 
 <% include footer.ejs %>

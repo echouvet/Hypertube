@@ -84,5 +84,7 @@
 	"Author : ": "Auteur : ",
 	"Search on ": "Chercher sur ",
 	"Top movies": "Top films",
-	"results found for": "résultats trouvés pour"
+	"results found for": "résultats trouvés pour",
+	"Upload date : ": "Date d'ajout : ",
+	"Your comment...": "Your comment..."
 }

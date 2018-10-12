@@ -40,11 +40,16 @@
 							<% if (movies[i].creator) { %>
 							<p style="margin-bottom: 3px;"><i><%= __("Author : ") %></i><b><%- movies[i].creator %></b></p> 
 							<% } %>
+							<% if (movies[i].uploaddate) { %>
+							<p style="margin-bottom: 3px;"><i><%= __("Upload date : ") %></i><b><%- movies[i].uploaddate %></b></p> 
+							<% } %>
 						</div>
-						<div style="background-color: rgb(26, 26, 26); padding: 5px;">
-							<p style="margin-bottom: 5px;"><i><b><%= __("Description : ") %></b></i></p>
-							<div><%- movies[i].synopsis %></div>
-						</div>
+						<% if (movies[i].synopsis) { %>
+							<div style="background-color: rgb(26, 26, 26); padding: 5px;">
+								<p style="margin-bottom: 5px;"><i><b><%= __("Description : ") %></b></i></p>
+								<div><%- movies[i].synopsis %></div>
+							</div>
+						<% } %>
 					</div></a>
 					</form>
 			<% i++; } %>

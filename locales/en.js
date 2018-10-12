@@ -79,9 +79,5 @@
 	"401 : invalid_grant": "401 : invalid_grant",
 	"Author : ": "Author : ",
 	"Search on ": "Search on ",
-	"Error : ": "Error : ",
-	"Top movies": "Top movies",
-	"results found for": "results found for",
-	"You must fill in every field to create an account": "You must fill in every field to create an account",
-	"Empty Field": "Empty Field"
+	"Error : ": "Error : "
 }
