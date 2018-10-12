@@ -1,15 +1,36 @@
-function render(movies, query)
+function checkforvues(movies, query, api, callback)
 {
-	if (empty(query))
-		query = 'Top Films';
-	res.render('search.ejs', {profile:req.session.profile, movies:movies, count:movies.length, q:query})
+	con.query('SELECT * FROM vues WHERE user_id = ?', [req.session.profile.id], (err, vueresult) =>{
+		if (vueresult.length == 0)
+			return callback(movies)
+		var movieids = new Array; 
+		movieids = vueresult.map(el => {return el.movie_id})
+		con.query('SELECT * FROM movies WHERE id = ? AND api = ?', [movieids, api], (err, seenmovies) =>{
+			if (seenmovies.length == 0 || movies.length == 0)
+				return callback(movies)
+			movies.filter(el => {
+				if (seenmovies.includes(el) == true)
+					el.vue = 1;
+			})
+			return callback(movies)
+		})
+	})
+}
+
+function render(movies, query, api)
+{
+	checkforvues(movies, query, api, (cmovies) => {
+		if (empty(query))
+			res.render('index.ejs', {profile:req.session.profile, movies:cmovies})
+		else
+			res.render('search.ejs', {profile:req.session.profile, movies:cmovies, count:cmovies.length, q:query})
+	})
 }
 
 function	mapyts(data){
-	var movies = new Array();
 	if (data.movie_count != 0)
 	{
-		movies = data.movies.map(elem => {
+		var movies = data.movies.map(elem => {
 			return ({
 				id: elem.id, 
 				title: elem.title, 
@@ -33,7 +54,7 @@ async function yts(query){
 		try {
 			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating&limit=20');
 			let movies = await fetching.json();
-			render(mapyts(movies.data), query);
+			render(mapyts(movies.data), query, 1);
 		} catch (err) {res.redirect('/error/' + err);}
 	}
 	else
@@ -66,13 +87,12 @@ async function yts(query){
 		try {
 			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?query_term=' + ytsquery + '&sort_by=' + sort);
 			let movies = await fetching.json();
-			render(mapyts(movies.data), query)
+			render(mapyts(movies.data), query, 1)
 		} catch (err) {res.redirect('/error/' + err); }
 	}
 }
 
-async function thepiratebay(query, callback) {
-	let result = new Array;
+async function thepiratebay(query) {
 	if (empty(query) || query === "undefined")
 		result = await PirateBay.topTorrents(200).catch(err => console.log('Piratebay Error: ' + err))
 	else
@@ -94,18 +114,12 @@ async function thepiratebay(query, callback) {
 	        category: elem.subcategory.name,
 	   		magnet: elem.magnetLink
 		})});
-	return callback(piratemovies)
+	render(piratemovies, query, 2)
 }
 
-function archiveorg(query) {
-	archive.search({q: query}, function(err, res) {
-		var movies = new Array;
-		movies = res.response.docs.filter(elem => {
-			if (elem.mediatype == "movies")
-				return true;
-			else
-				return false;
-		}).map(elem => {
+function maparchive(rawmovies)
+{
+	var movies = rawmovies.map(elem => {
 				return({
 					id: elem.identifier,
 					title: elem.title,
@@ -119,38 +133,34 @@ function archiveorg(query) {
 					creator: elem.creator,
 					downloads: elem.downloads
 		})});
-		render(movies, query)
+	render(movies, query, 3)
+}
+
+function archiveorg(query) {
+	archive.search({q: query}, function(err, res) {
+		var movies = res.response.docs.filter(elem => {
+			if (elem.mediatype == "movies")
+				return true;
+			else
+				return false;
+		})
+		maparchive(movies)
 	});
 }
 
-function toparchive() {
-	fetch('https://archive.org/services/search/v1/scrape?debug=false&xvar=production&total_only=false&count=100&sorts=avg_rating%20desc&fields=identifier\
-		%2Ctitle%2Cyear%2Cavg_rating%2Csubject%2Cdescription%2Clanguage%2Ccreator%2Cdownloads%2Cmediatype&q=mediatype%3A(movies)')
-	.catch(error => console.log(error))
-	.then(res => res.json())
-	.then (json => {
-		var movies = new Array;
-		movies = json.items.map(elem => {
-			return ({
-									id: elem.identifier,
-					title: elem.title,
-					year: elem.year,
-					rating: elem.avg_rating,
-					genres: elem.subject,
-					synopsis: elem.description,
-					language: elem.language,
-					cover: 'https://archive.org/services/img/' + elem.identifier,
-					background: 'https://archive.org/services/img/' + elem.identifier,
-					creator: elem.creator,
-					downloads: elem.downloads
-			})})
-		render(movies, '') });
+async function toparchive() {
+	try {
+		let fetching = await fetch('https://archive.org/services/search/v1/scrape?debug=false&xvar=production&total_only=false&count=100&sorts=avg_rating%20desc&fields=identifier\
+		%2Ctitle%2Cyear%2Cavg_rating%2Csubject%2Cdescription%2Clanguage%2Ccreator%2Cdownloads%2Cmediatype&q=mediatype%3A(movies)');
+		let movies = await fetching.json();
+		maparchive(movies.items)
+	} catch (err) {res.redirect('/error/' + err); }
 }
 
 var query = eschtml(req.body.query)
 switch (req.body.srch) {
     case 'tpb' :
-	    thepiratebay(query, (movies) => { render(movies, query) });
+	    thepiratebay(query);
 	    break;
     case 'arc' :
     if (empty(query))
@@ -163,7 +173,7 @@ switch (req.body.srch) {
     	if (r == true) 
     		yts(query);
     	else
-    		thepiratebay(query, (movies) => { render(movies, query) });
+    		thepiratebay(query);
     })
 	    break;
 	default :
@@ -171,6 +181,6 @@ switch (req.body.srch) {
     	if (r == true)
     		yts(query);
     	else
-    		thepiratebay(query, (movies) => { render(movies, query) });
+    		thepiratebay(query);
     })
 }
