@@ -36,12 +36,18 @@ else
 		var hash = movies.torrents[i].hash
 		var torrentURI = movies.torrents[i].url
 	}
-	else
+	else if (!empty(movies.magnet))
 	{
 		//les 2 lignes ci-dessous sont mauvaise (LUCIEN HELP PLS xD) ps: console.log(movies) pour plus d'infos
 		var torrentURI = movies.magnet
 		var hash = torrentURI;
 		// var torrentURI = movies.link
+	}
+	else
+	{
+		var magnet = 'magnet:?xt=urn:btih:'+movies.btih;
+		torrentURI = magnet;
+		hash = magnet;
 	}
 	magnetLink(torrentURI, (err, link) => { if (err) throw err;
 		if (magnet === undefined)

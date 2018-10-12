@@ -119,7 +119,7 @@ async function thepiratebay(query) {
 
 function maparchive(rawmovies)
 {
-	var movies = rawmovies.map(elem => {
+	var movies = rawmovies.map(elem => { console.log(rawmovies);
 				return({
 					id: elem.identifier,
 					title: elem.title,
@@ -131,7 +131,9 @@ function maparchive(rawmovies)
 					cover: 'https://archive.org/services/img/' + elem.identifier,
 					background: 'https://archive.org/services/img/' + elem.identifier,
 					creator: elem.creator,
-					downloads: elem.downloads
+					downloads: elem.downloads,
+					btih: elem.btih,
+					link: 'https://archive.org/download/'+elem.identifier+'/'+elem.identifier+'_archive.torrent'
 		})});
 	render(movies, query, 3)
 }
