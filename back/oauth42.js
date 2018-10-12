@@ -1,10 +1,10 @@
 function adduser (body) {
     con.query('SELECT * FROM users WHERE login = ? AND api = 2', [body.login], (err, result) => {
-        if (err) throw err;
+        if (err) res.redirect('/error/SQL error ' + err);
         if (result.length == 0)
         {
             sql = 'INSERT INTO `users` (`login`, `firstname`, `lastname`, `img`, `api`) VALUES ( ?, ?, ?, ?, 2)'
-            con.query(sql, [body.login, body.first_name, body.last_name, body.image_url], (err) => { if (err) throw err; })
+            con.query(sql, [body.login, body.first_name, body.last_name, body.image_url], (err) => { if (err) res.redirect('/error/SQL error ' + err); })
         }
     })
 }
@@ -21,9 +21,9 @@ request.post({
     }
 }, (error, response, body) => {
     if (error)
-        res.render('index.ejs', {error: response.statusCode + " : " + error})
+        res.redirect('error/oauth42 request error ' + response.statusCode + " : " + error);
     else if (response.body.error || response.statusCode != 200) 
-        res.render('index.ejs', {error: response.statusCode + " : " + response.body.error})
+        res.redirect('error/oauth42 request error ' + response.statusCode + " : " + response.body.error);
     else
     {
         token = response.body.access_token;
@@ -32,9 +32,9 @@ request.post({
             json: true
         }, (error, response, body) => {
             if (error)
-                res.render('index.ejs', {error: response.statusCode + " : " + error})
+                res.redirect('error/ oauth42 request error ' + response.statusCode + " : " + error);
             else if (response.body.error || response.statusCode != 200)
-                res.render('index.ejs', {error: response.statusCode + " : " + response.body.error})
+                res.redirect('error/ oauth42 request error ' + response.statusCode + " : " + response.body.error);
             else
             {
                 adduser(body)
@@ -44,7 +44,7 @@ request.post({
                 req.session.profile.lastname = body.last_name
                 req.session.profile.img = body.image_url
                 req.session.profile.api = '2';
-                res.redirect('/index')
+                res.redirect('/')
             }
         })
     } 

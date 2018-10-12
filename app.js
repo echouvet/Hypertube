@@ -89,7 +89,11 @@ app.use((req, res, next) => {
         res.redirect('/index')
 })
 .get('/error/:msg', (req,res) => {
-    res.render('error.ejs', {msg: req.param.msg})
+   var msg = eschtml(req.params.msg)
+    if (req.session.profile == undefined)
+        res.render('error.ejs', {msg: msg})
+    else
+        res.render('error.ejs', {profile: req.session.profile, msg: msg})
 })
 .all('/login', (req,res) => {
     eval(fs.readFileSync(__dirname + "/back/login.js")+'')

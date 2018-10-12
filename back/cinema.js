@@ -1,7 +1,6 @@
 if (empty(req.body.movie))
 {
-	console.log("fiosjfoiwejfoiwejfowejfweoijf");
-	res.render('index.ejs', {profile:req.session.profile, movie: movies, error: "Something went wrong"})
+	res.redirect('/error/Cinema.js did not receive req.body.movie')
 }
 else
 {
@@ -38,7 +37,6 @@ else
 	}
 	else if (!empty(movies.magnet))
 	{
-		//les 2 lignes ci-dessous sont mauvaise (LUCIEN HELP PLS xD) ps: console.log(movies) pour plus d'infos
 		var torrentURI = movies.magnet
 		var hash = torrentURI;
 		// var torrentURI = movies.link
@@ -49,7 +47,7 @@ else
 		torrentURI = magnet;
 		hash = magnet;
 	}
-	magnetLink(torrentURI, (err, link) => { if (err) throw err;
+	magnetLink(torrentURI, (err, link) => { if (err) res.redirect('/error/MagnetLink error ' + err);
 		if (magnet === undefined)
 			var magnet = link;
 		const engine = torrentStream(magnet, {
@@ -61,11 +59,11 @@ else
 				file.name.substr(file.name.length - 3) == 'avi' || file.name.substr(file.name.length - 3) == 'MP4')
 				{
 					con.query('SELECT path FROM movies WHERE hash = ?', [hash], (err, rows) => {
-						if (err) throw err;
+						if (err) res.redirect('/error/SQL error ' + err);
 						if (rows[0] == undefined)
 						{
 							con.query('INSERT INTO movies(hash, path) VALUES (?, ?)', [hash, file.path], 
-								(err) => { if (err) throw err; })
+								(err) => { if (err) res.redirect('/error/SQL error ' + err); })
 						}
 						
 					})
@@ -78,17 +76,15 @@ else
 		})
 	})
 	con.query('SELECT * FROM movies WHERE hash = ?', [hash], (err, rows) => {
-		if (err) throw err;
+		if (err) res.redirect('/error/SQL error ' + err);
 		if (rows[0] == undefined)
 		{
-			// res.redirect('/')
 			res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: '/tmp', hash: hash})
 			
 		}
 		else
 		{
 			path = '/tmp/films/'+rows[0].path;
-			// res.redirect('/')
 			res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash})
 		}
 	})	

@@ -1,7 +1,7 @@
 regLow = /[a-z]/ 
 regUp = /[A-Z]/
  var form = new formidable.IncomingForm();
-form.parse(req, function (err, field, files) { if (err) throw err;
+form.parse(req, function (err, field, files) { if (err) res.redirect('/error/form.parse error in register.js ' + err);
     if (req.session.profile != undefined)
         res.render('index.ejs', {profile: req.session})
     else if (!field || (!field.login && !field.firstname && !field.lastname && !field.pass && !field.confirmpass && !field.mail && !files.pic))
@@ -30,21 +30,22 @@ form.parse(req, function (err, field, files) { if (err) throw err;
     	else
     	{
             con.query('SELECT login FROM users WHERE (login = ? OR email = ?) AND api = 1', [login, email],
-            function (error, result) { if (error) throw error; if (result.length != 0)
-        	res.render('register.ejs', {error: 'Login or E-mail already exists in database'})
+            function (err, result) { if (err) res.redirect('/error/SQL error in register.js ' + err); 
+            if (result.length != 0)
+        	   res.render('register.ejs', {error: 'Login or E-mail already exists in database'})
         	else 
             {
-                con.query('SELECT id FROM `users` ORDER BY id DESC LIMIT 1', function(err, resid) { if (err) throw err;
+                con.query('SELECT id FROM `users` ORDER BY id DESC LIMIT 1', function(err, resid) { if (err) res.redirect('/error/SQL error ' + err);
                 if (resid.length == 0)
                     var picid = '1';
                 else
                     var picid = resid[0].id + 1;
                 var path = 'img/users/' + picid;
-                fs.readFile(files.pic.path, function (err, data) { if (err) throw err; 
-                fs.writeFile(path, data, function (err) { if (err) throw err; }) });
-                bcrypt.hash(pass, 10, function(err, hash) { if (err) throw err
+                fs.readFile(files.pic.path, function (err, data) { if (err) res.redirect('/error/readFile error in register.js ' + err); 
+                fs.writeFile(path, data, function (err) { if (err) res.redirect('/error/writeFile error in register.js ' + err); }) });
+                bcrypt.hash(pass, 10, function(err, hash) { if (err) res.redirect('/error/bcrypt error in register.js ' + err);
                 sql = 'INSERT INTO `users` (`login`, `firstname`, `lastname`, `pass`, `email`, `language`, `img`, `api`) VALUES (?, ?, ?, ?, ?, ?, ?, 1)'
-                con.query(sql, [login, firstname, lastname, hash, email, language, path], function (err, res) { if (err) throw err }) })
+                con.query(sql, [login, firstname, lastname, hash, email, language, path], function (err, res) { if (err) res.redirect('/error/SQL error ' + err); }) })
                 res.render('login.ejs', {success0: "Your account was successfully created !"}) })
             } })
     	}

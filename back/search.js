@@ -1,30 +1,34 @@
-function checkforvues(movies, query, api, callback)
-{
-	con.query('SELECT * FROM vues WHERE user_id = ?', [req.session.profile.id], (err, vueresult) =>{
-		if (vueresult == undefined)
-			return callback(movies)
-		var movieids = new Array; 
-		movieids = vueresult.map(el => {return el.movie_id})
-		con.query('SELECT * FROM movies WHERE id = ? AND api = ?', [movieids, api], (err, seenmovies) =>{
-			if (seenmovies == undefined || movies == undefined)
-				return callback(movies)
-			movies.filter(el => {
-				if (seenmovies.includes(el) == true)
-					el.vue = 1;
-			})
-			return callback(movies)
-		})
-	})
-}
+// function checkforvues(movies, query, api, callback)
+// {
+// 	con.query('SELECT * FROM vues WHERE user_id = ?', [req.session.profile.id], (err, vueresult) => {
+// 		if (err) { res.redirect('/error/SQL vue problem in search.js ' + err); }
+// 		if (vueresult == undefined)
+// 			return callback(movies)
+// 		var movieids = new Array; 
+// 		movieids = vueresult.map(el => {return el.movie_id})
+// 		con.query('SELECT * FROM movies WHERE id = ? AND api = ?', [movieids, api], (err, seenmovies) => {
+// 			if (err) { res.redirect('/error/SQL vue problem in search.js ' + err); }
+// 			if (seenmovies == undefined || movies == undefined)
+// 				return callback(movies)
+// 			movies.filter(el => {
+// 				if (seenmovies.includes(el) == true)
+// 					el.vue = 1;
+// 			})
+// 			return callback(movies)
+// 		})
+// 	})
+// }
 
 function render(movies, query, api)
 {
-	checkforvues(movies, query, api, (cmovies) => {
+	// cette fonction pour les films vues ne marche pas encore, j'y reviendrais
+	//checkforvues(movies, query, api, (cmovies) => {
+		let cmovies = movies;
 		if (empty(query))
 			res.render('index.ejs', {profile:req.session.profile, movies:cmovies, api})
 		else
 			res.render('search.ejs', {profile:req.session.profile, movies:cmovies, count:cmovies.length, q:query, api})
-	})
+	//})
 }
 
 function	mapyts(data){
@@ -55,7 +59,7 @@ async function yts(query){
 			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating&limit=20');
 			let movies = await fetching.json();
 			render(mapyts(movies.data), query, 1);
-		} catch (err) {res.redirect('/error/' + err);}
+		} catch (err) {res.redirect('/error/YTS catch' + err);}
 	}
 	else
 	{
@@ -88,13 +92,13 @@ async function yts(query){
 			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?query_term=' + ytsquery + '&sort_by=' + sort);
 			let movies = await fetching.json();
 			render(mapyts(movies.data), query, 1)
-		} catch (err) {res.redirect('/error/' + err); }
+		} catch (err) {res.redirect('/error/YTS catch ' + err); }
 	}
 }
 
 async function thepiratebay(query) {
 	if (empty(query) || query === "undefined")
-		result = await PirateBay.topTorrents(200).catch(err => console.log('Piratebay Error: ' + err))
+		result = await PirateBay.topTorrents(200).catch(err => {if (err) res.redirect('/error/thepiratebay catch ' + err);} )
 	else
 	{
 		result = await PirateBay.search(query, {
@@ -102,14 +106,14 @@ async function thepiratebay(query) {
 			orderBy: 'name',
 			sortBy: 'desc',
 			filter: { verified: true }
-  		}).catch(err => console.log('Piratebay Error: ' + err))
+  		}).catch(err => {if (err) res.redirect('/error/thepiratebay catch ' + err);})
 	}
   	const piratemovies = result.map(elem => {
   		elem.name = elem.name.replace(/\./g, ' ');
   		return({
 			id: elem.id,
 			title: elem.name,
-	        year: elem.uploadDate,
+	        uploaddate: elem.uploadDate,
 	        size: elem.size,
 	        link: elem.link,
 	        category: elem.subcategory.name,
@@ -142,6 +146,7 @@ function maparchive(rawmovies)
 
 function archiveorg(query) {
 	archive.search({q: query}, function(err, res) {
+		if (err) { res.redirect('/error/archive.org api search problem ' + err); }
 		var movies = res.response.docs.filter(elem => {
 			if (elem.mediatype == "movies")
 				return true;
@@ -158,7 +163,7 @@ async function toparchive() {
 		%2Ctitle%2Cyear%2Cavg_rating%2Csubject%2Cdescription%2Clanguage%2Ccreator%2Cdownloads%2Cmediatype&q=mediatype%3A(movies)');
 		let movies = await fetching.json();
 		maparchive(movies.items)
-	} catch (err) {res.redirect('/error/' + err); }
+	} catch (err) { res.redirect('/error/archive.org fetch problem ' + err); }
 }
 
 var query = eschtml(req.body.query)
@@ -177,7 +182,7 @@ switch (req.body.srch) {
     	if (r == true) 
     		yts(query);
     	else
-    		thepiratebay(query);
+    		res.redirect('/error/YTS is momentarily down, please try again later');
     })
 	    break;
 	default :

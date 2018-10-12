@@ -8,7 +8,7 @@ function updateuser(column, change) {
         }
     }
     var sql = 'UPDATE users SET ' + column + ' = ? WHERE id = ?'
-    con.query(sql, [change, req.session.profile.id], function (err) { if (err) throw err })
+    con.query(sql, [change, req.session.profile.id], function (err) { if (err) res.redirect('/error/SQL error ' + err); })
     req.session.profile[column] = change;
     update = 1;
 }
@@ -20,7 +20,7 @@ if (!req.session || !req.session.profile)
 else
 {
     var form = new formidable.IncomingForm();
-    form.parse(req, function (err1, field, files) { if (err1) throw err1; 
+    form.parse(req, function (err1, field, files) { if (err1) res.redirect('/error/form.parse in my_profile.js ' + err1);; 
     if (empty(field) && empty(files))
         res.render('my_profile.ejs', {profile: req.session.profile})
     else
@@ -43,7 +43,7 @@ else
             else if (field.pass != field.confirmpass) {
                 error += ' Your new Password and Password Confirmation did not match'; }
             else {
-                bcrypt.hash(eschtml(field.pass), 10, (err, hash) => { if (err) throw err
+                bcrypt.hash(eschtml(field.pass), 10, (err, hash) => { if (err) res.redirect('/error/SQL error ' + err);
                 updateuser('pass', hash) }) }  }
         if (files.pic.size !== 0 && error === '' && req.session.profile.api == 1)
         {
@@ -52,13 +52,13 @@ else
             else if (files.pic.size > 50000000) {
                 error += ' File is too big'; }
             else {
-                fs.readFile(files.pic.path, (err, data) => { if (err) throw err; 
-                    fs.writeFile('img/users/' + req.session.profile.id, data, (err) => { if (err) throw err; }) });
+                fs.readFile(files.pic.path, (err, data) => { if (err) res.redirect('/error/readFile error ' + err); 
+                    fs.writeFile('img/users/' + req.session.profile.id, data, (err) => { if (err) res.redirect('/error/writeFile error ' + err); }) });
                 updateuser('img', 'img/users/' + req.session.profile.id) }
         }
         if (!empty(field.login) && error === '') {
             wait.for.promise(new Promise((resolve) => {
-                con.query('SELECT id FROM users WHERE login = ?', [eschtml(field.login)], (err, result) => { if (err) throw err;
+                con.query('SELECT id FROM users WHERE login = ?', [eschtml(field.login)], (err, result) => { if (err) res.redirect('/error/SQL error ' + err);
                     if (result.length == 0) 
                         updateuser('login', eschtml(field.login)) 
                     else { 
@@ -71,7 +71,7 @@ else
                 error += ' E-mail is not valid'; }
             else {
                 wait.for.promise(new Promise((resolve) => {
-                    con.query('SELECT id FROM users WHERE email = ?', [eschtml(field.email)], (err, result) => { if (err) throw err;
+                    con.query('SELECT id FROM users WHERE email = ?', [eschtml(field.email)], (err, result) => { if (err) res.redirect('/error/SQL error ' + err);
                         if (result.length == 0) 
                             updateuser('email', eschtml(field.email)) 
                         else { 

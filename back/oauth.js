@@ -1,14 +1,13 @@
 function adduser (body) {
     con.query('SELECT * FROM users WHERE login = ? AND api = 3', [body.login], (err, result) => {
-        if (err) throw err;
+        if (err) res.redirect('/error/SQL error ' + err);
         if (result.length == 0)
         {
             sql = 'INSERT INTO `users` (`login`, `img`, `api`) VALUES ( ?, ?, 3)'
-            con.query(sql, [body.login, body.avatar_url], (err) => { if (err) throw err; })
+            con.query(sql, [body.login, body.avatar_url], (err) => { if (err) res.redirect('/error/SQL error ' + err); })
         }
     })
 }
-
 
 var headers = {
         'Accept' : 'application/json',
@@ -39,13 +38,12 @@ var headers = {
                     req.session.profile.img = body.avatar_url;
                     req.session.profile.api = '3';
                     adduser(body)
-                    res.redirect('/index')
+                    res.redirect('/')
                 }
                 else
-                    res.redirect('/error/' + response.statusCode + " : " + error)
+                    res.redirect('/error/request in oauth.js' + response.statusCode + " : " + error)
             })
         }
         else
-            res.redirect('/error/' + response.statusCode + " : " + error2);
-            // res.render('index.ejs', {error: response.statusCode + " : " + error})
+            res.redirect('/error/request in oauth.js' + response.statusCode + " : " + error2);
     });

@@ -4,7 +4,7 @@ else
 {
     email = eschtml(req.body.email)
     con.query('SELECT * FROM users WHERE email = ?', [email],
-    function (error, result) { if (error) throw error;
+    function (error, result) { if (error) res.redirect('/error/SQL error ' + error);;
     if (result.length == 0)
         res.render('login.ejs', {error2: "Email not found in database"})
     else
@@ -22,9 +22,9 @@ else
         smtpTransport.sendMail(mail, function(error, response){
         if (error) { res.render('login.ejs', {error2: 'Error whilst sending e-mail : ' + error}); }
         else {
-            bcrypt.hash(newpass, 10, function(err, hash) { if (err) throw err
+            bcrypt.hash(newpass, 10, function(err, hash) { if (err) res.redirect('/error/bcrypt in forgotpass.js ' + err);
             sql = 'UPDATE users SET pass = ? WHERE email = ?'
-            con.query(sql, [hash, email], function (error) { if (error) throw error; }) })
+            con.query(sql, [hash, email], function (error) { if (error) res.redirect('/error/SQL error ' + error); }) })
             res.render('login.ejs', {success: "Email successfully sent"})
         }
         smtpTransport.close() })
