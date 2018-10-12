@@ -1,12 +1,12 @@
 function checkforvues(movies, query, api, callback)
 {
 	con.query('SELECT * FROM vues WHERE user_id = ?', [req.session.profile.id], (err, vueresult) =>{
-		if (vueresult.length == 0)
+		if (vueresult == undefined)
 			return callback(movies)
 		var movieids = new Array; 
 		movieids = vueresult.map(el => {return el.movie_id})
 		con.query('SELECT * FROM movies WHERE id = ? AND api = ?', [movieids, api], (err, seenmovies) =>{
-			if (seenmovies.length == 0 || movies.length == 0)
+			if (seenmovies == undefined || movies == undefined)
 				return callback(movies)
 			movies.filter(el => {
 				if (seenmovies.includes(el) == true)
