@@ -1,12 +1,12 @@
 if (empty(req.body.movie))
 {
-	console.log(req.body);
+	console.log("fiosjfoiwejfoiwejfowejfweoijf");
 	res.render('index.ejs', {profile:req.session.profile, movie: movies, error: "Something went wrong"})
 }
 else
 {
-	console.log(req.body.movie);
 	var movies = JSON.parse(req.body.movie)
+	console.log(movies);
 	var id = eschtml(movies.id);
 	var title = eschtml(encodeURI(movies.title));
 	var i = 0;
@@ -29,7 +29,7 @@ else
 			i = 0;
 		return (i);
 	}
-	var i = getQuality(req.params.quality);
+	// var i = getQuality(req.body.quality);
 	
 	if (!empty(movies.torrents))
 	{
@@ -39,18 +39,20 @@ else
 	else
 	{
 		//les 2 lignes ci-dessous sont mauvaise (LUCIEN HELP PLS xD) ps: console.log(movies) pour plus d'infos
-		var hash = movies.magnet
-		var torrentURI = movies.link
+		var torrentURI = movies.magnet
+		var hash = torrentURI;
+		// var torrentURI = movies.link
 	}
 	magnetLink(torrentURI, (err, link) => { if (err) throw err;
-		var magnet = link;
+		if (magnet === undefined)
+			var magnet = link;
 		const engine = torrentStream(magnet, {
 			tmp: __dirname + '/tmp/upload',
 			path: __dirname + '/tmp/films/'});
 		engine.on('ready', () => {
 			engine.files.forEach(function(file) {
 				if (file.name.substr(file.name.length - 3) == 'mkv' || file.name.substr(file.name.length - 3) == 'mp4' ||
-				file.name.substr(file.name.length - 3) == 'avi')
+				file.name.substr(file.name.length - 3) == 'avi' || file.name.substr(file.name.length - 3) == 'MP4')
 				{
 					con.query('SELECT path FROM movies WHERE hash = ?', [hash], (err, rows) => {
 						if (err) throw err;
@@ -69,19 +71,19 @@ else
 			 console.log(chunck);
 		})
 	})
-	con.query('SELECT * FROM movies WHERE hash = ?', [movies.torrents[i].hash], (err, rows) => {
+	con.query('SELECT * FROM movies WHERE hash = ?', [hash], (err, rows) => {
 		if (err) throw err;
 		if (rows[0] == undefined)
 		{
 			// res.redirect('/')
-			res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: '/tmp'})
+			res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: '/tmp', hash: hash})
 			
 		}
 		else
 		{
 			path = '/tmp/films/'+rows[0].path;
 			// res.redirect('/')
-			res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path})
+			res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash})
 		}
 	})	
 }

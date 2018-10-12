@@ -10,5 +10,5 @@ con.query(users, (err) => { if (err) throw (err) })
 
 var movies =	'CREATE TABLE IF NOT EXISTS movies ( \
 				id INT AUTO_INCREMENT PRIMARY KEY, \
-				hash VARCHAR(255), path VARCHAR(255))'
+				hash TEXT, path VARCHAR(255))'
 con.query(movies, (err) => {if (err) throw err});

@@ -8,16 +8,40 @@
 	<div class="alert alert-light col-6 offset-3 text-center" style="margin-top: 1rem;">Your are looking "<%- path %>""<b style="color:black;"><i><%- title %></i></b>"</div>
 	<div class="text-center">
 	<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;"><source src="<%-path%>" type="video/mp4"></video>
+	
+		<script src="back/resources/jquery-3.3.1.min.js"></script>
+		<script>
+
+				movie = '<%-eschtml(JSON.stringify(movie))%>'
+				hash = '<%-eschtml(JSON.stringify(hash))%>'
+				$.ajax({
+					url: "/getPath",
+					type: "POST",
+					data: {movie : movie , hash: hash},
+					contentType: 'JSON',
+					success: function(result)
+					{
+						console.log("fpwoekfpowekfpowkfpowkfpkwef");
+						$('#player').attr('source', result);
+					},
+					error: function(err, Status){
+                    console.log("Status", Status);
+                    console.log("ERR", err);
+                }
+				});
+			</script>
 	</div>
 	<div>
-		<% movie.torrents.forEach(function(element) { %>
-			<a href="/search/<%-movie.id%>/<%-title%>/<%= element['quality'] %>"><button>"<%- element['quality'] %>"</button></a>
-		<% }) %>
+		<% if (movie.torrents) { movie.torrents.forEach(function(element) { %>
+			<form action='/cinema' method='POST'>
+				<input type='hidden' value='<%-eschtml(JSON.stringify(movie))%>' id='movie' name='movie'>
+				<input type='submit' value="<%- eschtml(JSON.stringify(element['quality'])) %>" id='quality' name='quality'>
+			</form>
+		<% }) } %>
 	</div>
 	
 </body>
-<% include footer.ejs %>
-<script>
 
-</script>
+<% include footer.ejs %>
+
 </html>

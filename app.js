@@ -124,6 +124,12 @@ app.use((req, res, next) => {
 .post('/cinema', (req, res) =>  {
     eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
 })
+.post('/getPath', (req, res) =>  {
+    eval(fs.readFileSync(__dirname+"/back/getpath.js")+'')
+})
+.get('/cinema/:id', (req, res) =>  {
+    eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
+})
 .get('/cinema/:quality', (req, res) =>  {
     eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
 })
