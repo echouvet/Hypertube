@@ -1,8 +1,12 @@
 if (empty(req.body.movie))
-	res.render('cinema.ejs', {profile:req.session.profile, movie: movies, error: "Something went wrong"})
+{
+	console.log(req.body);
+	res.render('index.ejs', {profile:req.session.profile, movie: movies, error: "Something went wrong"})
+}
 else
 {
-	var movies = req.body.movie
+	console.log(req.body.movie);
+	var movies = JSON.parse(req.body.movie)
 	var id = eschtml(movies.id);
 	var title = eschtml(encodeURI(movies.title));
 	var i = 0;
