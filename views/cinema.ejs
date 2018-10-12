@@ -5,8 +5,16 @@
 </head>
 <body>
 	
-	<div class="alert alert-light col-6 offset-3 text-center" style="margin-top: 1rem;">Your are looking "<%- path %>""<b style="color:black;"><i><%- title %></i></b>"</div>
+	<div class="alert alert-light col-6 offset-3 text-center" style="margin-top: 1rem;">Your are looking "<b style="color:black;"><i><%- decodeURI(title) %></i></b>"</div>
 	<div class="text-center">
+		<div class="quality"> Choose your quality :
+		<% if (movie.torrents) { movie.torrents.forEach(function(element) { %>
+			<form action='/cinema' method='POST' style="display:inline-flex;">
+				<input type='hidden' value='<%-eschtml(JSON.stringify(movie))%>' id='movie' name='movie'>
+				<input type='submit' value="<%- eschtml(JSON.stringify(element['quality'])) %>" id='quality' name='quality'>
+			</form>
+		<% }) } %>
+		</div>
 	<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;"><source src="<%-path%>" type="video/mp4"></video>
 	
 		<script src="back/resources/jquery-3.3.1.min.js"></script>
@@ -31,14 +39,7 @@
 				});
 			</script>
 	</div>
-	<div>
-		<% if (movie.torrents) { movie.torrents.forEach(function(element) { %>
-			<form action='/cinema' method='POST'>
-				<input type='hidden' value='<%-eschtml(JSON.stringify(movie))%>' id='movie' name='movie'>
-				<input type='submit' value="<%- eschtml(JSON.stringify(element['quality'])) %>" id='quality' name='quality'>
-			</form>
-		<% }) } %>
-	</div>
+	
 	
 </body>
 

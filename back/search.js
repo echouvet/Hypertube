@@ -21,9 +21,9 @@ function render(movies, query, api)
 {
 	checkforvues(movies, query, api, (cmovies) => {
 		if (empty(query))
-			res.render('index.ejs', {profile:req.session.profile, movies:cmovies})
+			res.render('index.ejs', {profile:req.session.profile, movies:cmovies, api})
 		else
-			res.render('search.ejs', {profile:req.session.profile, movies:cmovies, count:cmovies.length, q:query})
+			res.render('search.ejs', {profile:req.session.profile, movies:cmovies, count:cmovies.length, q:query, api})
 	})
 }
 
@@ -100,7 +100,8 @@ async function thepiratebay(query) {
 		result = await PirateBay.search(query, {
 	    	category: 'video',
 			orderBy: 'name',
-			sortBy: 'desc'
+			sortBy: 'desc',
+			filter: { verified: true }
   		}).catch(err => console.log('Piratebay Error: ' + err))
 	}
   	const piratemovies = result.map(elem => {
@@ -112,14 +113,15 @@ async function thepiratebay(query) {
 	        size: elem.size,
 	        link: elem.link,
 	        category: elem.subcategory.name,
-	   		magnet: elem.magnetLink
+	   		magnet: elem.magnetLink,
+	   		cover: 'img/piratebay.png'
 		})});
 	render(piratemovies, query, 2)
 }
 
 function maparchive(rawmovies)
 {
-	var movies = rawmovies.map(elem => { console.log(rawmovies);
+	var movies = rawmovies.map(elem => {
 				return({
 					id: elem.identifier,
 					title: elem.title,

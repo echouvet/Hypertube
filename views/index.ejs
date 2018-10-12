@@ -24,9 +24,14 @@
 					<div class="col-2 text-center listfilm1" id="<%- i %>">
 						<form action="/cinema" method="POST">
 						<input type="hidden"  value='<%- eschtml(JSON.stringify(movies[i])) %>' id="movie" name="movie">
+						<% if (api != 1) { %>
+							<h5 style="padding-top:4px;"><i><%- movies[i].title %></i></h5>
+						<% } %>
 						<input type="image" src="<%- movies[i].cover %>" alt="Submit Form" class="col-12" style="padding:0">
 						<div class="hid">
-							<h5 style="padding-top:4px;"><i><%- movies[i].title %></i></h5>
+							<% if (api == 1) { %>
+								<h5 style="padding-top:4px;"><i><%- movies[i].title %></i></h5>
+							<% } %>
 							<div style="background-color: #e9ecef; padding: 2px; color:black;">
 								<% if (movies[i].rating) { %>
 								<p style="margin-bottom: 3px;"><i><%= __("Rating : ") %></i><b><%- movies[i].rating %></b></p> <% } %>
@@ -44,10 +49,12 @@
 								<% if (movies[i].downloads) { %>
 								<p style="margin-bottom: 3px;"><i><%= __("Downloads : ") %> </i><b><%- movies[i].downloads %></b></p><% } %>
 							</div>
+							<% if (movies[i].synopsis) { %>
 							<div style="background-color: rgb(26, 26, 26); padding: 5px;">
 								<p style="margin-bottom: 5px;"><i><b><%= __("Description : ") %></b></i></p>
 								<div><%- movies[i].synopsis %></div>
 							</div>
+							<% } %>
 						</div>
 						</form>
 				</div>
