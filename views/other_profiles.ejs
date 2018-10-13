@@ -5,13 +5,13 @@
 </head>
 <body>
 	<% if (typeof users != 'undefined' && !empty(users)) { %>
-	<div class="container-fluid text-center" style="background-color: rgb(230,230,230,0.5); color:white; padding: 10px; padding-top: 10px; margin-top:1rem;">
+	<div class="container text-center" style="background-color: rgb(230,230,230,0.5); color:white; padding: 10px; padding-top: 10px; margin-top:1rem;">
 		<div class="container-fluid d-flex">
 			<div class="col-2 inf"><%= __("Login") %></div><hr class="hr2"><div class="col-3 inf"><%= __("Firstname") %></div><hr class="hr2"><div class="col-3 inf"><%= __("Lastname") %></div>
 			<hr class="hr2"><div class="col-2 inf"><%= __("Language") %></div><hr class="hr2"><div class="col-2 inf"><%= __("Picture") %></div>
 		</div>
 		<% var i = 0; while (users[i]) { %>
-		<div class="container-fluid infos d-flex" style="background-color: rgb(50,50,50,0.8); color:white; margin-top:0.5rem;">
+		<div class="container-fluid d-flex" style="background-color: rgb(50,50,50,0.8); color:white; margin-top:0.5rem; border: 1px solid black;">
 			<div class="col-2 marginforpic"><%- users[i].login %></div><div class="col-3 marginforpic"><%- users[i].firstname %></div>
 			<div class="col-3 marginforpic"><%- users[i].lastname %></div>
 			<div class="col-2 marginforpic"><%- users[i].language %></div>

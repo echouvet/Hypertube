@@ -7,14 +7,14 @@
 		<h3 class="col-6 offset-3 text-center" style="margin-top: 1rem; color:white">You are looking</h3>
 		<h2 class="titre text-center" class="text-center">"<b><i><%- decodeURI(title) %></i></b>"</h2>
 	<div class="text-center">
-		<div class="quality"> Choose your quality :
-		<% if (movie.torrents) { movie.torrents.forEach(function(element) { %>
-			<form action='/cinema' method='POST' style="display:inline-flex;">
-				<input type='hidden' value='<%-eschtml(JSON.stringify(movie))%>' id='movie' name='movie'>
-				<input type='submit' value="<%- eschtml(JSON.stringify(element['quality'])) %>" id='quality' name='quality'>
-			</form>
-		<% }) } %>
-		</div>
+			<% if (movie.torrents) { %>
+			<div class="quality"> Choose your quality :
+			<% movie.torrents.forEach(function(element) { %>
+				<form action='/cinema' method='POST' style="display:inline-flex;">
+					<input type='hidden' value='<%-eschtml(JSON.stringify(movie))%>' id='movie' name='movie'>
+					<input type='submit' value="<%- eschtml(JSON.stringify(element['quality'])) %>" id='quality' name='quality'>
+				</form>
+		<% }) %></div><% } %>
 	<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;"><source src="<%-path%>" type="video/mp4"></video>
 	
 		<script src="back/resources/jquery-3.3.1.min.js"></script>
@@ -40,8 +40,8 @@
 			</script>
 
 	</div>
-	<div class="col-10 offset-1 infos">
-		<img src="<%- movie.cover %>" alt="Cover torrent img">
+	<div class="col-10 offset-1 infos" style="background-color: black;">
+		<img src="<%- movie.cover %>" alt="Cover torrent img" class="img-responsive" width="30%" height="30%">
 		<div style="background-color: rgb(128, 128, 128);" class="col">
 			<h1 style="text-align: center; margin-top:1rem;"><%- movie.title %></h1><hr/>
 			<div class="col-10 offset-1" style="margin-top:2em; margin-bottom:2em;">
@@ -75,7 +75,7 @@
 						<% } %>
 		</div>
 	</div>
-	<div class="col-10 offset-1 comments" style="border: 1px solid green;">
+	<div class="col-10 offset-1 comments">
 		<h1 style="margin:1rem;">Comments</h1><hr/>
 		<div style="border: 1px solid black;" class="container">
 			Here there are the comments

@@ -139,7 +139,7 @@ function maparchive(rawmovies)
 					creator: elem.creator,
 					downloads: elem.downloads,
 					btih: elem.btih,
-					link: 'https://archive.org/download/'+elem.identifier+'/'+elem.identifier+'_archive.torrent'
+					magnet: 'https://archive.org/download/'+elem.identifier+'/'+elem.identifier+'_archive.torrent'
 		})});
 	render(movies, query, 3)
 }
