@@ -24,7 +24,9 @@ function render(movies, query, api)
 	// cette fonction pour les films vues ne marche pas encore, j'y reviendrais
 	//checkforvues(movies, query, api, (cmovies) => {
 		let cmovies = movies;
-		if (empty(query))
+		if (!cmovies)
+			res.redirect('/error/No movies found')
+		else if (empty(query))
 			res.render('index.ejs', {profile:req.session.profile, movies:cmovies, api})
 		else
 			res.render('search.ejs', {profile:req.session.profile, movies:cmovies, count:cmovies.length, q:query, api})
