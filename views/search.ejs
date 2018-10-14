@@ -19,6 +19,7 @@
 				<div class="col-2 text-center listfilm2" id="<%- i %>">
 						<form action="/cinema" method="POST">
 						<input type="hidden"  value='<%- eschtml(JSON.stringify(movies[i])) %>' id="movie" name="movie">
+						<input type="hidden"  value='<%- api %>' id="api" name="api">
 						<input type="image" src="<%- movies[i].cover %>" alt="Submit Form" class="col-12" style="padding:0">
 						<h5 style="padding-top:4px;"><i><%- movies[i].title %></i></h5>
 						<div style="background-color: #e9ecef; padding: 2px; color:black;">

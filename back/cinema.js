@@ -4,10 +4,10 @@ if (empty(req.body.movie))
 }
 else
 {
-	var movies = JSON.parse(req.body.movie)
-	console.log(movies);
+	var movies = JSON.parse(req.body.movie);
 	var id = eschtml(movies.id);
 	var title = eschtml(encodeURI(movies.title));
+		api = eschtml(req.body.api);
 	var i = 0;
 	function getQuality()
 	{
@@ -79,13 +79,29 @@ else
 		if (err) res.redirect('/error/SQL error ' + err);
 		if (rows[0] == undefined)
 		{
-			res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: '/tmp', hash: hash})
-			
+			if (api == 1) {
+			fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
+				.then(res => { return res.json(); })
+				.then(json => { 
+					res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: '/tmp', hash: hash, suggestions: json.data.movies, api})
+				})
+				.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
+			else
+				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: '/tmp', hash: hash, api})
+
 		}
 		else
 		{
-			path = '/tmp/films/'+rows[0].path;
-			res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash})
+			if (api == 1) {
+			fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
+				.then(res => { return res.json(); })
+				.then(json => { 
+					path = '/tmp/films/'+rows[0].path;
+					res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash, suggestions: json.data.movies, api})
+				})
+				.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
+			else
+				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash, api})
 		}
 	})	
 }
