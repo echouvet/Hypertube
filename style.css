@@ -154,3 +154,24 @@ hr
 	font-weight: bold;
 	font-size: 18px;
 }
+
+@media screen and (max-width: 1135px) {
+  .bloc {
+    max-width: 70vw;
+  }
+}
+@media screen and (max-width: 812px) {
+  .bloc {
+    max-width: 60vw;
+  }
+}
+.propic {
+    width: 200px;
+    height: 200px;
+  }
+@media screen and (max-width: 528px) {
+  .propic {
+    width: 100px;
+    height: 100px;
+  }
+}
