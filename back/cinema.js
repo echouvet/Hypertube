@@ -4,7 +4,7 @@ if (empty(req.body.movie))
 }
 else
 {
-	var movies = JSON.parse(req.body.movie);
+	var movies = JSON.parse(req.body.movie)
 	var id = eschtml(movies.id);
 	var title = eschtml(encodeURI(movies.title));
 		api = eschtml(req.body.api);
@@ -65,14 +65,13 @@ else
 							con.query('INSERT INTO movies(hash, path) VALUES (?, ?)', [hash, file.path], 
 								(err) => { if (err) res.redirect('/error/SQL error ' + err); })
 						}
-						
 					})
 					var stream = file.createReadStream();
 				}
 			})
 		})
 		engine.on('download', (chunck) => {
-			 console.log(chunck);
+			 // console.log(chunck);
 		})
 	})
 	con.query('SELECT * FROM movies WHERE hash = ?', [hash], (err, rows) => {
@@ -92,16 +91,17 @@ else
 		}
 		else
 		{
+			path = '/tmp/films/'+rows[0].path;
+			con.query('SELECT * FROM comments WHERE movie_id = ?', [rows[0].id], (err, coms) => {
 			if (api == 1) {
 			fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
 				.then(res => { return res.json(); })
 				.then(json => { 
-					path = '/tmp/films/'+rows[0].path;
-					res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash, suggestions: json.data.movies, api})
+					res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash, suggestions: json.data.movies, api, id: rows[0].id, coms:coms})
 				})
 				.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
 			else
-				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash, api})
+				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash, api, id: rows[0].id, coms:coms}) });
 		}
 	})	
 }

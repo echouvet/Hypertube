@@ -79,5 +79,9 @@
 	"401 : invalid_grant": "401 : invalid_grant",
 	"Author : ": "Author : ",
 	"Search on ": "Search on ",
-	"Error : ": "Error : "
+	"Error : ": "Error : ",
+	"Top movies": "Top movies",
+	"Your comment...": "Your comment...",
+	"results found for": "results found for",
+	"Upload date : ": "Upload date : "
 }

@@ -122,6 +122,9 @@ app.use((req, res, next) => {
 .get('/logout', (req, res) =>  {
     req.session.destroy(); req.session = 0; res.redirect('/');
 })
+.post('/comment', (req, res) => {
+   eval(fs.readFileSync(__dirname + "/back/comment.js")+'')
+})
 .all('/search', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
 })

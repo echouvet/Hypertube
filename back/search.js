@@ -37,15 +37,19 @@ function	mapyts(data){
 	if (data.movie_count != 0)
 	{
 		var movies = data.movies.map(elem => {
+			if (elem.large_cover_image)
+				var cover = elem.large_cover_image;
+			else
+				var cover = elem.medium_cover_image;
 			return ({
 				id: elem.id, 
 				title: elem.title, 
 				year: elem.year, 
 				rating: elem.rating,
 				genres: elem.genres,
-				synopsis: elem.synopsis,
+				synopsis: elem.synopsis, 
 				language: elem.language,
-				cover: elem.large_cover_image,
+				cover: cover,
 				background: elem.background_image,
 				runtime: elem.runtime,
 				torrents: elem.torrents

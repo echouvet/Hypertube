@@ -4,9 +4,7 @@
 	<% include header.ejs %>
 </head>
 <body>
-		<h3 class="col-6 offset-3 text-center" style="margin-top: 1rem; color:white">You are looking</h3>
-		<h2 class="titre text-center" class="text-center">"<b><i><%- decodeURI(title) %></i></b>"</h2>
-	<div class="text-center">
+	<div class="text-center" style="margin-top: 2rem;">
 			<% if (movie.torrents) { %>
 			<div class="quality"> Choose your quality :
 			<% movie.torrents.forEach(function(element) { %>
@@ -16,7 +14,7 @@
 					<input type='submit' value="<%- eschtml(JSON.stringify(element['quality'])) %>" id='quality' name='quality'>
 				</form>
 		<% }) %></div><% } %>
-	<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;box-shadow: 0px 0px 10px 10px black;"><source src="<%-path%>" type="video/mp4"></video>
+	<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;"><source src="<%-path%>" type="video/mp4"></video>
 	
 		<script src="back/resources/jquery-3.3.1.min.js"></script>
 		<script>
@@ -41,10 +39,10 @@
 			</script>
 
 	</div>
-	<div class="col-10 offset-1 infos" style="background-color: black;">
+	<div class="col-10 offset-1 infos">
 		<img src="<%- movie.cover %>" alt="Cover torrent img" class="img-responsive" width="30%" height="30%">
-		<div style="background-color: rgb(128, 128, 128);" class="col">
-			<h1 style="text-align: center; margin-top:1rem; text-shadow: 2px 2px 5px black;"><%- movie.title %></h1><hr/>
+		<div style="color:white" class="col">
+			<h1 style="text-align: center; margin-top:1rem;"><%- movie.title %></h1><hr/>
 			<div class="col-10 offset-1" style="margin-top:2em; margin-bottom:2em;">
 							<% if (movie.rating) { %>
 							<h5 style="margin-bottom: 3px;"><i><%= __("Rating : ") %></i><b><%- movie.rating %></b></h5> <% } %>
@@ -76,17 +74,27 @@
 						<% } %>
 		</div>
 	</div>
+	
 	<div class="col-10 offset-1 comments">
-		<h1 style="margin:1rem;text-shadow: 1px 1px 3px black;">Comments</h1><hr/>
-		<div style="border: 1px solid black;" class="container">
-			Here there are the comments
+		<h1 style="margin:1rem;"><% if (typeof coms != 'undefined' && coms) { %>
+			<% var i=0;while(coms[i]){i++;} %><% } else { var i = 0; } %><i><%- i %> </i>Comments</h1><hr/>
+		<% if (typeof coms != 'undefined' && coms) { %>
+		<div class="container" id="scrollcom" style="max-height: 50rem; overflow-y: auto;">
+		<% coms.forEach(function(com) { %>
+			<div class="col-12" style="background-color: #171717; padding: 15px; overflow: hidden; margin-bottom:5px;">
+			<h5 style="color:#919191;"><%- com.user_login %></h5>
+				<p><%- com.comment %></p></div>
+		<% }) } else { %>
+			<div class="col-12" style="background-color: #171717; padding: 15px; overflow: hidden; margin-bottom:5px;">
+				No comment yet, be the first to write a comment !
+			</div> <% } %>
 		</div>
 		<div style="display: inline-flex; padding-bottom:0.5rem; padding-top: 0.5rem;" class="col-12">
-				<input type="text" class="form-control text-center col-10" placeholder="<%= __("Your comment...")%>">
-				<input type="submit" class="text-center col-2" value="send">
+				<input type="text" class="form-control text-center col-10" id="comment" placeholder="<%= __("Your comment...")%>">
+				<input type="submit" class="text-center col-2" value="send" name="sub" id="send">
 		</div>
 	</div>
-<% if (typeof suggestions != 'undefined' && suggestions) { %>
+	<% if (typeof suggestions != 'undefined' && suggestions) { %>
 	<div class="col-10 offset-1 comments" style="padding-bottom: 2rem;">
 		<h1 style="margin:1rem;text-shadow: 1px 1px 3px black;">Suggestions</h1><hr/>
 		<div class="text-center col-12" style="padding: 0;">
@@ -100,6 +108,41 @@
 		</div>
 	</div>
 <% } %>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script type="text/javascript">
+	function scrolldiv() {
+        document.getElementById('scrollcom').scrollTop = 100000;
+    }
+    function insereCom(comment) {
+    	var div = '<div class="col-12" style="background-color: #171717; padding: 15px; overflow: hidden; margin-bottom:5px;">\
+			<h5 style="color:#919191;"><%- profile.login %></h5><p>' + comment + '</p></div>';
+    	$('#scrollcom').append(div);
+    }
+	$(document).ready(function() { scrolldiv();
+    $('#comment').keypress(function(e) {
+      if(e.keyCode==13)
+      {
+      	$('#send').click();
+      	this.value='';
+      }
+    });
+});
+		$("#send").click(function postCom() {
+			var movie_id = <% if (typeof id != 'undefined') { %><%-id%><%} else {%>'0'<%}%>;
+			var comment = document.getElementById("comment").value;
+			insereCom(comment);
+			$('#comment').val('');
+			scrolldiv();
+			$.post("/comment",
+		    {
+		        movie_id: movie_id,
+		        comment: comment
+		    },
+		    function(data, status){
+		        alert("\nStatus: " + status);
+		    });
+		});
+	</script>
 </body>
 
 <% include footer.ejs %>

@@ -19,3 +19,11 @@ id INT AUTO_INCREMENT PRIMARY KEY, \
 user_id INT, \
 movie_id INT)';
 con.query(vues, (err) => {if (err) res.redirect('/error/SQL error ' + err);});
+
+var comments = 'CREATE TABLE IF NOT EXISTS comments (\
+id INT AUTO_INCREMENT PRIMARY KEY, \
+user_id INT, \
+user_login VARCHAR(255), \
+movie_id INT, \
+comment TEXT)';
+con.query(comments, (err) => {if (err) res.redirect('/error/SQL error ' + err);});
