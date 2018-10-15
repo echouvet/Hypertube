@@ -4,6 +4,7 @@ if (empty(req.body.movie))
 }
 else
 {
+
 	var movies = JSON.parse(req.body.movie)
 	var id = eschtml(movies.id);
 	var title = eschtml(encodeURI(movies.title));
@@ -58,13 +59,24 @@ else
 				if (file.name.substr(file.name.length - 3) == 'mkv' || file.name.substr(file.name.length - 3) == 'mp4' ||
 				file.name.substr(file.name.length - 3) == 'avi' || file.name.substr(file.name.length - 3) == 'MP4')
 				{
-					con.query('SELECT path FROM movies WHERE hash = ?', [hash], (err, rows) => {
+					con.query('SELECT * FROM movies WHERE hash = ?', [hash], (err, rows) => {
 						if (err) res.redirect('/error/SQL error ' + err);
 						if (rows[0] == undefined)
 						{
-							con.query('INSERT INTO movies(hash, path) VALUES (?, ?)', [hash, file.path], 
-								(err) => { if (err) res.redirect('/error/SQL error ' + err); })
+							con.query('INSERT INTO movies(hash, path, api_id, api) VALUES (?, ?, ?, ?)', [hash, file.path, movies.id, api], 
+								(err, result) => { if (err) res.redirect('/error/SQL error ' + err); })
+							con.query('SELECT id FROM movies ORDER BY id DESC LIMIT 1', (err, result) => {if (err) throw err;
+								con.query('INSERT INTO vues (user_id, movie_id) VALUES (?, ?)', [req.session.profile.id, result[0].id], 
+								(err) => { if (err) throw err;})
+							})
 						}
+						else
+						{
+							con.query('INSERT INTO vues (user_id, movie_id) VALUES (?, ?)', [req.session.profile.id, rows[0].id], 
+								(err) => { if (err) throw err;})
+						}
+						
+
 					})
 					var stream = file.createReadStream();
 				}
@@ -103,5 +115,5 @@ else
 			else
 				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash, api, id: rows[0].id, coms:coms}) });
 		}
-	})	
+	})
 }

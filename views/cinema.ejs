@@ -77,7 +77,7 @@
 	
 	<div class="col-10 offset-1 comments">
 		<h1 style="margin:1rem;"><% if (typeof coms != 'undefined' && coms) { %>
-			<% var i=0;while(coms[i]){i++;} %><% } else { var i = 0; } %><i><%- i %> </i>Comments</h1><hr/>
+			<% var i=0;while(coms[i]){i++;} %><% } else { var i = 0; } %><i><%- i %> </i><%= __("Comments") %></h1><hr/>
 		<% if (typeof coms != 'undefined' && coms) { %>
 		<div class="container" id="scrollcom" style="max-height: 50rem; overflow-y: auto;">
 		<% coms.forEach(function(com) { %>
@@ -86,20 +86,20 @@
 				<p><%- com.comment %></p></div>
 		<% }) } else { %>
 			<div class="col-12" style="background-color: #171717; padding: 15px; overflow: hidden; margin-bottom:5px;">
-				No comment yet, be the first to write a comment !
+				<%= __("No comment yet, be the first to write a comment !") %>
 			</div> <% } %>
 		</div>
 		<div style="display: inline-flex; padding-bottom:0.5rem; padding-top: 0.5rem;" class="col-12">
 				<input type="text" class="form-control text-center col-10" id="comment" placeholder="<%= __("Your comment...")%>">
-				<input type="submit" class="text-center col-2" value="send" name="sub" id="send">
+				<input type="submit" class="text-center col-2" value="<%= __("send") %>" name="sub" id="send">
 		</div>
 	</div>
 	<% if (typeof suggestions != 'undefined' && suggestions) { %>
 	<div class="col-10 offset-1 comments" style="padding-bottom: 2rem;">
-		<h1 style="margin:1rem;text-shadow: 1px 1px 3px black;">Suggestions</h1><hr/>
+		<h1 style="margin:1rem;text-shadow: 1px 1px 3px black;"><%= __("Similar films") %></h1><hr/>
 		<div class="text-center col-12" style="padding: 0;">
 			<form action="/cinema" method="POST">
-				<% suggestions.forEach(function(suggestion) { console.log(suggestion) // Pourquoi ça marche pas ?!?! :( %>
+				<% suggestions.forEach(function(suggestion) {  // Pourquoi ça marche pas ?!?! :( %>
 					<input type="hidden"  value='<%- eschtml(JSON.stringify(suggestion)) %>' id="movie" name="movie">
 					<input type="hidden"  value='<%- api %>' id="api" name="api">
 					<input type="image" src="<%- suggestion.medium_cover_image %>" style="box-shadow: 10px 10px 10px 10px black; margin-top: 1rem;">
@@ -130,6 +130,7 @@
 		$("#send").click(function postCom() {
 			var movie_id = <% if (typeof id != 'undefined') { %><%-id%><%} else {%>'0'<%}%>;
 			var comment = document.getElementById("comment").value;
+			if (comment != "") {
 			insereCom(comment);
 			$('#comment').val('');
 			scrolldiv();
@@ -140,7 +141,7 @@
 		    },
 		    function(data, status){
 		        alert("\nStatus: " + status);
-		    });
+		    }); } 
 		});
 	</script>
 </body>

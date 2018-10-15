@@ -1,36 +1,52 @@
-// function checkforvues(movies, query, api, callback)
-// {
-// 	con.query('SELECT * FROM vues WHERE user_id = ?', [req.session.profile.id], (err, vueresult) => {
-// 		if (err) { res.redirect('/error/SQL vue problem in search.js ' + err); }
-// 		if (vueresult == undefined)
-// 			return callback(movies)
-// 		var movieids = new Array; 
-// 		movieids = vueresult.map(el => {return el.movie_id})
-// 		con.query('SELECT * FROM movies WHERE id = ? AND api = ?', [movieids, api], (err, seenmovies) => {
-// 			if (err) { res.redirect('/error/SQL vue problem in search.js ' + err); }
-// 			if (seenmovies == undefined || movies == undefined)
-// 				return callback(movies)
-// 			movies.filter(el => {
-// 				if (seenmovies.includes(el) == true)
-// 					el.vue = 1;
-// 			})
-// 			return callback(movies)
-// 		})
-// 	})
-// }
+function checkforvues(movies, query, api, callback)
+{
+	con.query('SELECT * FROM vues WHERE user_id = ?', [req.session.profile.id], (err, vueresult) => {
+		if (err) { res.redirect('/error/SQL vue problem in search.js 1 ' + err); }
+		if (vueresult.length == 0)
+			return callback(movies)
+
+		var ids = new Array;
+		var i = 0;
+		movieids = vueresult.map(el => {
+			if (!ids.includes(el.movie_id))
+			{
+				ids[i] = el.movie_id;
+				i++;
+				return el.movie_id
+			}
+			else
+				return null;
+		}).filter(el => {
+			if (el == null)
+				return false
+			else
+				return true
+		})
+		con.query('SELECT * FROM movies WHERE id IN (?) AND api = ?', [movieids, api], (err, seenmovies) => {
+			if (err) { res.redirect('/error/SQL vue problem in search.js 2 ' + err); }
+			if (seenmovies == undefined || movies == undefined)
+				return callback(movies)
+		// seenmovies = tout les films que t'as vue
+		// movies = tout les films qu'a rendue l'api durent ta recherche
+		// faut comparer les 2 pour pouvoir ajouter une case 'vue' dans movies quand c pareil, pour le front
+		// le probleme c'est qu'ils n'ont pas de variables en commun. Faudrais pouvoir comparer le hash....
+		// ce qu'est au dessus marche, puis rien ne crash, mais pour l'instant movies ne change pas ;(
+			return callback(movies)
+		})
+	})
+}
 
 function render(movies, query, api)
 {
-	// cette fonction pour les films vues ne marche pas encore, j'y reviendrais
-	//checkforvues(movies, query, api, (cmovies) => {
-		let cmovies = movies;
+	checkforvues(movies, query, api, (cmovies) => {
+		var cmovies = movies;
 		if (!cmovies)
 			res.redirect('/error/No movies found')
 		else if (empty(query))
 			res.render('index.ejs', {profile:req.session.profile, movies:cmovies, api})
 		else
 			res.render('search.ejs', {profile:req.session.profile, movies:cmovies, count:cmovies.length, q:query, api})
-	//})
+	})
 }
 
 function	mapyts(data){

@@ -83,5 +83,9 @@
 	"Top movies": "Top movies",
 	"Your comment...": "Your comment...",
 	"results found for": "results found for",
-	"Upload date : ": "Upload date : "
+	"Upload date : ": "Upload date : ",
+	"Comments": "Comments",
+	"send": "send",
+	"Similar films": "Similar films",
+	"No comment yet, be the first to write a comment !": "No comment yet, be the first to write a comment !"
 }
