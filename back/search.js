@@ -4,7 +4,6 @@ function checkforvues(movies, query, api, callback)
 		if (err) { res.redirect('/error/SQL vue problem in search.js 1 ' + err); }
 		if (vueresult.length == 0)
 			return callback(movies)
-
 		var ids = new Array;
 		var i = 0;
 		movieids = vueresult.map(el => {
@@ -22,15 +21,16 @@ function checkforvues(movies, query, api, callback)
 			else
 				return true
 		})
-		con.query('SELECT * FROM movies WHERE id IN (?) AND api = ?', [movieids, api], (err, seenmovies) => {
+		con.query('SELECT api_id FROM movies WHERE id IN (?) AND api = ?', [movieids, api], (err, seenmovies) => {
 			if (err) { res.redirect('/error/SQL vue problem in search.js 2 ' + err); }
 			if (seenmovies == undefined || movies == undefined)
 				return callback(movies)
-		// seenmovies = tout les films que t'as vue
-		// movies = tout les films qu'a rendue l'api durent ta recherche
-		// faut comparer les 2 pour pouvoir ajouter une case 'vue' dans movies quand c pareil, pour le front
-		// le probleme c'est qu'ils n'ont pas de variables en commun. Faudrais pouvoir comparer le hash....
-		// ce qu'est au dessus marche, puis rien ne crash, mais pour l'instant movies ne change pas ;(
+			movies.forEach(movie => {	
+				seenmovies.forEach(s => { 
+					if (s.api_id == movie.id)
+						movie.vue = 1
+				})
+			})
 			return callback(movies)
 		})
 	})

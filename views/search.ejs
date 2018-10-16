@@ -21,7 +21,7 @@
 						<input type="hidden"  value='<%- eschtml(JSON.stringify(movies[i])) %>' id="movie" name="movie">
 						<input type="hidden"  value='<%- api %>' id="api" name="api">
 						<input type="image" src="<%- movies[i].cover %>" alt="Submit Form" class="col-12" style="padding:0">
-						<h5 style="padding-top:4px;"><i><%- movies[i].title %></i></h5>
+						<h5 style="padding-top:4px; <% if (!movies[i].vue) { %> color: white; <% } else { %> color: black;<% } %>"><i><%- movies[i].title %></i></h5>
 						<div style="background-color: #e9ecef; padding: 2px; color:black;">
 							<% if (movies[i].rating) { %>
 							<p style="margin-bottom: 3px;"><i><%= __("Rating : ") %></i><b><%- movies[i].rating %></b></p> <% } %>
