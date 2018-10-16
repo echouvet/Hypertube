@@ -29,7 +29,7 @@ else
 			i = 0;
 		return (i);
 	}
-	// var i = getQuality(req.body.quality);
+	var i = getQuality(req.body.quality);
 	
 	if (!empty(movies.torrents))
 	{

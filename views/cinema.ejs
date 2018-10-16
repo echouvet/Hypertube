@@ -8,7 +8,7 @@
 			<% if (movie.torrents) { %>
 			<div class="quality"> Choose your quality :
 			<% movie.torrents.forEach(function(element) { %>
-				<form action='/cinema' method='POST' style="display:inline-flex;">
+				<form action="/cinema/<%- element['quality']%>" method='POST' style="display:inline-flex;">
 					<input type='hidden' value='<%-eschtml(JSON.stringify(movie))%>' id='movie' name='movie'>
 					<input type="hidden"  value='<%- api %>' id="api" name="api">
 					<input type='submit' value="<%- eschtml(JSON.stringify(element['quality'])) %>" id='quality' name='quality'>

@@ -137,7 +137,7 @@ app.use((req, res, next) => {
 .get('/cinema/:id', (req, res) =>  {
     eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
 })
-.get('/cinema/:quality', (req, res) =>  {
+.post('/cinema/:quality', (req, res) =>  {
     eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
 })
 .all('/my_profile', (req, res) =>  {
