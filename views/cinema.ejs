@@ -14,9 +14,10 @@
 					<input type='submit' value="<%- eschtml(JSON.stringify(element['quality'])) %>" id='quality' name='quality'>
 				</form>
 		<% }) %></div><% } %>
-	<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;"><source src="<%-path%>" type="video/mp4"></video>
+	<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;" src=""><source id="okay" src="" type="video/mp4"></video>
 	
 		<script src="back/resources/jquery-3.3.1.min.js"></script>
+
 		<script>
 
 				movie = '<%-eschtml(JSON.stringify(movie))%>'
@@ -25,11 +26,18 @@
 					url: "/getPath",
 					type: "POST",
 					data: {movie : movie , hash: hash},
-					contentType: 'JSON',
+					datatype: 'JSON',
 					success: function(result)
 					{
-						console.log("fpwoekfpowekfpowkfpowkfpkwef");
-						$('#player').attr('source', result);
+						setTimeout(function(){
+							console.log("getting path ok");
+							document.getElementById('okay').src="<%-path%>";
+						document.getElementById('player').src="<%-path%>";
+}, 25000);
+						// var player = '<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;"><source src="<%-path%>" type="video/mp4"></video>';
+						
+							// $('player').html(player);
+						console.log(document.getElementById('player'));
 					},
 					error: function(err, Status){
                     console.log("Status", Status);
