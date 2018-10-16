@@ -42,7 +42,7 @@
 	<div class="col-10 offset-1 infos">
 		<img src="<%- movie.cover %>" alt="Cover torrent img" class="img-responsive" width="30%" height="30%">
 		<div style="color:white" class="col">
-			<h1 style="text-align: center; margin-top:1rem;"><%- movie.title %></h1><hr/>
+			<h1 style="text-align: center; margin-top:1rem;text-shadow: 6px 6px 6px rgb(77, 0, 0);"><%- movie.title %></h1><hr/>
 			<div class="col-10 offset-1" style="margin-top:2em; margin-bottom:2em;">
 							<% if (movie.rating) { %>
 							<h5 style="margin-bottom: 3px;"><i><%= __("Rating : ") %></i><b><%- movie.rating %></b></h5> <% } %>
@@ -74,7 +74,6 @@
 						<% } %>
 		</div>
 	</div>
-	
 	<div class="col-10 offset-1 comments">
 		<h1 style="margin:1rem;"><% if (typeof coms != 'undefined' && coms) { %>
 			<% var i=0;while(coms[i]){i++;} %><% } else { var i = 0; } %><i><%- i %> </i><%= __("Comments") %></h1><hr/>
@@ -98,11 +97,13 @@
 	<div class="col-10 offset-1 comments" style="padding-bottom: 2rem;">
 		<h1 style="margin:1rem;text-shadow: 1px 1px 3px black;"><%= __("Similar films") %></h1><hr/>
 		<div class="text-center col-12" style="padding: 0;">
-			<form action="/cinema" method="POST">
+			<form action="/cinema" method="POST" style="display: flex;justify-content: space-around;">
 				<% suggestions.forEach(function(suggestion) {  // Pourquoi ça marche pas ?!?! :( %>
+				<div>
 					<input type="hidden"  value='<%- eschtml(JSON.stringify(suggestion)) %>' id="movie" name="movie">
 					<input type="hidden"  value='<%- api %>' id="api" name="api">
 					<input type="image" src="<%- suggestion.medium_cover_image %>" style="box-shadow: 10px 10px 10px 10px black; margin-top: 1rem;">
+				</div>
 				<% }) %>
 			</form>
 		</div>
