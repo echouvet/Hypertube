@@ -86,5 +86,8 @@
 	"Top movies": "Top films",
 	"results found for": "résultats trouvés pour",
 	"Upload date : ": "Date d'ajout : ",
-	"Your comment...": "Your comment..."
+	"Your comment...": "Votre commentaire...",
+	"Comments": "Commentaires",
+	"Send": "Envoyer",
+	"Similar films": "Films similaires"
 }
