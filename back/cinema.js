@@ -4,7 +4,7 @@ if (empty(req.body.movie))
 }
 else
 {
-
+	console.log(req.body.movie);
 	var movies = JSON.parse(req.body.movie)
 	var id = eschtml(movies.id);
 	var title = eschtml(encodeURI(movies.title));
