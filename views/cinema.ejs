@@ -84,7 +84,7 @@
 	</div>
 	<div class="col-10 offset-1 comments">
 		<h1 style="margin:1rem;"><% if (typeof coms != 'undefined' && coms) { %>
-			<% var i=0;while(coms[i]){i++;} %><% } else { var i = 0; } %><i><%- i %> </i><%= __("Comments") %></h1><hr/>
+			<% var i=0;while(coms[i]){i++;} %><% } else { var i = 0; } %><i><span id="changeNumber"><%-i%></span></i> <%= __("Comments") %></h1><hr/>
 		<% if (typeof coms != 'undefined' && coms) { %>
 		<div class="container" id="scrollcom" style="max-height: 50rem; overflow-y: auto;">
 		<% coms.forEach(function(com) { %>
@@ -142,6 +142,7 @@
 			var comment = document.getElementById("comment").value;
 				comment = escapeHtml(comment);
 			if (comment != "") {
+				$('#changeNumber').html(parseInt($('#changeNumber').html(), 10)+1);
 				insereCom(comment);
 				$('#comment').val('');
 				scrolldiv();
