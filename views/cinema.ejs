@@ -85,8 +85,8 @@
 	<div class="col-10 offset-1 comments">
 		<h1 style="margin:1rem;"><% if (typeof coms != 'undefined' && coms) { %>
 			<% var i=0;while(coms[i]){i++;} %><% } else { var i = 0; } %><i><span id="changeNumber"><%-i%></span></i> <%= __("Comments") %></h1><hr/>
-		<% if (typeof coms != 'undefined' && coms) { %>
 		<div class="container" id="scrollcom" style="max-height: 50rem; overflow-y: auto;">
+		<% if (typeof coms != 'undefined' && coms) { %>
 		<% coms.forEach(function(com) { %>
 			<div class="col-12" style="background-color: #171717; padding: 15px; overflow: hidden; margin-bottom:5px;">
 			<h5 style="color:#919191;"><%- com.user_login %></h5>

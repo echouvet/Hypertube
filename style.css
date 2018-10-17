@@ -101,7 +101,6 @@ body {
 	border: 2px solid black; 
 	box-shadow: 1px 1px 5px; 
 	overflow-y: auto; 
-	max-height: 25vw; 
 	vertical-align: top; 
 }
 
@@ -115,7 +114,6 @@ body {
 	border: 2px solid black; 
 	box-shadow: 1px 1px 5px; 
 	overflow-y: auto; 
-	max-height: 25vw; 
 	vertical-align: top; 
 }
 
@@ -169,3 +167,26 @@ hr
     height: 100px;
   }
 }
+@media (min-width: 300.98px) { .srchpic {
+	max-height: 61vw; 
+	min-height: 59vw;
+	max-width: 40.333%;
+	} }
+
+@media (min-width: 800.98px) { .srchpic {
+	max-height: 36vw; 
+	min-height: 34vw;
+	max-width: 22.333333%;
+	} }
+
+@media (min-width: 1600.98px) { .srchpic {
+	max-height: 21vw; 
+	min-height: 19vw;
+	max-width: 13.33333%;
+	} }
+
+@media (min-width: 2000.98px) { .srchpic {
+	max-height: 14vw; 
+	min-height: 12vw;
+	max-width: 8.333333%;
+	} }
