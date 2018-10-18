@@ -87,5 +87,6 @@
 	"Comments": "Comments",
 	"send": "send",
 	"Similar films": "Similar films",
-	"No comment yet, be the first to write a comment !": "No comment yet, be the first to write a comment !"
+	"No comment yet, be the first to write a comment !": "No comment yet, be the first to write a comment !",
+	"Size : ": "Size : "
 }

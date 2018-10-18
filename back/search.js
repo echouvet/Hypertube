@@ -21,21 +21,22 @@ function checkforvues(movies, query, api, callback)
 			else
 				return true
 		})
-		con.query('SELECT api_id FROM movies WHERE id IN (?) AND api = ?', [movieids, api], (err, seenmovies) => {
+		con.query('SELECT * FROM movies WHERE id IN (?) AND api = ?', [movieids, api], (err, seenmovies) => {
 			if (err) { res.redirect('/error/SQL vue problem in search.js 2 ' + err); }
 			if (seenmovies == undefined || movies == undefined)
 				return callback(movies)
 			movies.forEach(movie => {	
 				seenmovies.forEach(s => {
-					if (s.api_id == movie.id)
+					if ((s.api_id == movie.id && !empty(movie.id) && !empty(s.api_id)) || 
+						(s.title == movie.title && !empty(s.title) && !empty(movie.title)))
 						movie.vue = 1
+						
 				})
 			})
 			return callback(movies)
 		})
 	})
 }
-
 function render(movies, query, api)
 {
 	checkforvues(movies, query, api, (cmovies) => {
@@ -119,30 +120,32 @@ async function yts(query){
 }
 
 async function thepiratebay(query) {
-	if (empty(query) || query === "undefined")
-		result = await PirateBay.topTorrents(200).catch(err => {if (err) res.redirect('/error/thepiratebay catch ' + err);} )
-	else
-	{
-		result = await PirateBay.search(query, {
-	    	category: 'video',
-			orderBy: 'name',
-			sortBy: 'desc',
-			filter: { verified: true }
-  		}).catch(err => {if (err) res.redirect('/error/thepiratebay catch ' + err);})
-	}
-  	const piratemovies = result.map(elem => {
-  		elem.name = elem.name.replace(/\./g, ' ');
-  		return({
-			id: elem.id,
-			title: elem.name,
-	        uploaddate: elem.uploadDate,
-	        size: elem.size,
-	        link: elem.link,
-	        category: elem.subcategory.name,
-	   		magnet: elem.magnetLink,
-	   		cover: 'img/piratebay.png'
-		})});
-	render(piratemovies, query, 2)
+	try {
+		if (empty(query) || query === "undefined")
+			var result = await PirateBay.topTorrents(200)
+		else
+		{
+			var result = await PirateBay.search(query, {
+		    	category: 'video',
+				orderBy: 'name',
+				sortBy: 'desc',
+				filter: { verified: true }
+	  		})
+		}
+	  	const piratemovies = result.map(elem => {
+	  		elem.name = elem.name.replace(/\./g, ' ');
+	  		return({
+				id: elem.id,
+				title: elem.name,
+		        uploaddate: elem.uploadDate,
+		        size: elem.size,
+		        link: elem.link,
+		        category: elem.subcategory.name,
+		   		magnet: elem.magnetLink,
+		   		cover: 'img/piratebay.png'
+			})});
+		render(piratemovies, query, 2)
+	} catch (err) {res.redirect('/error/TPB catch ' + err); }
 }
 
 function maparchive(rawmovies)
@@ -205,30 +208,16 @@ function mapxtorrent(rawmovies)
 }
 
 function apixtorrent(query) {
-	xtorrent.search({query:query}).then(function (data) {
-  		mapxtorrent(data);
-	}).catch(err => console.log(err))
-}
-
-function apizooqle(query) {
-	console.log('ok')
-	zooqle.search(query).then(response => {
-  		console.log(response);
-	console.log('bug')
-
-	}).catch(err => console.log(err));
+	try {
+		xtorrent.search({query:query}).then(function (data) {
+  			mapxtorrent(data);
+		}) 
+	} catch (err) { res.redirect('/error/apixtorrent fetch problem ' + err); }
 }
 
 
 var query = eschtml(req.body.query)
-console.log(req.body.srch)
 switch (req.body.srch) {
-	case 'zoo' :
-		if (!empty(query))
-			apizooqle(query);
-		else
-			yts(query);
-		break;
 	case 'xto' :
 		if (!empty(query))
 			apixtorrent(query);

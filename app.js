@@ -30,7 +30,6 @@ var express = require('express')
     OS = require('opensubtitles-api');
     OpenSubtitles = new OS({useragent:'TemporaryUserAgent'});
     xtorrent = require('xtorrent');
-    const { zooqle } = require('zooqle')
 
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
@@ -61,7 +60,6 @@ server.listen(8080)
 
 
 app.use((req, res, next) => {
-    // oui ceci est moche, mais necessaire. Demandez a Eloi si y'a un doubt
     if (req.session && req.session.profile)
     {
         if (empty(req.session.profile.id)) {
