@@ -101,6 +101,7 @@ body {
 	border: 2px solid black; 
 	box-shadow: 1px 1px 5px; 
 	overflow-y: auto; 
+	overflow-x: hidden;
 	vertical-align: top; 
 }
 
@@ -114,6 +115,7 @@ body {
 	border: 2px solid black; 
 	box-shadow: 1px 1px 5px; 
 	overflow-y: auto; 
+	overflow-x: hidden;
 	vertical-align: top; 
 }
 

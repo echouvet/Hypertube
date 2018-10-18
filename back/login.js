@@ -21,7 +21,7 @@ var login = eschtml(req.body.login)
 				{
 					req.session.profile = result[0];
 					req.i18n.setLocale(result[0].language);
-					res.redirect('/');
+					res.redirect('/index');
 				}
 			})
 		}
