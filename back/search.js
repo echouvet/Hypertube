@@ -26,7 +26,7 @@ function checkforvues(movies, query, api, callback)
 			if (seenmovies == undefined || movies == undefined)
 				return callback(movies)
 			movies.forEach(movie => {	
-				seenmovies.forEach(s => { 
+				seenmovies.forEach(s => {
 					if (s.api_id == movie.id)
 						movie.vue = 1
 				})
@@ -188,8 +188,53 @@ async function toparchive() {
 	} catch (err) { res.redirect('/error/archive.org fetch problem ' + err); }
 }
 
+function mapxtorrent(rawmovies)
+{
+	var movies = rawmovies.map(elem => {
+		return xtorrent.info(elem.href).then(function (info) {
+			return({
+				title: elem.title,
+				href: elem.href,
+				size: info.size,
+				language: info.language,
+				cover: '/img/1337X.png',
+				uploaddate: info.date_uploaded,
+				magnet: info.download.magnet
+		})})});
+	Promise.all(movies).then((movies) => render(movies, query, 4));
+}
+
+function apixtorrent(query) {
+	xtorrent.search({query:query}).then(function (data) {
+  		mapxtorrent(data);
+	}).catch(err => console.log(err))
+}
+
+function apizooqle(query) {
+	console.log('ok')
+	zooqle.search(query).then(response => {
+  		console.log(response);
+	console.log('bug')
+
+	}).catch(err => console.log(err));
+}
+
+
 var query = eschtml(req.body.query)
+console.log(req.body.srch)
 switch (req.body.srch) {
+	case 'zoo' :
+		if (!empty(query))
+			apizooqle(query);
+		else
+			yts(query);
+		break;
+	case 'xto' :
+		if (!empty(query))
+			apixtorrent(query);
+		else
+			yts(query);
+		break;
     case 'tpb' :
 	    thepiratebay(query);
 	    break;

@@ -38,7 +38,7 @@ var headers = {
                     req.session.profile.img = body.avatar_url;
                     req.session.profile.api = '3';
                     adduser(body)
-                    res.redirect('/')
+                    res.redirect('/index')
                 }
                 else
                     res.redirect('/error/request in oauth.js' + response.statusCode + " : " + error)

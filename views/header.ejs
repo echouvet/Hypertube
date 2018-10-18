@@ -31,11 +31,13 @@
 </div>
 <nav class="navbar bg-dark">
     <div class="col-12" style="display: inline-flex;">
-        <form class="form-inline" action="/search" method="post">
+        <form class="form-inline" action="/index" method="post">
             <input class="form-control mr-2" type="text" placeholder="<%= __("Search..")  %>" name="query">
             <button class="btn btn-dark adv-search" type="submit" value="tpb" name="srch"><%= __("Search on ")%><i style="color:red;">ThePirateBays</i></button>
             <button class="btn btn-dark adv-search" type="submit" value="arc" name="srch"><%= __("Search on ")%><i style="color:red;">archive.org</i></button>
             <button class="btn btn-dark adv-search" type="submit" value="yts" name="srch"><%= __("Search on ")%><i style="color:red;">YTS</i>
+            <button class="btn btn-dark adv-search" type="submit" value="xto" name="srch"><%= __("Search on ")%><i style="color:red;">1337X</i>
+            <button class="btn btn-dark adv-search" type="submit" value="zoo" name="srch"><%= __("Search on ")%><i style="color:red;">Zooqle</i>
             <div class="adv-search col-12" style="position:absolute;height:20px;width: 150px;"></div>
            <div class="search col-12" style="position:absolute; top:45px; width: 200px;">
             <div style="text-align: left;">
@@ -73,6 +75,6 @@
     </div>
 </nav>
         <% } %>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="back/resources/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

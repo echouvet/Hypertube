@@ -29,6 +29,8 @@ var express = require('express')
     srtToVtt = require('srt-to-vtt');
     OS = require('opensubtitles-api');
     OpenSubtitles = new OS({useragent:'TemporaryUserAgent'});
+    xtorrent = require('xtorrent');
+    const { zooqle } = require('zooqle')
 
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
@@ -128,20 +130,11 @@ app.use((req, res, next) => {
 .post('/comment', (req, res) => {
    eval(fs.readFileSync(__dirname + "/back/comment.js")+'')
 })
-.all('/search', (req, res) =>  {
-    eval(fs.readFileSync(__dirname + "/back/search.js")+'')
-})
 .post('/cinema', (req, res) =>  {
     eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
 })
 .post('/getPath', (req, res) =>  {
     eval(fs.readFileSync(__dirname+"/back/getpath.js")+'')
-})
-.get('/cinema/:id', (req, res) =>  {
-    eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
-})
-.post('/cinema/:quality', (req, res) =>  {
-    eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
 })
 .all('/my_profile', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/my_profile.js")+'')
@@ -152,7 +145,7 @@ app.use((req, res, next) => {
         res.render('other_profiles.ejs', {profile: req.session.profile, users: result})
     })
 })
-.get('/index', (req, res) =>  {
+.all('/index', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
 })
 .get('*', (req,res) => {
