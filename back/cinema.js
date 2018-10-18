@@ -48,6 +48,7 @@ else
 		torrentURI = magnet;
 		hash = magnet;
 	}
+	
 	magnetLink(torrentURI, (err, link) => { if (err) res.redirect('/error/MagnetLink error ' + err);
 		if (magnet === undefined)
 			var magnet = link;
@@ -94,21 +95,58 @@ else
 			fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
 				.then(res => { return res.json(); })
 				.then(json => { 
+
+					OpenSubtitles.search({
+						hash: hash,
+						path: path,
+						filename: movies.title,
+						extensions: ['srt'],
+						query: movies.title
+					}).then(subtitles => {
+						console.log("pouletto")
+						console.log(subtitles);
+					})
 					res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: '/tmp', hash: hash, suggestions: json.data.movies, api})
 				})
 				.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
 			else
+			{
+				OpenSubtitles.search({
+					hash: hash,
+					path: path,
+					filename: movies.title,
+					extensions: ['srt'],
+					query: movies.title
+				}).then(subtitles => {
+					console.log("pouletto")
+					console.log(subtitles);
+				})
 				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: '/tmp', hash: hash, api})
+			}
 
 		}
 		else
 		{
-			path = '/tmp/films/'+rows[0].path;
+			path = '/tmp/films/'+rows[0].path
+			OpenSubtitles.search({
+				hash: hash,
+				path: path,
+				filename: movies.title,
+				extensions: ['srt'],
+				query: movies.title
+			}).then(subtitles => {
+				console.log("pouletto")
+				console.log(subtitles);
+			})
+			fs.createReadStream('tmp/25.srt')
+				.pipe(srtToVtt())
+				.pipe(fs.createWriteStream('tmp/25.vtt'));
 			con.query('SELECT * FROM comments WHERE movie_id = ?', [rows[0].id], (err, coms) => {
 			if (api == 1) {
 			fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
 				.then(res => { return res.json(); })
 				.then(json => { 
+					
 					res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash, suggestions: json.data.movies, api, id: rows[0].id, coms:coms})
 				})
 				.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }

@@ -26,6 +26,9 @@ var express = require('express')
     reqAjax = require('ajax-request');
     archive = require('archive.org');
     isReachable = require('is-reachable');
+    srtToVtt = require('srt-to-vtt');
+    OS = require('opensubtitles-api');
+    OpenSubtitles = new OS({useragent:'TemporaryUserAgent'});
 
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),

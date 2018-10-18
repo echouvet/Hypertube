@@ -14,7 +14,11 @@
 					<input type='submit' value="<%- eschtml(JSON.stringify(element['quality'])) %>" id='quality' name='quality'>
 				</form>
 		<% }) %></div><% } %>
-	<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;" src=""><source id="okay" src="" type="video/mp4"></video>
+	<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;" src="<%-path%>"><source id="okay" src="<%-path%>" type="video/mp4">
+		<track label="English" kind="subtitles" srclang="en" src="/tmp/25.vtt" default>
+			<track label="Deutsch" kind="subtitles" srclang="de" src="captions/vtt/sintel-de.vtt">
+			<track label="Español" kind="subtitles" srclang="es" src="captions/vtt/sintel-es.vtt">
+	</video>
 	
 		<script src="back/resources/jquery-3.3.1.min.js"></script>
 
@@ -22,6 +26,8 @@
 
 				movie = '<%-eschtml(JSON.stringify(movie))%>'
 				hash = '<%-eschtml(JSON.stringify(hash))%>'
+				path = '<%- path %>';
+				console.log(path);
 				$.ajax({
 					url: "/getPath",
 					type: "POST",
@@ -29,11 +35,13 @@
 					datatype: 'JSON',
 					success: function(result)
 					{
-						setTimeout(function(){
-							console.log("getting path ok");
-							document.getElementById('okay').src="<%-path%>";
-						document.getElementById('player').src="<%-path%>";
-}, 25000);
+// 						if (<%- path %> === '/tmpo'){ console.log("fkewopfjwoifjiowejfowejfiwejfwoijwefjiwoefjjj")
+// 						setTimeout(function(){
+// 							console.log("getting path ok");
+// 							document.getElementById('okay').src="<%-path%>";
+// 						document.getElementById('player').src="<%-path%>";
+// }, 25000);}
+
 						// var player = '<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;"><source src="<%-path%>" type="video/mp4"></video>';
 						
 							// $('player').html(player);
