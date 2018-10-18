@@ -119,30 +119,32 @@ async function yts(query){
 }
 
 async function thepiratebay(query) {
-	if (empty(query) || query === "undefined")
-		result = await PirateBay.topTorrents(200).catch(err => {if (err) res.redirect('/error/thepiratebay catch ' + err);} )
-	else
-	{
-		result = await PirateBay.search(query, {
-	    	category: 'video',
-			orderBy: 'name',
-			sortBy: 'desc',
-			filter: { verified: true }
-  		}).catch(err => {if (err) res.redirect('/error/thepiratebay catch ' + err);})
-	}
-  	const piratemovies = result.map(elem => {
-  		elem.name = elem.name.replace(/\./g, ' ');
-  		return({
-			id: elem.id,
-			title: elem.name,
-	        uploaddate: elem.uploadDate,
-	        size: elem.size,
-	        link: elem.link,
-	        category: elem.subcategory.name,
-	   		magnet: elem.magnetLink,
-	   		cover: 'img/piratebay.png'
-		})});
-	render(piratemovies, query, 2)
+	try {
+		if (empty(query) || query === "undefined")
+			var result = await PirateBay.topTorrents(200)
+		else
+		{
+			var result = await PirateBay.search(query, {
+		    	category: 'video',
+				orderBy: 'name',
+				sortBy: 'desc',
+				filter: { verified: true }
+	  		})
+		}
+	  	const piratemovies = result.map(elem => {
+	  		elem.name = elem.name.replace(/\./g, ' ');
+	  		return({
+				id: elem.id,
+				title: elem.name,
+		        uploaddate: elem.uploadDate,
+		        size: elem.size,
+		        link: elem.link,
+		        category: elem.subcategory.name,
+		   		magnet: elem.magnetLink,
+		   		cover: 'img/piratebay.png'
+			})});
+		render(piratemovies, query, 2)
+	} catch (err) {res.redirect('/error/YTS catch ' + err); }
 }
 
 function maparchive(rawmovies)
