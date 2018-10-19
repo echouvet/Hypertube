@@ -145,6 +145,9 @@ app.use((req, res, next) => {
         res.render('other_profiles.ejs', {profile: req.session.profile, users: result})
     })
 })
+.get('/video/:hash', (req, res) => {
+    eval(fs.readFileSync(__dirname + "/back/video.js")+'')
+})
 
 .all('/index', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
