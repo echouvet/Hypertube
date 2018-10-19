@@ -33,23 +33,41 @@
     <div class="col-12" style="display: inline-flex;">
         <form class="form-inline" action="/index" method="post">
             <input class="form-control mr-2" type="text" placeholder="<%= __("Search..")  %>" name="query">
+            <div class="adv-search" style="color:white;padding-left: 10px;padding-right: 10px;">Advanced search
+            <div class="adv-search col-12" style="position:absolute;height:20px;width: 150px;"></div>
+            <div class="search col-5 bg-dark" style="position:absolute; top:45px; justify-content: center;">
+                <div class="col-4">
+                    <h4><%= __("Sort") %></h4><hr style="margin:2px 2px 2px 2px;" />
+                        <div class="left"><label for="downloads"><%= __("Downloads") %><input type="radio" id="downloads" name="sort" value="0" class="rdio"></label></div><br/>
+                        <div class="left"><label for="likes"><%= __("Likes") %><input type="radio" id="likes" name="sort" value="1" class="rdio"></label></div><br/>
+                        <div class="left"><label for="year"><%= __("Year") %><input type="radio" id="year" name="sort" value="2" class="rdio" style=""></label></div><br/>
+                        <div class="left"><label for="date"><%= __("Date added") %><input type="radio" id="date" value="3" name="sort" class="rdio"></label></div><br/>
+                        <div class="left"><label for="rating"><%= __("Rating") %><input type="radio" id="rating" value="4" name="sort" class="rdio"></label></div><br/>
+                        <div class="left"><label for="peers"><%= __("Peers") %><input type="radio" id="peers" value="5" name="sort" class="rdio"></label></div><br/>
+                        <div class="left"><label for="seeds"><%= __("Seeds") %><input type="radio" id="seeds" value="6" name="sort" class="rdio"></label></div>
+                </div>
+                <div class="col-7">
+                    <h4><%= __("Filter") %></h4><hr style="margin:2px 2px 2px 2px;" />
+                    <div class="left"><label for="genres"><%= __("Genres") %><select class="text-center margleft" id="genres" name=genres style="text-align-last:center;">
+                        <option value="Action" selected>Action</option>
+                        <option value="Comedie">Comedie</option>
+                        <option value="Thriller">Thriller</option>
+                    </select></label></div><br/>
+                    <div class="left"><label for="productyear"><%= __("Product year between") %>
+                    <input class="marg text-center" type="text" name="productyear" id="productyear" style="max-width: 40px; max-height: 20px;"> <%= __("and") %> 
+                    <input class="marg text-center" type="text" name="productyear" id="productyear" style="max-width: 40px; max-height: 20px;">
+                    </label></div>
+                    <div class="left"><label for="filtrerating"><%= __("Rating between") %>
+                    <input class="marg text-center" type="text" name="filtrerating" id="filtrerating" style="max-width: 40px; max-height: 20px;"> <%= __("and") %> 
+                    <input class="marg text-center" type="text" name="filtrerating" id="filtrerating" style="max-width: 40px; max-height: 20px;">
+                    </label></div>
+                </div>
+            </div></div>
             <button class="btn btn-dark adv-search" type="submit" value="tpb" name="srch"><%= __("Search on ")%><i style="color:red;">ThePirateBays</i></button>
             <button class="btn btn-dark adv-search" type="submit" value="arc" name="srch"><%= __("Search on ")%><i style="color:red;">archive.org</i></button>
             <button class="btn btn-dark adv-search" type="submit" value="yts" name="srch"><%= __("Search on ")%><i style="color:red;">YTS</i></button>
             <button class="btn btn-dark adv-search" type="submit" value="xto" name="srch"><%= __("Search on ")%><i style="color:red;">1337X</i></button>
-            <div class="adv-search col-12" style="position:absolute;height:20px;width: 150px;"></div>
-           <div class="search col-12" style="position:absolute; top:45px; width: 200px;">
-            <div style="text-align: left;">
-                <label><%= __("Sort by (default:Title)") %></label><hr style="margin:2px 2px 2px 2px;" />
-                <label for="downloads"><%= __("Downloads") %><input type="radio" id="downloads" name="sort" value="0" style="margin-left:15px;"></label>
-                <label for="likes"><%= __("Likes") %><input type="radio" id="likes" name="sort" value="1" style="margin-left:15px;"></label>
-                <label for="year"><%= __("Year") %><input type="radio" id="year" name="sort" value="2" style="margin-left:15px;"></label>
-                <label for="date"><%= __("Date added") %><input type="radio" id="date" value="3" name="sort" style="margin-left:15px;"></label>
-                <label for="rating"><%= __("Rating") %><input type="radio" id="rating" value="4" name="sort" style="margin-left:15px;"></label>
-                <label for="peers"><%= __("Peers") %><input type="radio" id="peers" value="5" name="sort" style="margin-left:15px;"></label>
-                <label for="seeds"><%= __("Seeds") %><input type="radio" id="seeds" value="6" name="sort" style="margin-left:15px;"></label>
-            </div>
-        </div></button>
+           
         </form>
        
     </div>

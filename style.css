@@ -11,20 +11,14 @@ body {
 
 .adv-search:hover .search
 {
-	display: block;
-}
-.search:hover
-{
-	display: block;
+	display: flex;
 }
 .search
 {
 	z-index: 2;
 	display: none;
-	border: 1px solid black;
-	color: black;
-	background-color: #e9ecef;
-	border-radius: 10px;
+	box-shadow: 0px 0px 1px 1px red;
+	color: white;
 	padding: 4px;
 }
 .titre
@@ -52,6 +46,17 @@ body {
 {
 	display: none;
 }
+.rdio {
+	position:absolute;
+	right: 40px;
+}
+.margleft {
+	margin-left: 20px;
+}
+.marg {
+	margin-left: 10px;
+	margin-right: 10px;
+}
 .infos
 {
 	display:inline-flex; 
@@ -76,6 +81,10 @@ body {
 	display: -webkit-inline-box;
 }
 
+.left {
+	display: inline-flex;
+}
+
 .pic:hover .menu-pic
 {
 	display: block;
@@ -89,7 +98,7 @@ body {
 {
 	z-index: 2;
 	display: none;
-	border: 1px solid black;
+	box-shadow: 0px 0px 3px 3px red;
 }
 .listfilm1
 {
