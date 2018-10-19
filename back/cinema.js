@@ -1,35 +1,23 @@
-if (empty(req.body.movie))
+function getQuality(torrents, quality)
 {
-	res.redirect('/error/Cinema.js did not receive req.body.movie')
+	if (!empty(quality) && !empty(torrents))
+	{
+		torrents.forEach((el, i) => {
+			if (el.quality === quality)
+				return i;
+		})
+	}
+	return 0;
 }
+if (empty(req.body.movie))
+	res.redirect('/error/Cinema.js did not receive req.body.movie')
 else
 {
 	var movies = JSON.parse(req.body.movie)
-	var id = eschtml(movies.id);
-	var title = eschtml(encodeURI(movies.title));
-		api = eschtml(req.body.api);
-	var i = 0;
-	function getQuality()
-	{
-		if (req.params.quality && movies.torrents)
-		{
-			params = req.params.quality;
-			if (params) {
-				while (movies.torrents[i] && movies.torrents[i].quality != params)
-					i++;
-				if (movies.torrents[i].quality == params)
-					return (i);
-				else
-					i = 0;
-			}
-			return (i)
-		}
-		else
-			i = 0;
-		return (i);
-	}
-	var i = getQuality(req.body.quality);
-	
+	id = eschtml(movies.id);
+	title = eschtml(encodeURI(movies.title));
+	api = eschtml(req.body.api);
+	i = getQuality(movies.torrents, req.body.quality);
 	if (!empty(movies.torrents))
 	{
 		var hash = movies.torrents[i].hash
@@ -106,40 +94,40 @@ else
 		else
 		{
 			var path1 = '/tmp/films/'+rows[0].path;
-			setTimeout(function() {
-			var path = '/tmp/hypertube/tmp/films/'+rows[0].path
-			var stat = fs.statSync(path)
-			var fileSize = stat.size
-			var range = req.headers.range
+			// setTimeout(function() {
+			// var path = '/tmp/hypertube/tmp/films/'+rows[0].path
+			// var stat = fs.statSync(path)
+			// var fileSize = stat.size
+			// var range = req.headers.range
 			
-			console.log(range);
-			if (range)
-			{
-				console.log("fjwiejfodhs")
-				const parts = range.replace(/bytes=/, "").split("-")
-				const start = parseInt(parts[0], 10)
-				const end = parts[1] 
-				? parseInt(parts[1], 10)
-				: fileSize-1
-				const chunksize = (end-start)+1
-				const stream = fs.createReadStream(path, {start, end})
-				const head = {
-				'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-				'Accept-Ranges': 'bytes',
-				'Content-Length': chunksize,
-				'Content-Type': 'video/mp4',
-				}
-				stream.pipe(res);
-			}
-			else {
-				const head = {
-				  'Content-Length': fileSize,
-				  'content-type': 'video/mp4',
-				}
-				res.statusCode = 200;
-				res.setHeader('Content-Length', fileSize);
-				res.setHeader('Accept-ranges', 'bytes');
-				fs.createReadStream(path); }
+			// console.log(range);
+			// if (range)
+			// {
+			// 	console.log("fjwiejfodhs")
+			// 	const parts = range.replace(/bytes=/, "").split("-")
+			// 	const start = parseInt(parts[0], 10)
+			// 	const end = parts[1] 
+			// 	? parseInt(parts[1], 10)
+			// 	: fileSize-1
+			// 	const chunksize = (end-start)+1
+			// 	const stream = fs.createReadStream(path, {start, end})
+			// 	const head = {
+			// 	'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+			// 	'Accept-Ranges': 'bytes',
+			// 	'Content-Length': chunksize,
+			// 	'Content-Type': 'video/mp4',
+			// 	}
+			// 	stream.pipe(res);
+			// }
+			// else {
+			// 	const head = {
+			// 	  'Content-Length': fileSize,
+			// 	  'content-type': 'video/mp4',
+			// 	}
+			// 	res.statusCode = 200;
+			// 	res.setHeader('Content-Length', fileSize);
+			// 	res.setHeader('Accept-ranges', 'bytes');
+			// 	fs.createReadStream(path); }
 				con.query('SELECT * FROM comments WHERE movie_id = ?', [rows[0].id], (err, coms) => {
 					if (api == 1) {
 						fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
@@ -150,7 +138,7 @@ else
 						.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
 						else
 						res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, id: rows[0].id, coms:coms}) });
-					},5000);
+					// },5000);
 		}
 	})
 }
