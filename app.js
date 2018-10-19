@@ -30,6 +30,8 @@ var express = require('express')
     OS = require('opensubtitles-api');
     OpenSubtitles = new OS({useragent:'TemporaryUserAgent'});
     xtorrent = require('xtorrent');
+    pump = require('pump');
+    rangeParser = require('range-parser');
 
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
@@ -143,6 +145,7 @@ app.use((req, res, next) => {
         res.render('other_profiles.ejs', {profile: req.session.profile, users: result})
     })
 })
+
 .all('/index', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
 })

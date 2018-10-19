@@ -27,7 +27,6 @@
 				movie = '<%-eschtml(JSON.stringify(movie))%>'
 				hash = '<%-eschtml(JSON.stringify(hash))%>'
 				path = '<%- path %>';
-				console.log(path);
 				$.ajax({
 					url: "/getPath",
 					type: "POST",
@@ -35,16 +34,7 @@
 					datatype: 'JSON',
 					success: function(result)
 					{
-// 						if (<%- path %> === '/tmpo'){ console.log("fkewopfjwoifjiowejfowejfiwejfwoijwefjiwoefjjj")
-// 						setTimeout(function(){
-// 							console.log("getting path ok");
-// 							document.getElementById('okay').src="<%-path%>";
-// 						document.getElementById('player').src="<%-path%>";
-// }, 25000);}
-
-						// var player = '<video id="player" controls preload="auto" autoplay name="media" style="width: 90vw;"><source src="<%-path%>" type="video/mp4"></video>';
-						
-							// $('player').html(player);
+// 						
 						console.log(document.getElementById('player'));
 					},
 					error: function(err, Status){
@@ -172,7 +162,13 @@
 	           "'": '&#039;'
 	         };
 	        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-	    };
+		};
+			var req = new XMLHttpRequest();
+			req.open('GET', document.location, false);
+			req.send(null);
+			var headers = req.getAllResponseHeaders().toLowerCase();
+			alert(headers);
+		
 	</script>
 </body>
 

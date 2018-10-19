@@ -94,63 +94,63 @@ else
 			fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
 				.then(res => { return res.json(); })
 				.then(json => { 
-
-					OpenSubtitles.search({
-						hash: hash,
-						path: path,
-						filename: movies.title,
-						extensions: ['srt'],
-						query: movies.title
-					}).then(subtitles => {
-						console.log("pouletto")
-						console.log(subtitles);
-					})
 					res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: '/tmp', hash: hash, suggestions: json.data.movies, api})
 				})
 				.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
 			else
 			{
-				OpenSubtitles.search({
-					hash: hash,
-					path: path,
-					filename: movies.title,
-					extensions: ['srt'],
-					query: movies.title
-				}).then(subtitles => {
-					console.log("pouletto")
-					console.log(subtitles);
-				})
 				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: '/tmp', hash: hash, api})
 			}
 
 		}
 		else
 		{
-			path = '/tmp/films/'+rows[0].path
-			OpenSubtitles.search({
-				hash: hash,
-				path: path,
-				filename: movies.title,
-				extensions: ['srt'],
-				query: movies.title
-			}).then(subtitles => {
-				console.log("pouletto")
-				console.log(subtitles);
-			})
-			fs.createReadStream('tmp/25.srt')
-				.pipe(srtToVtt())
-				.pipe(fs.createWriteStream('tmp/25.vtt'));
-			con.query('SELECT * FROM comments WHERE movie_id = ?', [rows[0].id], (err, coms) => {
-			if (api == 1) {
-			fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
-				.then(res => { return res.json(); })
-				.then(json => { 
-					
-					res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash, suggestions: json.data.movies, api, id: rows[0].id, coms:coms})
-				})
-				.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
-			else
-				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path, hash: hash, api, id: rows[0].id, coms:coms}) });
+			var path1 = '/tmp/films/'+rows[0].path;
+			setTimeout(function() {
+			var path = '/tmp/hypertube/tmp/films/'+rows[0].path
+			var stat = fs.statSync(path)
+			var fileSize = stat.size
+			var range = req.headers.range
+			
+			console.log(range);
+			if (range)
+			{
+				console.log("fjwiejfodhs")
+				const parts = range.replace(/bytes=/, "").split("-")
+				const start = parseInt(parts[0], 10)
+				const end = parts[1] 
+				? parseInt(parts[1], 10)
+				: fileSize-1
+				const chunksize = (end-start)+1
+				const stream = fs.createReadStream(path, {start, end})
+				const head = {
+				'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+				'Accept-Ranges': 'bytes',
+				'Content-Length': chunksize,
+				'Content-Type': 'video/mp4',
+				}
+				stream.pipe(res);
+			}
+			else {
+				const head = {
+				  'Content-Length': fileSize,
+				  'content-type': 'video/mp4',
+				}
+				res.statusCode = 200;
+				res.setHeader('Content-Length', fileSize);
+				res.setHeader('Accept-ranges', 'bytes');
+				fs.createReadStream(path); }
+				con.query('SELECT * FROM comments WHERE movie_id = ?', [rows[0].id], (err, coms) => {
+					if (api == 1) {
+						fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
+						.then(res => { return res.json(); })
+						.then(json => { 
+							res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, suggestions: json.data.movies, api, id: rows[0].id, coms:coms})
+						})
+						.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
+						else
+						res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, id: rows[0].id, coms:coms}) });
+					},5000);
 		}
 	})
 }
