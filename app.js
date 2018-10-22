@@ -62,6 +62,8 @@ server.listen(8080)
 
 
 app.use((req, res, next) => {
+    console.log('PUTE')
+
     if (req.session && req.session.profile)
     {
         if (empty(req.session.profile.id)) {
@@ -86,6 +88,7 @@ app.use((req, res, next) => {
     }
     else
         next();
+
 })
 .get('/', (req,res) => {
     if (req.session.profile == undefined)
@@ -93,6 +96,7 @@ app.use((req, res, next) => {
     else
         res.redirect('/index')
 })
+
 .get('/error/:msg', (req,res) => {
    var msg = eschtml(req.params.msg)
     if (req.session.profile == undefined)
@@ -130,6 +134,7 @@ app.use((req, res, next) => {
 .post('/comment', (req, res) => {
    eval(fs.readFileSync(__dirname + "/back/comment.js")+'')
 })
+
 .post('/cinema', (req, res) =>  {
     eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
 })
@@ -145,13 +150,15 @@ app.use((req, res, next) => {
         res.render('other_profiles.ejs', {profile: req.session.profile, users: result})
     })
 })
-.get('/video/:hash', (req, res) => {
+.get('/video/:hash', async (req, res) => {
+    console.log("dd");
     eval(fs.readFileSync(__dirname + "/back/video.js")+'')
 })
 
 .all('/index', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
 })
+
 .get('*', (req,res) => {
     res.redirect('/')    
 })

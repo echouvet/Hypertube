@@ -11,7 +11,8 @@ function getQuality(torrents, quality) {
 		return a;
 	return 0;
 }
-if (empty(req.body.movie))
+// console.log("body", req.body, req.headers);
+if (empty(req.body.movie)) 
 	res.redirect('/error/Cinema.js did not receive req.body.movie')
 else
 {
@@ -45,6 +46,7 @@ else
 			tmp: __dirname + '/tmp/upload',
 			path: __dirname + '/tmp/films/'});
 		engine.on('ready', () => {
+			console.log("ready");
 			engine.files.forEach(function(file) {
 				if (file.name.substr(file.name.length - 3) == 'mkv' || file.name.substr(file.name.length - 3) == 'mp4' ||
 				file.name.substr(file.name.length - 3) == 'avi' || file.name.substr(file.name.length - 3) == 'MP4')
@@ -65,16 +67,14 @@ else
 							con.query('INSERT INTO vues (user_id, movie_id) VALUES (?, ?)', [req.session.profile.id, rows[0].id], 
 								(err) => { if (err) throw err;})
 						}
-						
-
 					})
 					var stream = file.createReadStream();
 				}
 			})
 		})
 		engine.on('download', (chunck) => {
-			 // console.log(chunck);
-		})
+			// console.log(chunck);
+	   })
 	})
 	con.query('SELECT * FROM movies WHERE hash = ?', [hash], (err, rows) => {
 		if (err) res.redirect('/error/SQL error ' + err);
@@ -95,41 +95,7 @@ else
 		}
 		else
 		{
-			var path1 = '/tmp/films/'+rows[0].path;
-			// setTimeout(function() {
-			// var path = '/tmp/hypertube/tmp/films/'+rows[0].path
-			// var stat = fs.statSync(path)
-			// var fileSize = stat.size
-			// var range = req.headers.range
-			
-			// console.log(range);
-			// if (range)
-			// {
-			// 	console.log("fjwiejfodhs")
-			// 	const parts = range.replace(/bytes=/, "").split("-")
-			// 	const start = parseInt(parts[0], 10)
-			// 	const end = parts[1] 
-			// 	? parseInt(parts[1], 10)
-			// 	: fileSize-1
-			// 	const chunksize = (end-start)+1
-			// 	const stream = fs.createReadStream(path, {start, end})
-			// 	const head = {
-			// 	'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-			// 	'Accept-Ranges': 'bytes',
-			// 	'Content-Length': chunksize,
-			// 	'Content-Type': 'video/mp4',
-			// 	}
-			// 	stream.pipe(res);
-			// }
-			// else {
-			// 	const head = {
-			// 	  'Content-Length': fileSize,
-			// 	  'content-type': 'video/mp4',
-			// 	}
-			// 	res.statusCode = 200;
-			// 	res.setHeader('Content-Length', fileSize);
-			// 	res.setHeader('Accept-ranges', 'bytes');
-			// 	fs.createReadStream(path); }
+			var path1 = '/video/'+hash;
 				con.query('SELECT * FROM comments WHERE movie_id = ?', [rows[0].id], (err, coms) => {
 					if (api == 1) {
 						fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
@@ -140,7 +106,6 @@ else
 						.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
 						else
 						res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, id: rows[0].id, coms:coms}) });
-					// },5000);
 		}
 	})
 }
