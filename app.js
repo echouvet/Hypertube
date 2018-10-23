@@ -62,7 +62,6 @@ server.listen(8080)
 
 
 app.use((req, res, next) => {
-    console.log('PUTE')
 
     if (req.session && req.session.profile)
     {

@@ -39,10 +39,13 @@ if (req.params.hash !== undefined)
 							file.name.substr(file.name.length - 3) == 'avi' || file.name.substr(file.name.length - 3) == 'MP4')
 							{
 								// var stream = file.createReadStream({start});
+								//ICI PROBLEME DANS CHROME ranges.end et ranges
+								if (ranges.end == undefined) { ranges.end = end }
+								if (ranges.start == undefined) { ranges.start = start }
 								res.setHeader('Accept-Ranges', 'bytes');
-								res.setHeader('Content-Type', `video/mp4`);
 								res.setHeader('Content-Length', 1 + ranges.end - ranges.start);
-								res.setHeader('Content-Range', `bytes ${ranges.start}-${ranges.end}/${file.length}`);
+								res.setHeader('Content-Type', `video/mp4`);
+								res.setHeader('Content-Range', `bytes ${ranges.start}-${ranges.end}/${file.lenght}`);
 								pump(file.createReadStream({start: ranges.start, end: ranges.end}), res);
 							}
 						})
@@ -62,9 +65,10 @@ if (req.params.hash !== undefined)
 							if (file.name.substr(file.name.length - 3) == 'mkv' || file.name.substr(file.name.length - 3) == 'mp4' ||
 							file.name.substr(file.name.length - 3) == 'avi' || file.name.substr(file.name.length - 3) == 'MP4')
 							{
-								var stream = file.createReadStream();
-								res.writeHead(200, head)
-								fs.createReadStream(path1).pipe(res)
+								res.setHeader('Accept-Ranges', 'bytes');
+								res.setHeader('Content-Length', fileSize);
+								res.setHeader('Content-Type', `video/mp4`);
+								pump(file.createReadStream(), res);
 							}
 						})
 					})

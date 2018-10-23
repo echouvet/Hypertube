@@ -6,7 +6,7 @@
   "dependencies": {
     "ajax-request": "^1.2.3",
     "archive.org": "0.0.7",
-    "bcrypt": "^3.0.1",
+    "bcrypt": "^3.0.2",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
