@@ -46,7 +46,7 @@ else
 			tmp: __dirname + '/tmp/upload',
 			path: __dirname + '/tmp/films/'});
 		engine.on('ready', () => {
-			console.log("ready");
+			console.log("ready1");
 			engine.files.forEach(function(file) {
 				if (file.name.substr(file.name.length - 3) == 'mkv' || file.name.substr(file.name.length - 3) == 'mp4' ||
 				file.name.substr(file.name.length - 3) == 'avi' || file.name.substr(file.name.length - 3) == 'MP4')
