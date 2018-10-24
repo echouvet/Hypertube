@@ -1,11 +1,12 @@
 console.log(req.headers)
 if (req.params.hash !== undefined)
 {
+
 	hash = req.params.hash;
-	con.query('SELECT path FROM movies WHERE hash = ?', [hash], (err, rows) => {
-		if (err) throw err;
-		if (rows[0] !== undefined && rows[0].path !== undefined)
-		{
+	// con.query('SELECT path FROM movies WHERE hash = ?', [hash], (err, rows) => {
+	// 	if (err) throw err;
+	// 	if (rows[0] !== undefined && rows[0].path !== undefined)
+	// 	{
 			const getTorrentFile = function(engine) {
 				return new Promise ((resolve, reject) => {
 					engine.on('ready', async() => {
@@ -131,38 +132,41 @@ if (req.params.hash !== undefined)
 			// 	}
 			// }
 			// module.exports = {
-					const ranger = req.headers.range;
-					const enginePending = startEngine(hash);
-					console.log('a');
-					res.setHeader('Accept-Ranges', 'bytes');
-					enginePending
-						.then((engine) => {
-							const getTorrent = getTorrentFile(engine);
-							console.log('b');
+	const ranger = req.headers.range;
+	const enginePending = startEngine(hash);
+	console.log('a');
+	res.setHeader('Accept-Ranges', 'bytes');
+	enginePending
+		.then((engine) => {
+			const getTorrent = getTorrentFile(engine);
+			console.log('b');
 
-							getTorrent
-								.then(async(file) => {
-					console.log('c');
+			getTorrent
+				.then(async(file) => {
+	console.log('c');
+					pathing = '/tmp/films/'+file.path;
+					con.query('UPDATE movies SET path = ? WHERE hash = ?', [pathing, hash], (err) => {
+						if (err) throw (err);
+					})
+					res.setHeader('Content-Type', `video/mp4`);
+					const ranges = await getRange(file, ranger, res);
+	console.log('d');
+					
+					if (!stream(file, ranges, res)) {
+	console.log('e');
 
-									res.setHeader('Content-Type', `video/mp4`);
-									const ranges = await getRange(file, ranger, res);
-					console.log('d');
-									
-									if (!stream(file, ranges, res)) {
-					console.log('e');
-
-					return (res.end());
-									}
-								})
-								.catch(err => {
-									;
-								})
-						})
-						.catch(err => {
-							;
-						})
-				}
-		// }
-	})
+						return (res.end());
+					}
+				})
+				.catch(err => {
+					console.log(err);
+				})
+		})
+		.catch(err => {
+			console.log(err);
+		})
 }
+		// }
+// 	})
+// }
 console.log('4');
