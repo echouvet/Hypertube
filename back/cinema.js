@@ -29,7 +29,10 @@ else
 	else if (!empty(movies.magnet))
 	{
 		var torrentURI = movies.magnet
-		var hash = torrentURI;
+		var hash1 = torrentURI.split('btih:');
+		var hash2 = hash1[1].split('&');
+		var hash = hash2[0];
+
 		// var torrentURI = movies.link
 	}
 	else
@@ -57,7 +60,7 @@ else
 		if (err) throw(err);
 		if (rows[0] == undefined)
 		{
-			console.log('lop');
+			console.log(movies);
 			con.query('INSERT INTO movies(hash, title, api_id, api, state) VALUES (?, ?, ?, ?, ?)', [hash, movies.title, movies.id, api, 0], 
 				(err, result) => { if (err) res.redirect('/error/SQL error ' + err); })
 			con.query('SELECT id FROM movies ORDER BY id DESC LIMIT 1', (err, result) => {if (err) throw err;
@@ -87,8 +90,15 @@ else
 					s
 					.pipe(srtToVtt())
 					.pipe(fs.createWriteStream(path));
-					con.query('INSERT INTO subtitles(hash, path, en, fr) VALUES(?, ?, ?, ?)', [hash, path, 0, 0], (err) => {
+				
+					con.query('SELECT * FROM subtitles WHERE hash = ?', [hash], (err, rows) => {
 						if (err) throw err;
+						if (rows[0] === undefined)
+						{
+							con.query('INSERT INTO subtitles(hash, path, en, fr) VALUES(?, ?, ?, ?)', [hash, path, 0, 0], (err) => {
+								if (err) throw err;
+							})
+						}
 					})
 
 				}
@@ -97,35 +107,43 @@ else
 			;
 		})
 	}
-	con.query('SELECT title FROM movies WHERE hash = ?' , [hash], (err, rows) => {
-		if (err) throw err;
-		if (rows[0] !== undefined)
-		{
-			console.log(rows[0].title)
-			OpenSubtitles.search({
-				query: rows[0].title,
-			})
-			.then(subtitles => {
-				if (subtitles.en)
-				{
+	function adding_sub_bdd(hash)
+	{
+		
+		con.query('SELECT title FROM movies WHERE hash = ?' , [hash], (err, rows) => {
+			if (err) throw err;
+			if (rows[0] !== undefined)
+			{
+				console.log(rows[0].title)
+				OpenSubtitles.search({
+					query: rows[0].title,
+				})
+				.then(subtitles => {
+					console.log(subtitles);
+					if (subtitles.en)
+					{
 
-					dl_sub(subtitles.en, hash);
-					console.log('si');
+						dl_sub(subtitles.en, hash);
+						console.log('si');
 
-					con.query('UPDATE subtitles SET en = ? WHERE hash = ?', [1, hash], (err) => {
-						if (err) throw err;
-					})
-				}
-				if (subtitles.fr)
-				{
-					dl_sub(subtitles.fr, hash);
-					con.query('UPDATE subtitles SET fr = ? WHERE hash = ?', [1, hash], (err) => {
-						if (err) throw err;
-					})
-				}
-			})
-		}
-	})
+						con.query('UPDATE subtitles SET en = ? WHERE hash = ?', [1, hash], (err) => {
+							if (err) throw err;
+						})
+						setTimeout(function() {}, 5000);
+					}
+					if (subtitles.fr)
+					{
+						dl_sub(subtitles.fr, hash);
+						con.query('UPDATE subtitles SET fr = ? WHERE hash = ?', [1, hash], (err) => {
+							if (err) throw err;
+						})
+						setTimeout(function() {}, 5000);
+					}
+				})
+			}
+		})
+	}
+	adding_sub_bdd(hash);
 					// var stream = file.createReadStream();
 		// 	})
 		// })
@@ -182,7 +200,8 @@ else
 					{
 						pathSub[1] = '/tmp/subtitles/'+hash+'fr.vtt'
 					}
-				console.log('eh pas merce')
+				}
+				console.log(pathSub)
 				con.query('SELECT * FROM comments WHERE movie_id = ?', [rows[0].id], (err, coms) => {
 					if (api == 1) {
 						fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
@@ -193,7 +212,7 @@ else
 						.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
 						else
 						res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, id: rows[0].id, coms:coms, pathSub: pathSub}) });
-					}
+					
 				})
 			}
 		})

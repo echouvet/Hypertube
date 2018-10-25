@@ -186,10 +186,6 @@ if (req.params.hash !== undefined)
 	enginePending
 		.then((engine) => {
 			const getTorrent = getTorrentFile(engine);
-			console.log('b');
-			engine.on('download', (chunck) => {
-				console.log(chunck);
-			})
 			getTorrent
 				.then(async(file) => {
 	console.log('c');
