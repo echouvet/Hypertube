@@ -35,13 +35,14 @@
 				  break;
 			  }
 			}
+			
 		   </script>
+		   
 		<video id="player" controls name="media" style="width: 90vw;">
 			<source id="okay" src="<%-path%>" type="video/mp4">
 				
-				<track label="English" kind="subtitles" srclang="en" src="/tmp/25.vtt" default>
-					<track label="Deutsch" kind="subtitles" srclang="de" src="captions/vtt/sintel-de.vtt">
-						<track label="Español" kind="subtitles" srclang="es" src="captions/vtt/sintel-es.vtt">
+				<track label="English" kind="subtitles" srclang="en" src="<%-pathSub[0]%>" default>
+					<track label="French" kind="subtitles" srclang="fr" src="<%-pathSub[1]%>">
 						</video>
 						
 		<script src="back/resources/jquery-3.3.1.min.js"></script>

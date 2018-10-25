@@ -52,6 +52,53 @@ if (req.params.hash !== undefined)
 				}
 				return (true);
 			}
+			// function dl_sub(subtitles, hash) {
+			// 	const path = __dirname + '/tmp/subtitles/'+hash+'/'+subtitles.langcode+'.vtt';
+			// 	axios({
+			// 		method: 'get',
+			// 		url: subtitles.url
+			// 	}).then(data => {
+			// 		fs.access(path, fs.constants.F_OK, (err) => {
+			// 			if (err) {
+			// 				const s = new ReadableStream();
+
+			// 				s.push(data.data);
+			// 				s.push(null);
+			// 				s
+			// 				.pipe(srt2vtt())
+			// 				.pipe(fs.createWriteStream(path));
+			// 				con.query('INSERT INTO subtitles(hash, path, en, fr) VALUES(?, ?, ?, ?)', [hash, '/tmp/subtitles/'+hash+'/'+subtitles.langcode+'.vtt', 0, 0], (err) => {
+			// 					if (err) throw err;
+			// 				})
+			// 			}
+			// 		})
+			// 	})
+			// }
+			// con.query('SELECT title FROM movies WHERE hash = ?' , [hash], (err, rows) => {
+			// 	if (err) throw err;
+			// 	if (rows[0] !== undefined)
+			// 	{
+			// 		OpenSubtitles.search({
+			// 			query: rows[0].title,
+			// 		})
+			// 		.then(subtitles => {
+			// 			if (subtitles.en)
+			// 			{
+			// 				dl_sub(subtitles, hash);
+			// 				con.query('UPDATE subtitles SET en = ? WHERE hash = ?', [1, hash], (err) => {
+			// 					if (err) throw err;
+			// 				})
+			// 			}
+			// 			if (subtitles.fr)
+			// 			{
+			// 				dl_sub(subtitles, hash);
+			// 				con.query('UPDATE subtitles SET fr = ? WHERE hash = ?', [1, hash], (err) => {
+			// 					if (err) throw err;
+			// 				})
+			// 			}
+			// 		})
+			// 	}
+			// })
 			// const path1 = '/tmp/hypertube/tmp/films/'+rows[0].path;
 			// if (fs.existsSync(path1))
 			// {
@@ -140,7 +187,9 @@ if (req.params.hash !== undefined)
 		.then((engine) => {
 			const getTorrent = getTorrentFile(engine);
 			console.log('b');
-
+			engine.on('download', (chunck) => {
+				console.log(chunck);
+			})
 			getTorrent
 				.then(async(file) => {
 	console.log('c');

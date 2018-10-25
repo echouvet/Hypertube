@@ -71,6 +71,61 @@ else
 				(err) => { if (err) throw err;})
 		}
 	})
+	function dl_sub(subtitles, hash) {
+		const path = __dirname + '/tmp/subtitles/'+hash+subtitles.langcode+'.vtt';
+		axios({
+			method: 'get',
+			url: subtitles.url
+		}).then(data => {
+			fs.access(path, fs.constants.F_OK, (err) => {
+				if (err) {
+					const s = new Readable();
+					console.log('la');
+
+					s.push(data.data);
+					s.push(null);
+					s
+					.pipe(srtToVtt())
+					.pipe(fs.createWriteStream(path));
+					con.query('INSERT INTO subtitles(hash, path, en, fr) VALUES(?, ?, ?, ?)', [hash, path, 0, 0], (err) => {
+						if (err) throw err;
+					})
+
+				}
+			})
+		}).catch(err => {
+			;
+		})
+	}
+	con.query('SELECT title FROM movies WHERE hash = ?' , [hash], (err, rows) => {
+		if (err) throw err;
+		if (rows[0] !== undefined)
+		{
+			console.log(rows[0].title)
+			OpenSubtitles.search({
+				query: rows[0].title,
+			})
+			.then(subtitles => {
+				if (subtitles.en)
+				{
+
+					dl_sub(subtitles.en, hash);
+					console.log('si');
+
+					con.query('UPDATE subtitles SET en = ? WHERE hash = ?', [1, hash], (err) => {
+						if (err) throw err;
+					})
+				}
+				if (subtitles.fr)
+				{
+					dl_sub(subtitles.fr, hash);
+					con.query('UPDATE subtitles SET fr = ? WHERE hash = ?', [1, hash], (err) => {
+						if (err) throw err;
+					})
+				}
+			})
+		}
+	})
 					// var stream = file.createReadStream();
 		// 	})
 		// })
@@ -115,18 +170,32 @@ else
 				console.log('oui');
 				var path1 = '/video/'+hash;
 			}
+			var pathSub = new Array();
+			con.query('SELECT * FROM subtitles WHERE hash = ?', [hash], (err, rows1) => {
+				if (err) throw err;
+				if (rows1[0] !== undefined) {
+					if (rows1[0].en == 1)
+					{
+						pathSub[0] = '/tmp/subtitles/'+hash+'en.vtt'
+					}
+					if (rows1[0].fr == 1)
+					{
+						pathSub[1] = '/tmp/subtitles/'+hash+'fr.vtt'
+					}
+				console.log('eh pas merce')
 				con.query('SELECT * FROM comments WHERE movie_id = ?', [rows[0].id], (err, coms) => {
 					if (api == 1) {
 						fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
 						.then(res => { return res.json(); })
 						.then(json => { 
-							res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, suggestions: json.data.movies, api, id: rows[0].id, coms:coms})
+							res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, suggestions: json.data.movies, api, id: rows[0].id, coms:coms, pathSub: pathSub})
 						})
 						.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
 						else
-						res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, id: rows[0].id, coms:coms}) });
-		}
-	})
-}, 4000);
-
+						res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, id: rows[0].id, coms:coms, pathSub: pathSub}) });
+					}
+				})
+			}
+		})
+	}, 10000);
 }

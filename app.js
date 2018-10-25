@@ -31,7 +31,9 @@ var express = require('express')
     OpenSubtitles = new OS({useragent:'TemporaryUserAgent'});
     xtorrent = require('xtorrent');
     pump = require('pump');
+    axios = require('axios');
     rangeParser = require('range-parser');
+    Readable = require('stream').Readable;
 
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
