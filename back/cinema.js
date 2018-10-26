@@ -30,8 +30,15 @@ else
 	{
 		var torrentURI = movies.magnet
 		var hash1 = torrentURI.split('btih:');
-		var hash2 = hash1[1].split('&');
-		var hash = hash2[0];
+		if (hash1[1] !== undefined)
+		{
+			var hash2 = hash1[1].split('&');
+			var hash = hash2[0];
+		}
+		else
+		{
+			hash = movies.magnet;
+		}
 
 		// var torrentURI = movies.link
 	}
@@ -60,7 +67,6 @@ else
 		if (err) throw(err);
 		if (rows[0] == undefined)
 		{
-			console.log(movies);
 			con.query('INSERT INTO movies(hash, title, api_id, api, state) VALUES (?, ?, ?, ?, ?)', [hash, movies.title, movies.id, api, 0], 
 				(err, result) => { if (err) res.redirect('/error/SQL error ' + err); })
 			con.query('SELECT id FROM movies ORDER BY id DESC LIMIT 1', (err, result) => {if (err) throw err;
@@ -83,7 +89,6 @@ else
 			fs.access(path, fs.constants.F_OK, (err) => {
 				if (err) {
 					const s = new Readable();
-					console.log('la');
 
 					s.push(data.data);
 					s.push(null);
@@ -106,10 +111,12 @@ else
 		}).catch(err => {
 			;
 		})
+		setTimeout(function() {}, 2000);
 	}
 	function adding_sub_bdd(hash)
 	{
-		
+		let fr = 0;
+		let en = 0;	
 		con.query('SELECT title FROM movies WHERE hash = ?' , [hash], (err, rows) => {
 			if (err) throw err;
 			if (rows[0] !== undefined)
@@ -119,29 +126,25 @@ else
 					query: rows[0].title,
 				})
 				.then(subtitles => {
-					console.log(subtitles);
 					if (subtitles.en)
 					{
 
 						dl_sub(subtitles.en, hash);
-						console.log('si');
-
-						con.query('UPDATE subtitles SET en = ? WHERE hash = ?', [1, hash], (err) => {
-							if (err) throw err;
-						})
-						setTimeout(function() {}, 5000);
+						en = 1;
 					}
 					if (subtitles.fr)
 					{
+
 						dl_sub(subtitles.fr, hash);
-						con.query('UPDATE subtitles SET fr = ? WHERE hash = ?', [1, hash], (err) => {
-							if (err) throw err;
-						})
-						setTimeout(function() {}, 5000);
+						fr = 1;
 					}
 				})
 			}
 		})
+		con.query('UPDATE subtitles SET en = ?, fr = ? WHERE hash = ?', [en, fr, hash], (err) => {
+			if (err) throw err;
+		})
+		setTimeout(function() {}, 1000);
 	}
 	adding_sub_bdd(hash);
 					// var stream = file.createReadStream();
@@ -192,12 +195,21 @@ else
 			con.query('SELECT * FROM subtitles WHERE hash = ?', [hash], (err, rows1) => {
 				if (err) throw err;
 				if (rows1[0] !== undefined) {
-					if (rows1[0].en == 1)
+					if (req.session.language == 'en' && rows[0].en == 1)
 					{
 						pathSub[0] = '/tmp/subtitles/'+hash+'en.vtt'
+						pathSub[1] = '/tmp/subtitles/'+hash+'fr.vtt'
+						
 					}
-					if (rows1[0].fr == 1)
+					else if (req.session.language == 'fr' && rows[0].fr == 1)
 					{
+						pathSub[0] = '/tmp/subtitles/'+hash+'fr.vtt'
+						pathSub[1] = '/tmp/subtitles/'+hash+'en.vtt'
+						
+					}
+					else
+					{
+						pathSub[0] = '/tmp/subtitles/'+hash+'en.vtt'
 						pathSub[1] = '/tmp/subtitles/'+hash+'fr.vtt'
 					}
 				}
@@ -216,5 +228,5 @@ else
 				})
 			}
 		})
-	}, 10000);
+	}, 3000);
 }
