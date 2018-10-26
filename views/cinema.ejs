@@ -15,32 +15,15 @@
 				</form>
 		<% }) %></div><% } %>
 		<script>
-			function failed(e) {
-			  // video playback failed - show a message saying why
-			  switch (e.target.error.code) {
-				case e.target.error.MEDIA_ERR_ABORTED:
-				  alert('You aborted the video playback.');
-				  break;
-				case e.target.error.MEDIA_ERR_NETWORK:
-				  alert('A network error caused the video download to fail part-way.');
-				  break;
-				case e.target.error.MEDIA_ERR_DECODE:
-				  alert('The video playback was aborted due to a corruption problem or because the video used features your browser did not support.');
-				  break;
-				case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-				  alert('The video could not be loaded, either because the server or network failed or because the format is not supported.');
-				  break;
-				default:
-				  alert('An unknown error occurred.');
-				  break;
-			  }
-			}
+			$('#player').on('play', function (event) {
+				$(this).removeClass('loading');
+				$(this).attr('poster', '');
+			});
 			
 		   </script>
 		   
 		<video id="player" controls name="media" style="width: 90vw;">
 			<source id="okay" src="<%-path%>" type="video/mp4">
-				
 				<track label="English" kind="subtitles" srclang="en" src="<%-pathSub[0]%>" default>
 					<track label="French" kind="subtitles" srclang="fr" src="<%-pathSub[1]%>">
 						</video>
@@ -73,7 +56,7 @@
 	<div class="col-10 offset-1 infos">
 		<img src="<%- movie.cover %>" alt="Cover torrent img" class="img-responsive" width="30%" height="30%">
 		<div style="color:white" class="col">
-			<h1 style="text-align: center; margin-top:1rem;text-shadow: 6px 6px 6px rgb(77, 0, 0);"><%- hash %></h1><hr/>
+			<h1 style="text-align: center; margin-top:1rem;text-shadow: 6px 6px 6px rgb(77, 0, 0);"><%- movie.title %></h1><hr/>
 			<div class="col-10 offset-1" style="margin-top:2em; margin-bottom:2em;">
 							<% if (movie.rating) { %>
 							<h5 style="margin-bottom: 3px;"><i><%= __("Rating : ") %></i><b><%- movie.rating %></b></h5> <% } %>
