@@ -8,7 +8,7 @@
 			<% if (movie.torrents) { %>
 			<div class="quality"> Choose your quality :
 			<% movie.torrents.forEach(function(element) { %>
-				<form action="/cinema" method='POST' style="display:inline-flex;">
+				<form action="/cinema" method='POST' style="display:inline-flex;"> <!-- Ici meme faille que en bas -->
 					<input type='hidden' value='<%- eschtml(JSON.stringify(movie))%>' id='movie' name='movie'>
 					<input type="hidden"  value='<%= api %>' id="api" name="api">
 					<input type='submit' value="<%= element['quality'] %>" id='quality' name='quality'>
@@ -24,9 +24,13 @@
 		   
 		<video id="player" controls name="media" style="width: 90vw;">
 			<source id="okay" src="<%-path%>" type="video/mp4">
+				<% if (typeof pathSub[0] != "undefined" && pathSub[0]) { %>
 				<track label="English" kind="subtitles" srclang="en" src="<%-pathSub[0]%>" default>
-					<track label="French" kind="subtitles" srclang="fr" src="<%-pathSub[1]%>">
-						</video>
+				<% } %>
+				<% if (typeof pathSub[1] != "undefined" && pathSub[1]) { %>
+				<track label="French" kind="subtitles" srclang="fr" src="<%-pathSub[1]%>">
+				<% } %>
+		</video>
 						
 		<script src="back/resources/jquery-3.3.1.min.js"></script>
 
@@ -111,15 +115,17 @@
 	<div class="col-10 offset-1 comments" style="padding-bottom: 2rem;">
 		<h1 style="margin:1rem;text-shadow: 1px 1px 3px black;"><%= __("Similar films") %></h1><hr/>
 		<div class="text-center col-12" style="padding: 0;">
-			<form action="/cinema" method="POST" style="display: flex;justify-content: space-around;">
-				<% suggestions.forEach(function(suggestion) { %>  <!-- Pourquoi ça marche pas ?!?! On recoit tout le tableau suggestions alors que je demande uniquement le film suggestion ... si qqun a une idee -->
-				<div>
-					<input type="hidden"  value='<%- eschtml(JSON.stringify(suggestion)) %>' id="movie" name="movie">
-					<input type="hidden"  value='<%- api %>' id="api" name="api">
-					<input type="image" src="<%- suggestion.medium_cover_image %>" style="box-shadow: 10px 10px 10px 10px black; margin-top: 1rem;">
-				</div>
+			<div style="display: flex;justify-content: space-around;">
+				<% suggestions.forEach(function(elem) { %>
+					<form action="/cinema" method="POST" id="sendmovie">
+						<div> <!-- Grosse faille xss et sql ici il faut changer ça -->
+							<input type="hidden"  value='<%- eschtml(JSON.stringify(elem)) %>' id="movie" name="movie">
+							<input type="hidden"  value='<%- api %>' id="api" name="api">
+							<input type="image" src="<%- elem.medium_cover_image %>" style="box-shadow: 10px 10px 10px 10px black; margin-top: 1rem;">
+						</div>
+					</form>
 				<% }) %>
-			</form>
+			</div>
 		</div>
 	</div>
 <% } %>
@@ -171,6 +177,7 @@
 	         };
 	        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
 		};
+		
 		
 	</script>
 </body>
