@@ -11,7 +11,7 @@ con.query(users, (err) => { if (err) res.redirect('/error/SQL error ' + err); })
 var movies = 'CREATE TABLE IF NOT EXISTS movies ( \
 id INT AUTO_INCREMENT PRIMARY KEY, \
 hash TEXT, path VARCHAR(255), \
-title TEXT, api_id INT, api INT, state INT)';
+title TEXT, api_id VARCHAR(255), api INT, state INT)';
 con.query(movies, (err) => {if (err) res.redirect('/error/SQL error ' + err);});
 
 var vues = 'CREATE TABLE IF NOT EXISTS vues (\

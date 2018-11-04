@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="/style.css">
 <title>Hypertube</title>
-<div class="page-header text-center">
+<div class="page-header text-center" id="hideheader">
     <div class="container-fluid" style="padding: 0px;">
         <div class="jumbotron" style="margin-bottom: 0px; padding: 1rem;background-image: url('/img/header3.jpg'); background-position: bottom 0px; background-size: 100vw;">
             <% if (typeof profile != 'undefined') { %>
@@ -33,9 +33,9 @@
     <div class="col-12" style="display: inline-flex;">
         <form class="form-inline" action="/index" method="post">
             <input class="form-control mr-2" type="text" placeholder="<%= __("Search..")  %>" name="query">
-            <div class="adv-search" style="color:white;padding-left: 10px;padding-right: 10px;">Advanced search
+            <div class="adv-search" style="color:white;padding-left: 10px;padding-right: 10px;"><div id="hideadv">Advanced search
             <div class="adv-search col-12" style="position:absolute;height:20px;width: 150px;"></div>
-            <div class="search col-5 bg-dark" style="position:absolute; top:45px; justify-content: center;">
+            <div class="search bg-dark" id="filter" style="position:absolute; top:45px; justify-content: center;">
                 <div class="col-4">
                     <h4><%= __("Sort") %></h4><hr style="margin:2px 2px 2px 2px;" />
                         <div class="left"><label for="downloads"><%= __("Downloads") %><input type="radio" id="downloads" name="sort" value="0" class="rdio"></label></div><br/>
@@ -49,9 +49,14 @@
                 <div class="col-7">
                     <h4><%= __("Filter") %></h4><hr style="margin:2px 2px 2px 2px;" />
                     <div class="left"><label for="genres"><%= __("Genres") %><select class="text-center margleft" id="genres" name=genres style="text-align-last:center;">
-                        <option value="Action" selected>Action</option>
-                        <option value="Comedie">Comedie</option>
-                        <option value="Thriller">Thriller</option>
+                        <option value="Action" selected><%= __("Action") %></option>
+                        <option value="Comedie"><%= __("Comedy") %></option>
+                        <option value="Thriller"><%= __("Thriller") %></option>
+                        <option value="Adventure"><%= __("Adventure") %></option>
+                        <option value="Crime"><%= __("Crime") %></option>
+                        <option value="Drama"><%= __("Drama") %></option>
+                        <option value="War"><%= __("War") %></option>
+                        <option value="Romance"><%= __("Romance") %></option>
                     </select></label></div><br/>
                     <div class="left"><label for="productyear"><%= __("Product year between") %>
                     <input class="marg text-center" type="text" name="productyear" id="productyear" style="max-width: 40px; max-height: 20px;"> <%= __("and") %> 
@@ -62,7 +67,7 @@
                     <input class="marg text-center" type="text" name="filtrerating" id="filtrerating" style="max-width: 40px; max-height: 20px;">
                     </label></div>
                 </div>
-            </div></div>
+            </div></div></div>
             <button class="btn btn-dark adv-search" type="submit" value="tpb" name="srch"><%= __("Search on ")%><i style="color:red;">ThePirateBays</i></button>
             <button class="btn btn-dark adv-search" type="submit" value="arc" name="srch"><%= __("Search on ")%><i style="color:red;">archive.org</i></button>
             <button class="btn btn-dark adv-search" type="submit" value="yts" name="srch"><%= __("Search on ")%><i style="color:red;">YTS</i></button>

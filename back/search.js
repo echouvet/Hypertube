@@ -43,6 +43,8 @@ function render(movies, query, api)
 		var cmovies = movies;
 		if (!cmovies)
 			res.redirect('/error/No movies found')
+		else if (empty(query) && req.body.srch == 'xto')
+			res.render('index.ejs', {profile:req.session.profile, error: 'Top Movies not available with 1337x npm module', movies:cmovies, api})
 		else if (empty(query))
 			res.render('index.ejs', {profile:req.session.profile, movies:cmovies, api})
 		else
@@ -77,17 +79,7 @@ function	mapyts(data){
 }
 
 async function yts(query){
-	if (empty(query) || query === "undefined") {
-		try {
-			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?sort_by=rating&limit=20');
-			let movies = await fetching.json();
-			render(mapyts(movies.data), query, 1);
-		} catch (err) {res.redirect('/error/YTS catch' + err);}
-	}
-	else
-	{
-		var ytsquery = encodeURI(query)
-		switch (req.body.sort) {
+	switch (req.body.sort) {
 	    case '0':
 	        var sort = "download_count";
 	        break;
@@ -108,10 +100,20 @@ async function yts(query){
 	        break;
 	    case '6':
 	  		var sort = "seeds";
-	    default:
-	    	var sort = "title";
-		}
+	}
+	if (empty(query) || query === "undefined") {
 		try {
+			if (!sort) { var sort = "rating" };
+			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?sort_by=' + sort + '&limit=20');
+			let movies = await fetching.json();
+			render(mapyts(movies.data), query, 1);
+		} catch (err) {res.redirect('/error/YTS catch' + err);}
+	}
+	else
+	{
+		var ytsquery = encodeURI(query)
+		try {
+			if (!sort) { var sort = "title" };
 			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?query_term=' + ytsquery + '&sort_by=' + sort);
 			let movies = await fetching.json();
 			render(mapyts(movies.data), query, 1)

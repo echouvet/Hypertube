@@ -5,12 +5,12 @@
 </head>
 <body>
 	<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
-		<div class="alert alert-danger col-4 offset-4 text-center" style="margin-top:1rem;">
+		<div class="alert alert-danger col-6 offset-3 text-center" style="margin-top:1rem;">
   			<strong>Error !</strong> <%- __(error) %>
 		</div>
 	<% } %>
 	<% if (typeof movies !== 'undefined' && movies && movies !== 'none')  { %>
-		<div class="alert alert-success col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
+		<div class="alert alert-success col-6 offset-3 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
   			<%- '<strong>' + count + '</strong>' %> <%= __("results found for") %> "<%- decodeURI(q) %>".
 		</div>
 		<div class="container-fluid" style="background-color: rgb(10,10,10,0.4); color:white; padding: 0px; margin:auto; margin-top:1em; justify-content: center; text-align: center;">

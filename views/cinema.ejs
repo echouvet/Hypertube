@@ -58,7 +58,7 @@
 
 	</div>
 	<div class="col-10 offset-1 infos">
-		<img src="<%- movie.cover %>" alt="Cover torrent img" class="img-responsive" width="30%" height="30%">
+		<img src="<% if (movie.cover) { %><%- movie.cover %><% } else if (movie.large_cover_image) { %><%- movie.large_cover_image %><% } else if (movie.medium_cover_image) { %><%- movie.medium_cover_image %><% } %>" alt="Cover torrent img" class="img-responsive" width="30%" height="30%">
 		<div style="color:white" class="col">
 			<h1 style="text-align: center; margin-top:1rem;text-shadow: 6px 6px 6px rgb(77, 0, 0);"><%- movie.title %></h1><hr/>
 			<div class="col-10 offset-1" style="margin-top:2em; margin-bottom:2em;">
@@ -96,13 +96,13 @@
 		<h1 style="margin:1rem;"><% if (typeof coms != 'undefined' && coms) { %>
 			<% var i=0;while(coms[i]){i++;} %><% } else { var i = 0; } %><i><span id="changeNumber"><%-i%></span></i> <%= __("Comments") %></h1><hr/>
 		<div class="container" id="scrollcom" style="max-height: 50rem; overflow-y: auto;">
-		<% if (typeof coms != 'undefined' && coms) { %>
+		<% if (i > 0) { %>
 		<% coms.forEach(function(com) { %>
 			<div class="col-12" style="background-color: #171717; padding: 15px; overflow: hidden; margin-bottom:5px;">
 			<h5 style="color:#919191;"><%- com.user_login %></h5>
 				<p><%- com.comment %></p></div>
 		<% }) } else { %>
-			<div class="col-12" style="background-color: #171717; padding: 15px; overflow: hidden; margin-bottom:5px;">
+			<div class="col-12" id="nocom" style="background-color: #171717; padding: 15px; overflow: hidden; margin-bottom:5px;">
 				<%= __("No comment yet, be the first to write a comment !") %>
 			</div> <% } %>
 		</div>
@@ -110,6 +110,7 @@
 				<input type="text" class="form-control text-center col-10" id="comment" placeholder="<%= __("Your comment...")%>">
 				<input type="submit" class="text-center col-2" style="font-weight: bold; color:white; background-color: #171717;" value="<%= __("Send") %>" name="sub" id="send">
 		</div>
+		<div id="wait" class="text-right" style="margin: 0 auto; color:red; display: none;">Please wait a few moment.</div>
 	</div>
 	<% if (typeof suggestions != 'undefined' && suggestions) { %>
 	<div class="col-10 offset-1 comments" style="padding-bottom: 2rem;">
@@ -130,6 +131,7 @@
 	</div>
 <% } %>
 	<script type="text/javascript">
+		var waitforcomment = false;
 		function scrolldiv() {
 	        document.getElementById('scrollcom').scrollTop = 100000;
 	    };
@@ -139,6 +141,7 @@
 	    	$('#scrollcom').append(div);
 	    };
 		$(document).ready(function() { 
+
 			scrolldiv();
 		    $('#comment').keypress(function(e) {
 		      if(e.keyCode==13)
@@ -148,14 +151,18 @@
 		      }
 		    });
 		});
-		$("#send").click(function postCom() {
+		$("#send").unbind().click(function postCom() {
 			var movie_id = <% if (typeof id != 'undefined') { %><%-id%><%} else {%>'0'<%}%>;
 			var comment = document.getElementById("comment").value;
 				comment = escapeHtml(comment);
 			if (comment != "") {
+				if (!waitforcomment) {
+					waitforcomment = true;
+				setTimeout(function(){ waitforcomment = false; $('#wait').hide(300); }, 4000); 
 				$('#changeNumber').html(parseInt($('#changeNumber').html(), 10)+1);
 				insereCom(comment);
 				$('#comment').val('');
+				$('#nocom').hide(500);
 				scrolldiv();
 				$.post("/comment",
 			    {
@@ -165,7 +172,7 @@
 			    function(data, status){
 			        alert("\nStatus: " + status);
 			    }); 
-			} 
+			} else { $('#wait').show(300); } }
 		});
 		function escapeHtml(text) {
 	         var map = {

@@ -5,12 +5,12 @@
 </head>
 <body>
 	<% if (typeof success !== 'undefined' && success && success !== 'none')  { %>
-		<div class="alert alert-success col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
+		<div class="alert alert-success col-6 offset-3 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
   			<strong>Success !</strong> <%- success %>
 		</div>
 	<% } %>
 	<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
-		<div class="alert alert-danger col-4 offset-4 text-center" style="margin-top:1rem;">
+		<div class="alert alert-danger col-6 offset-3 text-center" style="margin-top:1rem;">
   			<strong>Error !</strong> <%- __(error) %>
 		</div>
 	<% } %>

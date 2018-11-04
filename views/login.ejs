@@ -60,11 +60,9 @@
 		function afficher_masquer(id)
 		{
   			if (document.getElementById(id).style.display == 'none')
-    			document.getElementById(id).style.display = 'block';
+    			$('#'+id).show(200);
   			else
-  			{
-      			document.getElementById(id).style.display = 'none';
-  			}
+      			$('#'+id).hide(200);
 		}
 	</script>
 </body>
