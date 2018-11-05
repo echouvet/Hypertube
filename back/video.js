@@ -7,7 +7,7 @@ if (req.params.hash !== undefined)
 	// 	if (err) throw err;
 	// 	if (rows[0] !== undefined && rows[0].path !== undefined)
 	// 	{
-			const getTorrentFile = function(engine) {
+			const getEngineFile = function(engine) {
 				return new Promise ((resolve, reject) => {
 					engine.on('ready', async() => {
 						await engine.files.forEach((file, id) => {
@@ -21,12 +21,12 @@ if (req.params.hash !== undefined)
 					});
 				});
 			}
-			async function startEngine(hash) {
+			async function tsStart(hash) {
 				return (await torrentStream(hash, {
 					tmp: __dirname + '/tmp/upload',
 					path: __dirname + '/tmp/films/'}))
 			}
-			function getRange(file, rangeHeader, res) {
+			function checkRange(file, rangeHeader, res) {
 				const ranges = rangeParser(file.length, rangeHeader, {combine: true});
 				if (ranges === -1)
 					return (-1);
@@ -35,7 +35,7 @@ if (req.params.hash !== undefined)
 				else
 					return (ranges[0]);
 			}
-			function stream(file, ranges, res) {
+			function checkStream(file, ranges, res) {
 				if (ranges === -1) {
 					console.log('o');
 					res.statusCode = 416;
@@ -186,12 +186,12 @@ if (req.params.hash !== undefined)
 			// module.exports = {
 	
 	const ranger = req.headers.range;
-	const enginePending = startEngine(hash);
+	const ts = tsStart(hash);
 	res.setHeader('Accept-Ranges', 'bytes');
-	enginePending
+	ts
 		.then((engine) => {
-			const getTorrent = getTorrentFile(engine);
-			getTorrent
+			const torrentFile = getEngineFile(engine);
+			torrentFile
 				.then(async(file) => {
 					engine.on('download', function(chunck) {
 						console.log(chunck);
@@ -203,10 +203,10 @@ if (req.params.hash !== undefined)
 						if (err) throw (err);
 					})
 					res.setHeader('Content-Type', `video/mp4`);
-					const ranges = await getRange(file, ranger, res);
+					const ranges = await checkRange(file, ranger, res);
 					console.log('d');
 					console.log(engine.swarm.downloaded);
-					if (!stream(file, ranges, res)) {
+					if (!checkStream(file, ranges, res)) {
 						console.log('fail');
 						return (res.end());
 					}

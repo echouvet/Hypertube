@@ -22,14 +22,10 @@
 			
 		   </script>
 		   
-		<video id="player" controls name="media" style="width: 90vw;">
+		<video id="player" preload="auto" controls name="media" style="width: 90vw;">
 			<source id="okay" src="<%-path%>" type="video/mp4">
-				<% if (typeof pathSub[0] != "undefined" && pathSub[0]) { %>
-				<track label="English" kind="subtitles" srclang="en" src="<%-pathSub[0]%>" default>
-				<% } %>
-				<% if (typeof pathSub[1] != "undefined" && pathSub[1]) { %>
-				<track label="French" kind="subtitles" srclang="fr" src="<%-pathSub[1]%>">
-				<% } %>
+				<track label="<%-pathSub[2]%>" kind="subtitles" srclang="<%-pathSub[2]%>" src="<%-pathSub[0]%>" default>
+				<track label="<%-pathSub[3]%>" kind="subtitles" srclang="<%-pathSub[3]%>" src="<%-pathSub[1]%>">
 		</video>
 						
 		<script src="back/resources/jquery-3.3.1.min.js"></script>
