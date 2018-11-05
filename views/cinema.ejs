@@ -112,7 +112,7 @@
 	<div class="col-10 offset-1 comments" style="padding-bottom: 2rem;">
 		<h1 style="margin:1rem;text-shadow: 1px 1px 3px black;"><%= __("Similar films") %></h1><hr/>
 		<div class="text-center col-12" style="padding: 0;">
-			<div style="display: flex;justify-content: space-around;">
+			<div style="justify-content: space-around;" id="suggestblock">
 				<% suggestions.forEach(function(elem) { %>
 					<form action="/cinema" method="POST" id="sendmovie">
 						<div> <!-- Grosse faille xss et sql ici il faut changer ça -->

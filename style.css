@@ -204,9 +204,15 @@ hr
 @media (max-width: 760px) { #filter {
 		left: 0px;
 	} }
-@media (max-width: 520px) { #hideadv {
+@media (max-width: 600px) { #hideadv {
 	display: none;
 } }
 @media (max-width: 450px) { #hideheader {
 	display: none;
+} }
+#suggestblock {
+	display: flex;
+}
+@media (max-width: 1120px) { #suggestblock {
+	display: block;
 } }
