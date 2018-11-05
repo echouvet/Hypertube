@@ -35,19 +35,6 @@ if (req.params.hash !== undefined)
 				else
 					return (ranges[0]);
 			}
-			async function convertToMp4(stream, file, res) {
-				if (file.ext !== 'mp4') {
-					ffmpeg(stream)
-						.videoCodec('libvpx')
-						.audioCodec('libvorbis')
-						.format('mp4')
-						.audioBitrate(128)
-						.videoBitrate(1024)
-						.outputOptions([ '-deadline realtime', '-cpu-used -5' ])
-						.save('~/goinfre/' + 'test' + '.mp4')
-				}
-				pump(stream, res);
-			}
 			function checkStream(file, ranges, res) {
 				if (ranges === -1) {
 					console.log('o');
