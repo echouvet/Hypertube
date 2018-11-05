@@ -33,7 +33,7 @@
     <div class="col-12" style="display: inline-flex;">
         <form class="form-inline" action="/index" method="post">
             <input class="form-control mr-2" type="text" placeholder="<%= __("Search..")  %>" name="query">
-            <div class="adv-search" style="color:white;padding-left: 10px;padding-right: 10px;"><div id="hideadv">Advanced search
+            <div class="adv-search" style="color:white;padding:3px;padding-left: 10px;padding-right: 10px;border:1px solid white; border-radius: 5px;margin-right:4px;"><div id="hideadv"><label><%= __("Settings") %></label>
             <div class="adv-search col-12" style="position:absolute;height:20px;width: 150px;"></div>
             <div class="search bg-dark" id="filter" style="position:absolute; top:45px; justify-content: center;">
                 <div class="col-4">
@@ -85,12 +85,10 @@
             <a href="register" class="btn btn-dark" style="text-decoration: none;"><%= __("Register")%></a>
             </div>
             <div style="position: absolute; right:0;">
-    <a href="https://github.com/login/oauth/authorize?scope=read:user&client_id=64b33bf122900dfa0966&redirect_uri=http://localhost:8080/oauth">
+    <a href="https://github.com/login/oauth/authorize?scope=read:user&client_id=64b33bf122900dfa0966">
         <button type="button" class="btn button-dark bg-dark" style="color:#e9ecef;">Connect with <i style="color:red;">GitHub</i></button></a>
         <a href="https://api.intra.42.fr/oauth/authorize?client_id=e9d8c67e741dc42f8076e26764e96751113a2956434b46baa131d0739f784127&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth42&response_type=code">
         <button type="button" class="btn button-dark bg-dark" style="color:#e9ecef;">Connect with <i style="color:red;">42</i></button></a>
-        <a href="https://graph.facebook.com/oauth/authorize?client_id=271023080199498&redirect_uri=http://localhost:8080/oauthfacebook">
-        <button type="button" class="btn button-dark bg-dark" style="color:#e9ecef;">Connect with <i style="color:red;">Facebook</i></button></a>
     </div>
     </div>
        

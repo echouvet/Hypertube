@@ -91,5 +91,21 @@
 	"Send": "Envoyer",
 	"Similar films": "Films similaires",
 	"No comment yet, be the first to write a comment !": "No comment yet, be the first to write a comment !",
-	"Size : ": "Size : "
+	"Size : ": "Size : ",
+	"Sort": "Sort",
+	"Filter": "Filter",
+	"Genres": "Genres",
+	"Action": "Action",
+	"Comedy": "Comedy",
+	"Thriller": "Thriller",
+	"Adventure": "Adventure",
+	"Crime": "Crime",
+	"Drama": "Drama",
+	"War": "War",
+	"Romance": "Romance",
+	"Product year between": "Product year between",
+	"and": "and",
+	"Rating between": "Rating between",
+	"Top Movies not available with 1337x npm module": "Top Movies not available with 1337x npm module",
+	"Settings": "Settings"
 }
