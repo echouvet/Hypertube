@@ -105,7 +105,16 @@
 	"Romance": "Romance",
 	"Product year between": "Année de production entre",
 	"and": "et",
-	"Rating between": "Note entre",
 	"Top Movies not available with 1337x npm module": "Pas de top movies disponibles sur 1337X !",
-	"Settings": "Options"
+	"Settings": "Options",
+	"Horror": "Horreur",
+	"Mystery": "Mystère",
+	"Fantasy": "Fantaisie",
+	"Superhero": "Super héros",
+	"Animation": "Animation",
+	"Sci-fi": "Sci-fi",
+	"All": "Tous",
+	"Error : ": "Erreur : ",
+	"Minimum rating": "Note minimum",
+	"Quality": "Qualité"
 }

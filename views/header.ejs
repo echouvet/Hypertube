@@ -35,8 +35,8 @@
             <input class="form-control mr-2" type="text" placeholder="<%= __("Search..")  %>" name="query">
             <div class="adv-search" style="color:white;margin-right:4px;"><div id="hideadv"><label style="border:1px solid white; border-radius: 5px;padding:3px;padding-left: 10px;padding-right: 10px;"><%= __("Settings") %></label>
             <div class="adv-search col-12" style="position:absolute;height:20px;width: 150px;"></div>
-            <div class="search bg-dark" id="filter" style="position:absolute; top:45px; justify-content: center;">
-                <div class="col-4">
+            <div class="search bg-dark" id="filter" style="position:absolute; top:45px; justify-content: center;min-width: 500px;">
+                <div class="col">
                     <h4><%= __("Sort") %></h4><hr style="margin:2px 2px 2px 2px;" />
                         <div class="left"><label for="downloads"><%= __("Downloads") %><input type="radio" id="downloads" name="sort" value="0" class="rdio"></label></div><br/>
                         <div class="left"><label for="likes"><%= __("Likes") %><input type="radio" id="likes" name="sort" value="1" class="rdio"></label></div><br/>
@@ -46,10 +46,11 @@
                         <div class="left"><label for="peers"><%= __("Peers") %><input type="radio" id="peers" value="5" name="sort" class="rdio"></label></div><br/>
                         <div class="left"><label for="seeds"><%= __("Seeds") %><input type="radio" id="seeds" value="6" name="sort" class="rdio"></label></div>
                 </div>
-                <div class="col-7">
+                <div class="col">
                     <h4><%= __("Filter") %></h4><hr style="margin:2px 2px 2px 2px;" />
                     <div class="left"><label for="genres"><%= __("Genres") %><select class="text-center margleft" id="genres" name=genres style="text-align-last:center;">
-                        <option value="Action" selected><%= __("Action") %></option>
+                        <option value="All" selected><%= __("All") %></option>
+                        <option value="Action"><%= __("Action") %></option>
                         <option value="Comedie"><%= __("Comedy") %></option>
                         <option value="Thriller"><%= __("Thriller") %></option>
                         <option value="Adventure"><%= __("Adventure") %></option>
@@ -57,15 +58,27 @@
                         <option value="Drama"><%= __("Drama") %></option>
                         <option value="War"><%= __("War") %></option>
                         <option value="Romance"><%= __("Romance") %></option>
+                        <option value="Horror"><%= __("Horror") %></option>
+                        <option value="Mystery"><%= __("Mystery") %></option>
+                        <option value="Fantasy"><%= __("Fantasy") %></option>
+                        <option value="Superhero"><%= __("Superhero") %></option>
+                        <option value="Animation"><%= __("Animation") %></option>
+                        <option value="Sci-fi"><%= __("Sci-fi") %></option>
                     </select></label></div><br/>
-                    <div class="left"><label for="productyear"><%= __("Product year between") %>
+                    <div class="left"><label for="filtrerating"><%= __("Minimum rating") %>
+                    <input class="marg text-center" type="number" min="0" max="9" name="filtrerating" id="filtrerating" style="max-width: 40px; max-height: 20px;">
+                    </label></div><br/>
+                    <div class="left"><label for="quality"><%= __("Quality") %><select class="text-center margleft" id="quality" name=quality style="text-align-last:center;">
+                        <option value="All" selected><%= __("All") %></option>
+                        <option value="720p">720p</option>
+                        <option value="1080p">1080p</option>
+                        <option value="3D">3D</option>
+                    </select></label></div>
+
+                   <!--  <div class="left"><label for="productyear"><%= __("Product year between") %>
                     <input class="marg text-center" type="text" name="productyear" id="productyear" style="max-width: 40px; max-height: 20px;"> <%= __("and") %> 
                     <input class="marg text-center" type="text" name="productyear" id="productyear" style="max-width: 40px; max-height: 20px;">
-                    </label></div>
-                    <div class="left"><label for="filtrerating"><%= __("Rating between") %>
-                    <input class="marg text-center" type="text" name="filtrerating" id="filtrerating" style="max-width: 40px; max-height: 20px;"> <%= __("and") %> 
-                    <input class="marg text-center" type="text" name="filtrerating" id="filtrerating" style="max-width: 40px; max-height: 20px;">
-                    </label></div>
+                    </label></div> -->
                 </div>
             </div></div></div>
             <button class="btn btn-dark adv-search" type="submit" value="tpb" name="srch"><%= __("Search on ")%><i style="color:red;">ThePirateBays</i></button>

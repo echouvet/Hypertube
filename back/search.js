@@ -81,30 +81,39 @@ function	mapyts(data){
 async function yts(query){
 	switch (req.body.sort) {
 	    case '0':
-	        var sort = "download_count";
-	        break;
+	        var sort = "download_count";break;
 	    case '1':
-	        var sort = "like_count";
-	        break;
+	        var sort = "like_count";break;
 	    case '2':
-	        var sort = "year";
-	        break;
+	        var sort = "year";break;
 	    case '3':
-	        var sort = "date_added";
-	        break;
+	        var sort = "date_added";break;
 	    case '4':
-	        var sort = "rating";
-	        break;
+	        var sort = "rating";break;
 	    case '5':
-	        var sort = "peers";
-	        break;
+	        var sort = "peers";break;
 	    case '6':
-	  		var sort = "seeds";
+	  		var sort = "seeds";break;
 	}
+	if (req.body.genres)
+		var genre = eschtml(req.body.genres);
+	else
+		var genre = "All";
+	if (req.body.filtrerating)
+		var minimumrating = eschtml(req.body.filtrerating);
+	if (req.body.quality)
+		var quality = eschtml(req.body.quality);
 	if (empty(query) || query === "undefined") {
 		try {
 			if (!sort) { var sort = "rating" };
-			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?sort_by=' + sort + '&limit=20');
+			var requete = 'https://yts.am/api/v2/list_movies.json?sort_by=' + sort + '&limit=20';
+			if (genre != "All")
+				var requete =  requete + '&genre=' + genre;
+			if (minimumrating)
+				var requete =  requete + '&minimum_rating=' +  minimumrating;
+			if (quality)
+				var requete =  requete + '&quality=' + quality;
+			let fetching = await fetch(requete);
 			let movies = await fetching.json();
 			render(mapyts(movies.data), query, 1);
 		} catch (err) {res.redirect('/error/YTS catch' + err);}
@@ -114,7 +123,14 @@ async function yts(query){
 		var ytsquery = encodeURI(query)
 		try {
 			if (!sort) { var sort = "title" };
-			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?query_term=' + ytsquery + '&sort_by=' + sort);
+			var requete = 'https://yts.am/api/v2/list_movies.json?query_term=' + ytsquery + '&sort_by=' + sort + '&limit=40';
+			if (genre != "All")
+				var requete =  requete + '&genre=' + genre;
+			if (minimumrating)
+				var requete =  requete + '&minimum_rating=' +  minimumrating;
+			if (quality)
+				var requete =  requete + '&quality=' + quality;
+			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?query_term=' + ytsquery + '&sort_by=' + sort + '&limit=40');
 			let movies = await fetching.json();
 			render(mapyts(movies.data), query, 1)
 		} catch (err) {res.redirect('/error/YTS catch ' + err); }
