@@ -48,7 +48,7 @@ else
 		torrentURI = magnet;
 		hash = magnet;
 	}
-
+console.log(hash);
 	function insertMovieBdd(hash, movies, api)
 	{
 		con.query('SELECT * FROM movies WHERE hash = ?', [hash], (err, rows) => {
@@ -113,6 +113,7 @@ else
 	}
 	insertMovieBdd(hash, movies, api)
 	pathSub = adding_sub_bdd(hash, movies.title)
+	setTimeout(function(){
 	if (req.session.language == 'en')
 	{
 		pathSub[0] = '/tmp/subtitles/'+hash+'en.vtt'
@@ -134,9 +135,11 @@ else
 		pathSub[2] = 'en'
 		pathSub[3] = 'fr'
 	}
+	console.log(JSON.stringify(movies));
 	console.log(pathSub[0]);
 	con.query('SELECT * FROM movies WHERE hash = ?', [hash], (err, rows) => {
 		if (err) res.redirect('/error/SQL error ' + err);
+		var path1 = '/video/'+hash;
 		if (rows[0] == undefined)
 		{
 			console.log('ouais')
@@ -144,7 +147,6 @@ else
 			fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
 				.then(res => { return res.json(); })
 				.then(json => { 
-				var path1 = '/video/'+hash;
 				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, suggestions: json.data.movies, api, pathSub: pathSub})
 				})
 				.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
@@ -177,4 +179,5 @@ else
 			});
 		}
 	})
+}, 3000);
 }
