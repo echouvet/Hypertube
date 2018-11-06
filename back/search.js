@@ -182,28 +182,58 @@ function maparchive(rawmovies)
 					creator: elem.creator,
 					downloads: elem.downloads,
 					btih: elem.btih,
+					size: elem.size,
 					magnet: 'https://archive.org/download/'+elem.identifier+'/'+elem.identifier+'_archive.torrent'
 		})});
 	render(movies, query, 3)
 }
 
-function archiveorg(query) {
-	archive.search({q: query}, function(err, res) {
-		if (err) { res.redirect('/error/archive.org api search problem ' + err); }
-		var movies = res.response.docs.filter(elem => {
-			if (elem.mediatype == "movies")
-				return true;
-			else
-				return false;
-		})
-		maparchive(movies)
-	});
+async function archiveorg() {
+	query = encodeURI(query);
+	switch (req.body.sort2) {
+	    case '0':
+	        var sort = "downloads%20desc";break;
+	    case '1':
+	        var sort = "createdate%desc";break;
+	    case '2':
+	        var sort = "addeddate%20desc";break;
+	    case '3':
+	        var sort = "avg_rating%20desc";break;
+	}
+	if (!sort) { var sort = "avg_rating%20desc"; }
+	try {
+		let fetching = await fetch('https://archive.org/services/search/v1/scrape?debug=false&xvar=production&total_only=false&count=100&sorts='+ sort +'&fields=\
+		avg_rating%2Cbtih%2Ccreator%2Cdescription%2Cdownloads%2Cidentifier%2Clanguage%2Csubject%2Ctitle%2Cyear%2Citem_size&q=title%3A%28'+ query +'%29%20AND%20mediatype%3A(movies)');
+		let movies = await fetching.json();
+		maparchive(movies.items)
+	} catch (err) { res.redirect('/error/archive.org fetch problem ' + err); }
+	// archive.search({q: query}, function(err, res) {
+	// 	if (err) { res.redirect('/error/archive.org api search problem ' + err); }
+	// 	var movies = res.response.docs.filter(elem => {
+	// 		if (elem.mediatype == "movies")
+	// 			return true;
+	// 		else
+	// 			return false;
+	// 	})
+	// 	maparchive(movies)
+	// });
 }
 
 async function toparchive() {
+	switch (req.body.sort2) {
+	    case '0':
+	        var sort = "downloads%20desc";break;
+	    case '1':
+	        var sort = "createdate%desc";break;
+	    case '2':
+	        var sort = "addeddate%20desc";break;
+	    case '3':
+	        var sort = "avg_rating%20desc";break;
+	}
+	if (!sort) { var sort = "avg_rating%20desc"; }
 	try {
-		let fetching = await fetch('https://archive.org/services/search/v1/scrape?debug=false&xvar=production&total_only=false&count=100&sorts=avg_rating%20desc&fields=identifier\
-		%2Ctitle%2Cyear%2Cavg_rating%2Csubject%2Cdescription%2Clanguage%2Ccreator%2Cdownloads%2Cmediatype&q=mediatype%3A(movies)');
+		let fetching = await fetch('https://archive.org/services/search/v1/scrape?debug=false&xvar=production&total_only=false&count=100&sorts='+ sort +'&fields=identifier\
+		%2Ctitle%2Cyear%2Cavg_rating%2Csubject%2Cdescription%2Clanguage%2Ccreator%2Cdownloads%2Cmediatype%2Citem_size&q=mediatype%3A(movies)');
 		let movies = await fetching.json();
 		maparchive(movies.items)
 	} catch (err) { res.redirect('/error/archive.org fetch problem ' + err); }

@@ -116,5 +116,6 @@
 	"All": "Tous",
 	"Error : ": "Erreur : ",
 	"Minimum rating": "Note minimum",
-	"Quality": "Qualité"
+	"Quality": "Qualité",
+	"Size": "Taille"
 }
