@@ -39,8 +39,8 @@ function checkforvues(movies, query, api, callback)
 }
 function render(movies, query, api)
 {
+	req.session.movies = movies;
 	checkforvues(movies, query, api, (cmovies) => {
-		var cmovies = movies;
 		if (!cmovies)
 			res.redirect('/error/No movies found')
 		else if (empty(query) && req.body.srch == 'xto')

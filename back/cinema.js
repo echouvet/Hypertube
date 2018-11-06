@@ -11,8 +11,10 @@ function getQuality(torrents, quality) {
 		return a;
 	return 0;
 }
-// console.log("body", req.body, req.headers);
-if (empty(req.body.movie)) 
+console.log(req.session.movies)
+
+
+if (empty(req.session.movies)) 
 	res.redirect('/error/Cinema.js did not receive req.body.movie')
 else
 {
@@ -135,14 +137,11 @@ else
 		pathSub[2] = 'en'
 		pathSub[3] = 'fr'
 	}
-	console.log(JSON.stringify(movies));
-	console.log(pathSub[0]);
 	con.query('SELECT * FROM movies WHERE hash = ?', [hash], (err, rows) => {
 		if (err) res.redirect('/error/SQL error ' + err);
 		var path1 = '/video/'+hash;
 		if (rows[0] == undefined)
 		{
-			console.log('ouais')
 			if (api == 1) {
 			fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
 				.then(res => { return res.json(); })
@@ -157,13 +156,10 @@ else
 		}
 		else
 		{
-			console.log('oulay');
 			if (rows[0].state == 1) {
-			console.log('non');
 			var path1 = '/tmp/films/'+rows[0].path;
 			}
 			else {
-				console.log('oui');
 				var path1 = '/video/'+hash;
 			}
 			con.query('SELECT * FROM comments WHERE movie_id = ?', [rows[0].id], (err, coms) => {

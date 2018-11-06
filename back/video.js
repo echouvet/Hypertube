@@ -1,4 +1,3 @@
-console.log(req.headers)
 if (req.params.hash !== undefined)
 {
 
@@ -37,24 +36,19 @@ if (req.params.hash !== undefined)
 			}
 			function checkStream(file, ranges, res) {
 				if (ranges === -1) {
-					console.log('o');
 					res.statusCode = 416;
 					return (false);
 				}
 				else if (ranges === 0) {
-					console.log('n');
 					res.setHeader('Content-Length', file.length);
 					pump(file.createReadStream(), res);
 				}
 				else {
-					console.log('m');
 					res.statusCode = 206;
 					res.setHeader('Content-Length', 1 + ranges.end - ranges.start);
 					res.setHeader('Content-Range', `bytes ${ranges.start}-${ranges.end}/${file.length}`);
 					pump(file.createReadStream({start: ranges.start, end: ranges.end}), res);
-					console.log('p');
 				}
-					console.log('q');
 					return (true);
 			}
 			// function dl_sub(subtitles, hash) {
@@ -194,20 +188,17 @@ if (req.params.hash !== undefined)
 			torrentFile
 				.then(async(file) => {
 					engine.on('download', function(chunck) {
-						console.log(chunck);
+						// console.log(chunck);
 					})
 
-					console.log('c');
 					pathing = '/tmp/films/'+file.path;
 					con.query('UPDATE movies SET path = ? WHERE hash = ?', [pathing, hash], (err) => {
 						if (err) throw (err);
 					})
 					res.setHeader('Content-Type', `video/mp4`);
 					const ranges = await checkRange(file, ranger, res);
-					console.log('d');
 					console.log(engine.swarm.downloaded);
 					if (!checkStream(file, ranges, res)) {
-						console.log('fail');
 						return (res.end());
 					}
 				})
