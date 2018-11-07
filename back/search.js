@@ -122,14 +122,14 @@ async function yts(query){
 		var ytsquery = encodeURI(query)
 		try {
 			if (!sort) { var sort = "title" };
-			var requete = 'https://yts.am/api/v2/list_movies.json?query_term=' + ytsquery + '&sort_by=' + sort + '&limit=40';
+			var requete = 'https://yts.am/api/v2/list_movies.json?query_term=' + ytsquery + '&sort_by=' + sort + '&limit=50';
 			if (genre != "All")
 				var requete =  requete + '&genre=' + genre;
 			if (minimumrating)
 				var requete =  requete + '&minimum_rating=' +  minimumrating;
 			if (quality)
 				var requete =  requete + '&quality=' + quality;
-			let fetching = await fetch('https://yts.am/api/v2/list_movies.json?query_term=' + ytsquery + '&sort_by=' + sort + '&limit=40');
+			let fetching = await fetch(requete);
 			let movies = await fetching.json();
 			render(mapyts(movies.data), query, 1)
 		} catch (err) {res.redirect('/error/YTS catch ' + err); }
