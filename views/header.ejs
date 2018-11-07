@@ -33,7 +33,7 @@
     <div class="col-12" style="display: inline-flex;">
         <form class="form-inline" action="/index" method="post">
             <input class="form-control mr-2" type="text" placeholder="<%= __("Search..")  %>" name="query">
-            <div class="adv-search" style="color:white;margin-right:4px;"><button class="btn btn-dark adv-search" type="submit" value="yts" name="srch"><%= __("Search on ")%><i style="color:red;">YTS</i><div id="hideadv">
+            <div class="adv-search" style="color:white;margin-right:4px;"><button class="btn btn-dark adv-search" type="submit" value="yts" name="srch"><%= __("Search on ")%><i style="color:red;">YTS</i></button><div id="hideadv">
             <div class="adv-search col-12" style="position:absolute;height:20px;width: 150px;"></div>
             <div class="search bg-dark" id="filter" style="position:absolute; top:45px; justify-content: center;min-width: 500px;">
                 <div class="col text-left">
@@ -48,10 +48,9 @@
                 </div>
                 <div class="col text-left">
                     <h4><%= __("Filter") %></h4><hr style="margin:2px 2px 2px 2px;" />
-                    <div class="left"><label for="genres"><%= __("Genres") %><select class="text-center margleft" id="genres" name=genres style="text-align-last:center;">
+                    <div class="left"><%= __("Genres") %><select class="text-center margleft" id="genres" name=genres style="text-align-last:center;">
                         <option value="All" selected><%= __("All") %></option>
                         <option value="Action"><%= __("Action") %></option>
-                        <option value="Comedie"><%= __("Comedy") %></option>
                         <option value="Thriller"><%= __("Thriller") %></option>
                         <option value="Adventure"><%= __("Adventure") %></option>
                         <option value="Crime"><%= __("Crime") %></option>
@@ -61,39 +60,36 @@
                         <option value="Horror"><%= __("Horror") %></option>
                         <option value="Mystery"><%= __("Mystery") %></option>
                         <option value="Fantasy"><%= __("Fantasy") %></option>
-                        <option value="Superhero"><%= __("Superhero") %></option>
                         <option value="Animation"><%= __("Animation") %></option>
                         <option value="Sci-fi"><%= __("Sci-fi") %></option>
-                    </select></label></div><br/>
+                    </select></div><br/>
                     <div class="left"><label for="filtrerating"><%= __("Minimum rating") %>
                     <input class="marg text-center" type="number" min="0" max="9" name="filtrerating" id="filtrerating" style="max-width: 40px; max-height: 20px;">
                     </label></div><br/>
-                    <div class="left"><label for="quality"><%= __("Quality") %><select class="text-center margleft" id="quality" name=quality style="text-align-last:center;">
+                    <div class="left"><%= __("Quality") %><select class="text-center margleft" id="quality" name=quality style="text-align-last:center;">
                         <option value="All" selected><%= __("All") %></option>
                         <option value="720p">720p</option>
                         <option value="1080p">1080p</option>
                         <option value="3D">3D</option>
-                    </select></label></div>
+                    </select></div>
 
                    <!--  <div class="left"><label for="productyear"><%= __("Product year between") %>
                     <input class="marg text-center" type="text" name="productyear" id="productyear" style="max-width: 40px; max-height: 20px;"> <%= __("and") %> 
                     <input class="marg text-center" type="text" name="productyear" id="productyear" style="max-width: 40px; max-height: 20px;">
                     </label></div> -->
                 </div>
-            </div></div></div></button>
-            <button class="btn btn-dark adv-search" type="submit" value="arc" name="srch"><%= __("Search on ")%><i style="color:red;">archive.org</i>
-                <div class="adv-search col-12" style="position:absolute;height:20px;width: 180px;"></div>
-                <div class="search bg-dark" id="filter" style="position:absolute; top:45px; justify-content: center;min-width: 260px;">
+            </div></div></div>
+            <div class="adv-search2"><button class="btn btn-dark adv-search" type="submit" value="arc" name="srch"><%= __("Search on ")%><i style="color:red;">archive.org</i></button>
+                <div class="adv-search2 col-12" style="position:absolute;height:20px;width: 180px;"></div>
+                <div class="search2 bg-dark" id="filter" style="position:absolute; top:45px; justify-content: center;min-width: 260px;">
                     <div class="col text-left">
                         <h4><%= __("Sort") %></h4><hr style="margin:2px 2px 2px 2px;" />
-                        <div class="left"><label for="downloads"><%= __("Downloads") %><input type="radio" id="downloads" name="sort2" value="0" class="rdio"></label></div><br/>
-                        <div class="left"><label for="year"><%= __("Year") %><input type="radio" id="year" name="sort2" value="1" class="rdio" style=""></label></div><br/>
-                        <div class="left"><label for="date"><%= __("Date added") %><input type="radio" id="date" value="2" name="sort2" class="rdio"></label></div><br/>
-                        <div class="left"><label for="rating"><%= __("Rating") %><input type="radio" id="rating" value="3" name="sort2" class="rdio"></label></div><br/>
-                        
+                        <div class="left"><label for="downloads2"><%= __("Downloads") %><input type="radio" id="downloads2" name="sort2" value="0" class="rdio"></label></div><br/>
+                        <div class="left"><label for="date2"><%= __("Date added") %><input type="radio" id="date2" value="2" name="sort2" class="rdio"></label></div><br/>
+                        <div class="left"><label for="rating2"><%= __("Rating") %><input type="radio" id="rating2" value="3" name="sort2" class="rdio"></label></div><br/>
                     </div>
-                </div>
-            </button>
+                </div></div>
+            
             <button class="btn btn-dark adv-search" type="submit" value="tpb" name="srch"><%= __("Search on ")%><i style="color:red;">ThePirateBays</i></button>
             <button class="btn btn-dark adv-search" type="submit" value="xto" name="srch"><%= __("Search on ")%><i style="color:red;">1337X</i></button>
            
