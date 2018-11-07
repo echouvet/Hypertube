@@ -65,8 +65,20 @@ server.listen(8080)
 
 app.use((req, res, next) => {
 
-    con.query('DELETE FROM movies WHERE last < NOW() - INTERVAL 1 MONTH', (err) => {
+    con.query('SELECT path FROM movies WHERE last < NOW() - INTERVAL 1 MONTH', (err, rows) => {
         if (err) throw err;
+        if (rows[0] != undefined)
+        {
+            var i = 0;
+            while (rows[i])
+            {
+                fs.unlink(rows[i].path);
+                i++;
+            }
+        }
+        con.query('DELETE FROM movies WHERE last < NOW() - INTERVAL 1 MONTH', (err) => {
+            if (err) throw err;
+        });
     })
     if (req.session && req.session.profile)
     {

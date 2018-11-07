@@ -40,14 +40,52 @@ if (req.params.hash !== undefined)
 					return (false);
 				}
 				else if (ranges === 0) {
+					var convert = null;
+					if (file.name.substr(file.name.length - 3) == 'avi')
+					{
+						var convert = ffmpeg(file.createReadStream())
+										.videoCodec('libvpx')
+										.audioCodec('libvorbis')
+										.videoBitrate('512k')
+										.format('webm')
+										.outputOptions([
+											'-deadline realtime',
+											'-error-resilient 1'
+										])
+										.on('error', (err) => {
+											console.log(err);
+										})
+					}
 					res.setHeader('Content-Length', file.length);
-					pump(file.createReadStream(), res);
+					if (convert != null)
+						pump(convert, res);
+					else
+						pump(file.createReadStream(), res);
 				}
 				else {
+					var convert = null;
+					if (file.name.substr(file.name.length - 3) == 'avi')
+					{
+						var convert = ffmpeg(file.createReadStream({start: ranges.start, end: ranges.end}))
+										.videoCodec('libvpx')
+										.audioCodec('libvorbis')
+										.videoBitrate('512k')
+										.format('webm')
+										.outputOptions([
+											'-deadline realtime',
+											'-error-resilient 1'
+										])
+										.on('error', (err) => {
+											console.log(err);
+										})
+					}
 					res.statusCode = 206;
 					res.setHeader('Content-Length', 1 + ranges.end - ranges.start);
 					res.setHeader('Content-Range', `bytes ${ranges.start}-${ranges.end}/${file.length}`);
-					pump(file.createReadStream({start: ranges.start, end: ranges.end}), res);
+					if(convert != null)
+						pump(convert, res);
+					else
+						pump(file.createReadStream({start: ranges.start, end: ranges.end}), res);
 				}
 					return (true);
 			}
@@ -188,7 +226,7 @@ if (req.params.hash !== undefined)
 			torrentFile
 				.then(async(file) => {
 					engine.on('download', function(chunck) {
-						// console.log(chunck);
+						console.log(Math.floor((engine.swarm.downloaded / file.length) * 100)+ '%');
 					})
 
 					pathing = '/tmp/films/'+file.path;
