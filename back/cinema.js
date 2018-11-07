@@ -11,14 +11,12 @@ function getQuality(torrents, quality) {
 		return a;
 	return 0;
 }
-console.log(req.session.movies)
 
-
-if (empty(req.session.movies)) 
+try { var movies = JSON.parse(req.body.movie) } catch (err) { req.body.movie = ""; var red = 1; res.redirect('/error/Parsing movie ' + err); }
+if (empty(req.body.movie) && !red) 
 	res.redirect('/error/Cinema.js did not receive req.body.movie')
-else
+else if (!red)
 {
-	var movies = JSON.parse(req.body.movie)
 	id = eschtml(movies.id);
 	title = eschtml(encodeURI(movies.title));
 	api = eschtml(req.body.api);
