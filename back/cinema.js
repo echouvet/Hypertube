@@ -56,7 +56,7 @@ else
 			if (err) throw(err);
 			if (rows[0] == undefined)
 			{
-				con.query('INSERT INTO movies(hash, title, api_id, api, state) VALUES (?, ?, ?, ?, ?)', [hash, movies.title, movies.id, api, 0],
+				con.query('INSERT INTO movies(hash, title, api_id, api, state, last) VALUES (?, ?, ?, ?, ?, NOW())', [hash, movies.title, movies.id, api, 0],
 					(err, result) => { if (err) res.redirect('/error/SQL error ' + err); })
 				con.query('SELECT id FROM movies ORDER BY id DESC LIMIT 1', (err, result) => {if (err) throw err;
 					con.query('INSERT INTO vues (user_id, movie_id) VALUES (?, ?)', [req.session.profile.id, result[0].id],

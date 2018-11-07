@@ -65,6 +65,9 @@ server.listen(8080)
 
 app.use((req, res, next) => {
 
+    con.query('DELETE FROM movies WHERE last < NOW() - INTERVAL 1 MONTH', (err) => {
+        if (err) throw err;
+    })
     if (req.session && req.session.profile)
     {
         if (empty(req.session.profile.id)) {
