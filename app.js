@@ -34,7 +34,10 @@ var express = require('express')
     axios = require('axios');
     rangeParser = require('range-parser');
     Readable = require('stream').Readable;
-
+    ffmpegPath = require('@ffmpeg-installer/ffmpeg').path
+    ffmpeg = require('fluent-ffmpeg');
+    ffmpeg.setFfmpegPath(ffmpegPath);
+    
     sessionMiddleware = ssn({ secret: "Eloi has a beautiful secret",
         store: new MemoryStore(),
         key: 'sid',
