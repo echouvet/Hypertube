@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
 	<% include header.ejs %>
-</head>
-<body>
 	<div class="text-center" style="margin-top: 2rem;">
 			<% if (movie.torrents) { %>
 			<div class="quality"> Choose your quality :
@@ -27,9 +24,6 @@
 				<track label="<%-pathSub[2]%>" kind="subtitles" srclang="<%-pathSub[2]%>" src="<%-pathSub[0]%>" default>
 				<track label="<%-pathSub[3]%>" kind="subtitles" srclang="<%-pathSub[3]%>" src="<%-pathSub[1]%>">
 		</video>
-						
-		<script src="back/resources/jquery-3.3.1.min.js"></script>
-
 		<script>
 
 				movie = '<%-eschtml(JSON.stringify(movie))%>'
@@ -42,7 +36,6 @@
 					datatype: 'JSON',
 					success: function(result)
 					{
-// 						
 						console.log(document.getElementById('player'));
 					},
 					error: function(err, Status){

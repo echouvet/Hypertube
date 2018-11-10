@@ -104,5 +104,14 @@
 	"Drama": "Drama",
 	"War": "War",
 	"Romance": "Romance",
-	"Top Movies not available with 1337x npm module": "Top Movies not available with 1337x npm module"
+	"Top Movies not available with 1337x npm module": "Top Movies not available with 1337x npm module",
+	"All": "All",
+	"Horror": "Horror",
+	"Mystery": "Mystery",
+	"Fantasy": "Fantasy",
+	"Animation": "Animation",
+	"Sci-fi": "Sci-fi",
+	"Minimum rating": "Minimum rating",
+	"Quality": "Quality",
+	"There aren't any profiles to show.": "There aren't any profiles to show."
 }

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
 	<% include header.ejs %>
-</head>
-<body>
 	<% if (typeof error !== 'undefined' && error && error !== 'none')  { %>
 		<div class="alert alert-danger col-6 offset-3 text-center" style="margin-top:1rem;">
   			<strong>Error !</strong> <%- __(error) %>
@@ -68,7 +65,3 @@
 <% include footer.ejs %>
 
 </html>
-<script src="back/resources/jquery-3.3.1.min.js"></script>
-<script>
-
-</script>

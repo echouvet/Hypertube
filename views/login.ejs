@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
 	<% include header.ejs %>
-</head>
-<body>
 	<% if (typeof error0 !== 'undefined' && error0 && error0 !== 'none')  { %>
 		<div class="alert alert-danger col-4 offset-4 text-center" style="margin-bottom: 0px; margin-top: 1rem;">
   			<strong>Error !</strong> <%- __(error0) + ' ' %><a href="/register" class="btn btn-link" style="padding:0px;">Create an account</a>
