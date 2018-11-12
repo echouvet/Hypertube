@@ -31,6 +31,7 @@ else
             updateuser('lastname', eschtml(field.lastname))
         if (!empty(field.lang))
         {
+            // Language Parsing Necessary Maybe? also in register
             if (field.lang == req.session.profile.language)
                 error = 'Your current language is already ' + eschtml(field.lang)
             else

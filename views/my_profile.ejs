@@ -46,10 +46,10 @@
 					<label for="lang" class="col-2 col-form-label"><%= __("Preference:") %></label>
 					<div class="col-8 offset-2">
 						<select class="custom-select text-center" name=lang id="lang" style="text-align-last:center;">
-							<option value="<%- profile.language %>" selected><%- profile.language %></option>
-							<option value="en">English</option>
-							<option value="fr">Francais</option>
-							<option value="de">Deutsche</option>
+							<option value="<%- profile.language %>" selected>
+								<% if (profile.language == 'fr') { %> Francais <option value="en">English</option> <% } 
+								else { %> English <option value="fr">Francais</option><% } %>
+							</option>
 						</select>
 					</div>
 			</div>

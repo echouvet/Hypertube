@@ -20,7 +20,7 @@ form.parse(req, function (err, field, files) { if (err) res.redirect('/error/for
         pass = eschtml(field.pass)
         email = eschtml(field.mail)
         language = eschtml(field.lang)
-        //faudra verif que la langue c bien une langue existante et qui marche chez nous
+        // Language Parsing Necessary Maybe? also in my profile
         if (pass.length < 5 || pass.search(regLow) == -1 || pass.search(regUp) == -1)
     		res.render('register.ejs', {error: 'Password must be minimum 6 characters long and must contain an uppercase and a lowercase'})
     	else if (field.pass !== field.confirmpass)

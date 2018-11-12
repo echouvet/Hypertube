@@ -50,7 +50,7 @@ var express = require('express')
     app.set('view engine', 'ejs');
     
     i18n.expressBind(app, {
-        locales: ['en', 'fr', 'de'],
+        locales: ['en', 'fr'],
         defaultLocale: 'en'
     });
 
