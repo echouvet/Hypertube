@@ -1,3 +1,7 @@
+function error(msg) {
+     res.render('register.ejs', {error : msg});
+}  
+
 regLow = /[a-z]/ 
 regUp = /[A-Z]/
  var form = new formidable.IncomingForm();
@@ -7,11 +11,11 @@ form.parse(req, function (err, field, files) { if (err) res.redirect('/error/for
     else if (!field || (!field.login && !field.firstname && !field.lastname && !field.pass && !field.confirmpass && !field.mail && !files.pic))
     	res.render('register.ejs')
     else if (!field.login || !field.firstname || !field.lastname || !field.pass || !field.confirmpass || !field.mail || !files.pic)
-    	res.render('register.ejs', {error: 'You must fill in every field to create an account'})
+        error('You must fill in every field to create an account')
     else if (files.pic.type !== 'image/png' && files.pic.type !== 'image/jpeg' && files.pic.type !== 'image/jpg')
-        res.render('register.ejs', {error: 'Only jpeg, jpg, and png images aloud'})
+        error('Only jpeg, jpg, and png images aloud')
     else if (files.pic.size > 50000000)
-        res.render('register.ejs', {error: 'Your image is too big'}) 
+        error('Your image is too big') 
     else
     {
     var login = eschtml(field.login)
@@ -21,18 +25,20 @@ form.parse(req, function (err, field, files) { if (err) res.redirect('/error/for
         email = eschtml(field.mail)
         language = eschtml(field.lang)
         // Language Parsing Necessary Maybe? also in my profile
-        if (pass.length < 5 || pass.search(regLow) == -1 || pass.search(regUp) == -1)
-    		res.render('register.ejs', {error: 'Password must be minimum 6 characters long and must contain an uppercase and a lowercase'})
+        if (field.lang !== 'fr' && field.lang !== 'en')
+            error('Only English and French are available on here')
+        else if (pass.length < 5 || pass.search(regLow) == -1 || pass.search(regUp) == -1)
+    	   error('Password must be minimum 6 characters long and must contain an uppercase and a lowercase')
     	else if (field.pass !== field.confirmpass)
-    		res.render('register.ejs', {error: 'Your Password Confirmation did not match your Password'})
+    	   error('Your Password Confirmation did not match your Password')
     	else if (!validator.isEmail(email))
-    		res.render('register.ejs', {error: 'Your e-mail is not valid'})
+    	   error('Your e-mail is not valid')
     	else
     	{
             con.query('SELECT login FROM users WHERE (login = ? OR email = ?) AND api = 1', [login, email],
             function (err, result) { if (err) res.redirect('/error/SQL error in register.js ' + err); 
             if (result.length != 0)
-        	   res.render('register.ejs', {error: 'Login or E-mail already exists in database'})
+        	   error('Login or E-mail already exists in database')
         	else 
             {
                 con.query('SELECT id FROM `users` ORDER BY id DESC LIMIT 1', function(err, resid) { if (err) res.redirect('/error/SQL error ' + err);

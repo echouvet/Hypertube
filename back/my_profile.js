@@ -31,11 +31,13 @@ else
             updateuser('lastname', eschtml(field.lastname))
         if (!empty(field.lang))
         {
-            // Language Parsing Necessary Maybe? also in register
-            if (field.lang == req.session.profile.language)
-                error = 'Your current language is already ' + eschtml(field.lang)
+            if (field.lang !== 'fr' && field.lang !== 'en')
+                error = 'Only English and French are available on here';
             else
+            {
                 updateuser('language', eschtml(field.lang))
+                req.i18n.setLocale(req.session.profile.language);
+            }
         }
         if (!empty(field.pass) && error === '') {
             var regLow = /[a-z]/; var regUp = /[A-Z]/;

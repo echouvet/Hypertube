@@ -114,5 +114,9 @@
 	"Minimum rating": "Minimum rating",
 	"Quality": "Quality",
 	"There aren't any profiles to show.": "There aren't any profiles to show.",
-	"Sorry, Top Movies are not available for 1337x": "Sorry, Top Movies are not available for 1337x"
+	"Sorry, Top Movies are not available for 1337x": "Sorry, Top Movies are not available for 1337x",
+	"Only English and French are available on here": "Only English and French are available on here",
+	"Choose file...": "Choose file...",
+	"Your account was successfully created !": "Your account was successfully created !",
+	"You must fill in every field to create an account": "You must fill in every field to create an account"
 }

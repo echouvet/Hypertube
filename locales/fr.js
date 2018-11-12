@@ -118,5 +118,7 @@
 	"Minimum rating": "Note minimum",
 	"Quality": "Qualité",
 	"Size": "Taille",
-	"Sorry, Top Movies are not available for 1337x": "Sorry, Top Movies are not available for 1337x"
+	"Sorry, Top Movies are not available for 1337x": "Sorry, Top Movies are not available for 1337x",
+	"Only English and French are available on here": "Only English and French are available on here",
+	" File must be .png, .jpeg, or .jpg": " File must be .png, .jpeg, or .jpg"
 }
