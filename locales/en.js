@@ -113,5 +113,6 @@
 	"Sci-fi": "Sci-fi",
 	"Minimum rating": "Minimum rating",
 	"Quality": "Quality",
-	"There aren't any profiles to show.": "There aren't any profiles to show."
+	"There aren't any profiles to show.": "There aren't any profiles to show.",
+	"Sorry, Top Movies are not available for 1337x": "Sorry, Top Movies are not available for 1337x"
 }

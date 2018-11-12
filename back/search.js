@@ -43,7 +43,7 @@ function render(movies, query, api)
 		if (!cmovies)
 			res.redirect('/error/No movies found')
 		else if (empty(query) && req.body.srch == 'xto')
-			res.render('index.ejs', {profile:req.session.profile, error: 'Top Movies not available with 1337x npm module', movies:cmovies, api})
+			res.render('index.ejs', {profile:req.session.profile, error: 'Sorry, Top Movies are not available for 1337x', movies:cmovies, api})
 		else if (empty(query))
 			res.render('index.ejs', {profile:req.session.profile, movies:cmovies, api})
 		else
@@ -165,56 +165,6 @@ async function thepiratebay(query) {
 	} catch (err) {res.redirect('/error/TPB catch ' + err); }
 }
 
-function maparchive(rawmovies)
-{
-	var movies = rawmovies.map(elem => {
-				return({
-					id: elem.identifier,
-					title: elem.title,
-					year: elem.year,
-					rating: elem.avg_rating,
-					genres: elem.subject,
-					synopsis: elem.description,
-					language: elem.language,
-					cover: 'https://archive.org/services/img/' + elem.identifier,
-					background: 'https://archive.org/services/img/' + elem.identifier,
-					creator: elem.creator,
-					downloads: elem.downloads,
-					btih: elem.btih,
-					size: elem.size,
-					magnet: 'https://archive.org/download/'+elem.identifier+'/'+elem.identifier+'_archive.torrent'
-		})});
-	render(movies, query, 3)
-}
-
-async function archive(query)  {
-	switch (req.body.sort2) {
-	    case '0':
-	        var sort = "downloads%20desc";break;
-	    case '1':
-	        var sort = "createdate%desc";break;
-	    case '2':
-	        var sort = "addeddate%20desc";break;
-	    case '3':
-	        var sort = "avg_rating%20desc";break;
-	}
-	if (!sort) { var sort = "avg_rating%20desc"; }
-	if (empty(query)) {
-		var variable = 'https://archive.org/services/search/v1/scrape?debug=false&xvar=production&total_only=false&count=100&sorts='+ sort +'&fields=identifier\
-		%2Ctitle%2Cyear%2Cavg_rating%2Csubject%2Cdescription%2Clanguage%2Ccreator%2Cdownloads%2Cmediatype%2Citem_size&q=mediatype%3A(movies)';
-	}
-	else {
-		query = encodeURI(query);
-		var variable = 'https://archive.org/services/search/v1/scrape?debug=false&xvar=production&total_only=false&count=100&sorts='+ sort +'&fields=\
-		avg_rating%2Cbtih%2Ccreator%2Cdescription%2Cdownloads%2Cidentifier%2Clanguage%2Csubject%2Ctitle%2Cyear%2Citem_size&q=title%3A%28'+ query +'%29%20AND%20mediatype%3A(movies)';
-	}
-	try {
-		let fetching = await fetch(variable);
-		let movies = await fetching.json();
-		maparchive(movies.items)
-	} catch (err) { res.redirect('/error/archive.org fetch problem ' + err); }
-}
-
 function mapxtorrent(rawmovies)
 {
 	var movies = rawmovies.map(elem => {
@@ -251,9 +201,6 @@ switch (req.body.srch) {
     case 'tpb' :
 	    thepiratebay(query);
 	    break;
-    case 'arc' :
-    	archive(query);
-	    break;
     case 'yts' :
 	    isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 2000}).then(r => {
     	if (r == true) 
@@ -267,6 +214,6 @@ switch (req.body.srch) {
     	if (r == true)
     		yts(query);
     	else
-    		archive(query);
+    		thepiratebay(query);
     })
 }

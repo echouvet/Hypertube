@@ -117,5 +117,6 @@
 	"Error : ": "Erreur : ",
 	"Minimum rating": "Note minimum",
 	"Quality": "Qualité",
-	"Size": "Taille"
+	"Size": "Taille",
+	"Sorry, Top Movies are not available for 1337x": "Sorry, Top Movies are not available for 1337x"
 }
