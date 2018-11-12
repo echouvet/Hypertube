@@ -39,8 +39,6 @@ else if (!red)
 		{
 			hash = movies.magnet;
 		}
-
-		// var torrentURI = movies.link
 	}
 	else
 	{
@@ -92,7 +90,6 @@ else if (!red)
 	function adding_sub_bdd(hash, title)
 	{
 		var pathSub = new Array();
-		console.log(title)
 		OpenSubtitles.search({
 			query: title,
 		})

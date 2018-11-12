@@ -132,21 +132,18 @@ app.use((req, res, next) => {
 .post('/forgotpass', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/forgotpass.js")+'')
 })
-// login with github
 .get('/oauth', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/oauth.js")+'')
 })
 .get('/oauth42', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/oauth42.js")+'')
 })
-//toutes pages ou pas besoin d'etre log, en haut
 .use((req, res, next) => {
     if (req.session.profile == undefined)
         res.render('login.ejs', {error0: "You must be logged in to use Hypertube."})
     else
         next();
 })
-//toutes pages ou faut etre log faut mettre dessous ceci
 .get('/logout', (req, res) =>  {
     req.session.destroy(); req.session = 0; res.redirect('/');
 })
@@ -170,10 +167,11 @@ app.use((req, res, next) => {
     })
 })
 .get('/video/:hash', async (req, res) => {
-    console.log("dd");
     eval(fs.readFileSync(__dirname + "/back/video.js")+'')
 })
-
+.post('/search2', (req, res) =>  {
+    eval(fs.readFileSync(__dirname + "/back/search2.js")+'')
+})
 .all('/index', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/search.js")+'')
 })

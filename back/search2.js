@@ -37,17 +37,25 @@ function checkforvues(movies, query, api, callback)
 		})
 	})
 }
-function render(movies, query, api)
+function render(movies, query, api, number)
 {
 	checkforvues(movies, query, api, (cmovies) => {
 		if (empty(cmovies) || empty(movies))
 			res.redirect('/error/No movies found')
 		else if (empty(query) && req.body.srch == 'xto')
-			res.render('index.ejs', {profile:req.session.profile, error: 'Top Movies not available with 1337x npm module', movies:cmovies, api: 1, sort: req.body.sort, search: req.body.srch, genres: req.body.genres, rating: req.body.filtrerating, qualityk: req.body.quality})
+			res.render('index.ejs', {profile:req.session.profile, error: 'Top Movies not available with 1337x npm module', movies:cmovies, api: 1, sort: req.body.sort, search: req.body.srch})
 		else if (empty(query))
-			res.render('index.ejs', {profile:req.session.profile, movies:cmovies, api: api, sort: req.body.sort, search: req.body.srch, genres: req.body.genres, rating: req.body.filtrerating, qualityk: req.body.quality})
-		else
-			res.render('search.ejs', {profile:req.session.profile, movies:cmovies, count:cmovies.length, q:query, api: api, sort: req.body.sort, search: req.body.srch, genres: req.body.genres, rating: req.body.filtrerating, qualityk: req.body.quality})
+			{
+                res.json({
+                    status: 1,
+                    code: 200,
+                    type: 'success',
+                    data: {
+                        profile:req.session.profile, movies: cmovies, count:cmovies.length, q:query, api, number: number, sort: req.body.sort, search: req.body.srch, genres: req.body.genre, rating: req.body.filtrerating, qualityk: req.body.quality}
+                    })
+                }
+            else
+                res.render('search.ejs', {profile:req.session.profile, movies:cmovies, count:cmovies.length, q:query, api, sort: req.body.sort, search: req.body.srch})
 	})
 }
 
@@ -74,10 +82,10 @@ function	mapyts(data){
 			})
 		})
 	}
-	return(movies)
+	return (movies)
 }
 
-async function yts(query){
+async function yts(query, number){
 	switch (req.body.sort) {
 	    case '0':
 	        var sort = "download_count";break;
@@ -114,7 +122,7 @@ async function yts(query){
 				var requete =  requete + '&quality=' + quality;
 			let fetching = await fetch(requete);
 			let movies = await fetching.json();
-			render(mapyts(movies.data), query, 1);
+			render(mapyts(movies.data), query, 1, number);
 		} catch (err) {res.redirect('/error/YTS catch' + err);}
 	}
 	else
@@ -131,12 +139,13 @@ async function yts(query){
 				var requete =  requete + '&quality=' + quality;
 			let fetching = await fetch(requete);
 			let movies = await fetching.json();
-			render(mapyts(movies.data), query, 1)
+			render(mapyts(movies.data), query, 1, number)
 		} catch (err) {res.redirect('/error/YTS catch ' + err); }
 	}
 }
 
-async function thepiratebay(query) {
+async function thepiratebay(query, number) {
+
 	try {
 		if (empty(query) || query === "undefined")
 			var result = await PirateBay.topTorrents(200)
@@ -161,39 +170,12 @@ async function thepiratebay(query) {
 		   		magnet: elem.magnetLink,
 		   		cover: 'img/piratebay.png'
 			})});
-		render(piratemovies, query, 2)
+		render(piratemovies, query, 2, number)
 	} catch (err) {res.redirect('/error/TPB catch ' + err); }
 }
 
-function mapxtorrent(rawmovies)
-{
-	var movies = rawmovies.map(elem => {
-		return xtorrent.info(elem.href).then(function (info) {
-			return({
-				title: elem.title,
-				href: elem.href,
-				size: info.size,
-				language: info.language,
-				cover: '/img/1337X.png',
-				uploaddate: info.date_uploaded,
-				magnet: info.download.magnet
-		})})});
-	Promise.all(movies).then((movies) => render(movies, query, 4));
-}
-
-function apixtorrent(query) {
-	try {
-		xtorrent.search({query:query}).then(function (data) {
-  			mapxtorrent(data);
-		}) 
-	} catch (err) { res.redirect('/error/apixtorrent fetch problem ' + err); }
-}
-
-
 var query = eschtml(req.body.query)
 var number = req.body.number;
-if (number === undefined)
-	number = 1;
 if (req.body.srch == undefined)
 	req.body.srch = 'yts';
 if (req.body.sort == undefined && req.body.genres == undefined && req.body.quality == undefined && req.body.filtrerating == undefined)
@@ -201,25 +183,23 @@ if (req.body.sort == undefined && req.body.genres == undefined && req.body.quali
 switch (req.body.srch) {
 	case 'xto' :
 		if (!empty(query))
-			apixtorrent(query);
+			apixtorrent(query, number);
 		else
 		{
-			isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 3000}).then(r => {
-			if (r == true)
-			{
-				req.body.srch = 'yts'
+			req.body.srch = 'yts'
+			isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 2000}).then(r => {
+			if (r == true) 
 				yts(query, number);
-			}
 			else
-				thepiratebay(query);
-			})
+				res.redirect('/error/YTS is momentarily down, please try again later');
+  			})
 		}
 		break;
     case 'tpb' :
-	    thepiratebay(query);
+	    thepiratebay(query, number);
 	    break;
     case 'yts' :
-	    isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 3000}).then(r => {
+	    isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 2000}).then(r => {
     	if (r == true) 
     		yts(query, number);
     	else
@@ -227,10 +207,10 @@ switch (req.body.srch) {
     })
 	    break;
 	default :
-		isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 3000}).then(r => {
+		isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 2000}).then(r => {
     	if (r == true)
-    		yts(query);
+    		yts(query, number);
     	else
-		thepiratebay(query);
+			thepiratebay(query, number);
     })
 }
