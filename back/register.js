@@ -26,7 +26,6 @@ form.parse(req, function (err, field, files) { if (err) {res.redirect('/error/fo
             pass = eschtml(field.pass)
             email = eschtml(field.mail)
             language = eschtml(field.lang)
-            // Language Parsing Necessary Maybe? also in my profile
             if (field.lang !== 'fr' && field.lang !== 'en')
                 error('Only English and French are available on here')
             else if (pass.length < 5 || pass.search(regLow) == -1 || pass.search(regUp) == -1)
