@@ -3,6 +3,9 @@ footer {
 	bottom: 0;
     width: 100%;
 }
+input[type="image"]:hover, a:hover {
+	opacity:0.8;
+}
 
 body {
 	background-image: url('img/Background.jpg'); 

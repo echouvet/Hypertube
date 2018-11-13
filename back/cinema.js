@@ -17,10 +17,7 @@ if (empty(req.session.movies))
 	res.redirect('/error/Cinema.js did not receive the movie')
 else
 {
-	console.log('poul')
 	a = eschtml(req.body.i)
-	console.log(req.session.movies[a]);
-	console.log(req.session.movies[1]);
 	movies = req.session.movies[a];
 	id = eschtml(movies.id);
 	title = eschtml(encodeURI(movies.title));
