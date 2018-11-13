@@ -118,5 +118,6 @@
 	"Only English and French are available on here": "Only English and French are available on here",
 	"Choose file...": "Choose file...",
 	"Your account was successfully created !": "Your account was successfully created !",
-	"You must fill in every field to create an account": "You must fill in every field to create an account"
+	"You must fill in every field to create an account": "You must fill in every field to create an account",
+	" You can only update your language preference whilst not using a local account": " You can only update your language preference whilst not using a local account"
 }
