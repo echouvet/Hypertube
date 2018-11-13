@@ -20,6 +20,7 @@ var login = eschtml(req.body.login)
 				else
 				{
 					req.session.profile = result[0];
+					req.session.first = '1';
 					req.i18n.setLocale(result[0].language);
 					res.redirect('/index');
 				}

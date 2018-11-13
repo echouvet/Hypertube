@@ -37,6 +37,7 @@ var headers = {
                     req.session.profile.login = body.login;
                     req.session.profile.img = body.avatar_url;
                     req.session.profile.api = '3';
+                    req.session.first = '1';
                     adduser(body)
                     res.redirect('/index')
                 }

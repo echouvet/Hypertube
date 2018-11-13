@@ -44,6 +44,7 @@ request.post({
                 req.session.profile.lastname = body.last_name
                 req.session.profile.img = body.image_url
                 req.session.profile.api = '2';
+                req.session.first = '1';
                 res.redirect('/index')
             }
         })
