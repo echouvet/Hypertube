@@ -68,6 +68,7 @@
 	<% if (search == undefined) {var search;};if (q == undefined) {var q;}} %>
 </body>
 <script>
+	var delay = 1;
 	function escapeHtml(text) {
 	         var map = {
 	           '&': '&amp;',
@@ -85,9 +86,10 @@
 		var position = 1;
 		var time = 2;
 		var sort = '<%-sort%>';
-		$(window).scroll(function () { 
+		$(window).scroll(function () { console.log(delay); 
 			var scrollPercent = Math.round(($(window).scrollTop()) / ($(document).height() - $(window).height()) * 100);
-			if (scrollPercent >= 100) {
+			if (scrollPercent >= 100 && delay == 1) {
+				delay = 0;
 				$.ajax({
 					url: '/search2',
 					type: 'POST',
@@ -96,7 +98,7 @@
 					},
 					success: function(response){
 						var i = 0;
-						if (time < 15 && response.data.movies)
+						if (time < 15 && response && response.data && response.data.movies)
 						{
 							while (response.data.movies[i]) 
 							{
@@ -107,7 +109,7 @@
 								total += '<form action="/cinema" method="POST">'
 								total += '<input type="hidden"  value='+((10 * time) + i - 10)+' id="i" name="i">'
 								if (response.data.api != 1) {
-									total += '<h5 style="padding-top:4px;"><i>'+response.movies[i].title+'</i></h5>'
+									total += '<h5 style="padding-top:4px;"><i>'+response.data.movies[i].title+'</i></h5>'
 								}
 
 								total += '<input type="image" src="'+response.data.movies[i].cover+'" alt="Submit Form" class="col-12" style="padding:0">'
@@ -166,10 +168,11 @@
 								total = '';
 								i++;
 							}
+							sort = response.data.sort;
 						}
-						sort = response.data.sort;
 						var position = time;
 						time++;
+						delay = 1;
 					}
 				})
 			}
