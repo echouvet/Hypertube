@@ -93,9 +93,9 @@ if (req.params.hash !== undefined)
 			const torrentFile = getEngineFile(engine);
 			torrentFile
 				.then(async(file) => {
-					engine.on('download', function(chunck) {
-						// console.log(Math.floor((engine.swarm.downloaded / file.length) * 100)+ '%');
-					})
+					// engine.on('download', function(chunck) {
+
+					// })
 
 					pathing = '/tmp/films/'+file.path;
 					con.query('UPDATE movies SET path = ? WHERE hash = ?', [pathing, hash], (err) => {

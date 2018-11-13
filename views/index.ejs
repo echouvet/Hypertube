@@ -103,7 +103,7 @@
 								var total='';
 								var title = response.data.movies[i].title.toString().replace("/",'_')
 								if (response.data.movies[i].vue) { var border='border:3px solid green;'} else {border=''}
-								total += '<div class="srchpic text-center listfilm1 post" id='+((10 * time) + i - 10)+' style="background-color: black;'+border+'">'
+								total += '<div class="srchpic text-center listfilm1 post" id='+((10 * time) + i)+' style="background-color: black;'+border+'">'
 								total += '<form action="/cinema" method="POST">'
 								total += '<input type="hidden"  value='+((10 * time) + i - 10)+' id="i" name="i">'
 								if (response.data.api != 1) {

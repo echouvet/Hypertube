@@ -11,8 +11,6 @@ function getQuality(torrents, quality) {
 		return a;
 	return 0;
 }
-
-// try { var movies = JSON.parse(req.body.movie) } catch (err) { req.body.movie = ""; var red = 1; res.redirect('/error/Parsing movie ' + err); }
 if (empty(req.session.movies))
 	res.redirect('/error/Cinema.js did not receive the movie')
 else
