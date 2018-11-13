@@ -65,8 +65,13 @@ con.connect((err) => { if (err) throw err
 
 server.listen(8080)
 
-
 app.use((req, res, next) => {
+    if (req.url.search("%%") == -1)
+        next();
+    else
+        res.redirect('/error/Please dont break my URL')
+})
+.use((req, res, next) => {
 
     con.query('SELECT path FROM movies WHERE last < NOW() - INTERVAL 1 MONTH', (err, rows) => {
         if (err) throw err;
@@ -107,7 +112,6 @@ app.use((req, res, next) => {
     }
     else
         next();
-
 })
 .get('/', (req,res) => {
     if (req.session.profile == undefined)
@@ -115,7 +119,6 @@ app.use((req, res, next) => {
     else
         res.redirect('/index')
 })
-
 .get('/error/:msg', (req,res) => {
    var msg = eschtml(req.params.msg)
     if (req.session.profile == undefined)
