@@ -15,6 +15,6 @@ NAME = Hypertube
 all : $(NAME)
 
 $(NAME) :
-	@npm i --silent
+	@npm i > "/dev/null" 2>&1
 	@echo Modules downloaded !
 
