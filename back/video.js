@@ -94,7 +94,7 @@ if (req.params.hash !== undefined)
 			torrentFile
 				.then(async(file) => {
 					engine.on('download', function(chunck) {
-						console.log(Math.floor((engine.swarm.downloaded / file.length) * 100)+ '%');
+						// console.log(Math.floor((engine.swarm.downloaded / file.length) * 100)+ '%');
 					})
 
 					pathing = '/tmp/films/'+file.path;
@@ -103,7 +103,6 @@ if (req.params.hash !== undefined)
 					})
 					res.setHeader('Content-Type', `video/mp4`);
 					const ranges = await checkRange(file, ranger, res);
-					console.log(engine.swarm.downloaded);
 					if (!checkStream(file, ranges, res)) {
 						return (res.end());
 					}
