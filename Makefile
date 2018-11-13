@@ -12,12 +12,9 @@
 
 NAME = Hypertube
 
-
-SRC = $(OBJ:.o=.c)
-
 all : $(NAME)
 
-$(NAME) : $(SRC)
+$(NAME) :
 	@npm i --silent
 	@echo Modules downloaded !
 
