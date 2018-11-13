@@ -12,14 +12,19 @@ function getQuality(torrents, quality) {
 	return 0;
 }
 
-try { var movies = JSON.parse(req.body.movie) } catch (err) { req.body.movie = ""; var red = 1; res.redirect('/error/Parsing movie ' + err); }
-if (empty(req.body.movie) && !red) 
-	res.redirect('/error/Cinema.js did not receive req.body.movie')
-else if (!red)
+// try { var movies = JSON.parse(req.body.movie) } catch (err) { req.body.movie = ""; var red = 1; res.redirect('/error/Parsing movie ' + err); }
+if (empty(req.session.movies))
+	res.redirect('/error/Cinema.js did not receive the movie')
+else
 {
+	console.log('poul')
+	a = eschtml(req.body.i)
+	console.log(req.session.movies[a]);
+	console.log(req.session.movies[1]);
+	movies = req.session.movies[a];
 	id = eschtml(movies.id);
 	title = eschtml(encodeURI(movies.title));
-	api = eschtml(req.body.api);
+	api = req.session.api;
 	i = getQuality(movies.torrents, req.body.quality);
 	if (!empty(movies.torrents))
 	{
@@ -141,12 +146,12 @@ else if (!red)
 			fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
 				.then(res => { return res.json(); })
 				.then(json => { 
-				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, suggestions: json.data.movies, api, pathSub: pathSub})
+				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, suggestions: json.data.movies, api, pathSub: pathSub, a: a})
 				})
 				.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
 			else
 			{
-				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, pathSub: pathSub})
+				res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, pathSub: pathSub, a: a})
 			}
 		}
 		else
@@ -162,11 +167,11 @@ else if (!red)
 					fetch('https://yts.am/api/v2/movie_suggestions.json?movie_id='+id)
 					.then(res => { return res.json(); })
 					.then(json => { 
-						res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, suggestions: json.data.movies, api, id: rows[0].id, coms:coms, pathSub: pathSub})
+						res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, suggestions: json.data.movies, api, id: rows[0].id, coms:coms, pathSub: pathSub, a: a})
 					})
 					.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
 				else
-					res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, id: rows[0].id, coms:coms, pathSub: pathSub})
+					res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, id: rows[0].id, coms:coms, pathSub: pathSub, a: a})
 			});
 		}
 	})

@@ -39,6 +39,7 @@ function checkforvues(movies, query, api, callback)
 }
 function render(movies, query, api, number)
 {
+	req.session.movies = req.session.movies.concat(movies);
 	checkforvues(movies, query, api, (cmovies) => {
 		if (empty(cmovies) || empty(movies))
 			res.redirect('/error/No movies found')
@@ -175,7 +176,7 @@ async function thepiratebay(query, number) {
 }
 
 var query = eschtml(req.body.query)
-var number = req.body.number;
+var number = eschtml(req.body.number);
 if (req.body.srch == undefined)
 	req.body.srch = 'yts';
 if (req.body.sort == undefined && req.body.genres == undefined && req.body.quality == undefined && req.body.filtrerating == undefined)

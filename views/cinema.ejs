@@ -6,7 +6,7 @@
 			<div class="quality"> Choose your quality :
 			<% movie.torrents.forEach(function(element) { %>
 				<form action="/cinema" method='POST' style="display:inline-flex;"> <!-- Ici meme faille que en bas -->
-					<input type='hidden' value='<%- eschtml(JSON.stringify(movie))%>' id='movie' name='movie'>
+					<input type='hidden' value='<%- a%>' id='movie' name='i'>
 					<input type="hidden"  value='<%= api %>' id="api" name="api">
 					<input type='submit' value="<%= element['quality'] %>" id='quality' name='quality'>
 				</form>
@@ -106,13 +106,7 @@
 		<div class="text-center col-12" style="padding: 0;">
 			<div style="justify-content: space-around;" id="suggestblock">
 				<% suggestions.forEach(function(elem) { %>
-					<form action="/cinema" method="POST" id="sendmovie">
-						<div> <!-- Grosse faille xss et sql ici il faut changer ça -->
-							<input type="hidden"  value='<%- eschtml(JSON.stringify(elem)) %>' id="movie" name="movie">
-							<input type="hidden"  value='<%- api %>' id="api" name="api">
-							<input type="image" src="<%- elem.medium_cover_image %>" style="box-shadow: 10px 10px 10px 10px black; margin-top: 1rem;">
-						</div>
-					</form>
+							<img src="<%- elem.medium_cover_image %>" style="box-shadow: 10px 10px 10px 10px black; margin-top: 1rem;">
 				<% }) %>
 			</div>
 		</div>

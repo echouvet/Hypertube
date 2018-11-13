@@ -39,6 +39,11 @@ function checkforvues(movies, query, api, callback)
 }
 function render(movies, query, api)
 {
+	if (!empty(req.body.srch))
+	{
+		req.session.movies = movies;
+		req.session.api = api;
+	}
 	checkforvues(movies, query, api, (cmovies) => {
 		if (empty(cmovies) || empty(movies))
 			res.redirect('/error/No movies found')
@@ -194,8 +199,6 @@ var query = eschtml(req.body.query)
 var number = req.body.number;
 if (number === undefined)
 	number = 1;
-if (req.body.srch == undefined)
-	req.body.srch = 'yts';
 if (req.body.sort == undefined && req.body.genres == undefined && req.body.quality == undefined && req.body.filtrerating == undefined)
 	req.body.sort = 4;
 switch (req.body.srch) {
