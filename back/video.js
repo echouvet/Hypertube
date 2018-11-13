@@ -94,7 +94,7 @@ if (req.params.hash !== undefined)
 			torrentFile
 				.then(async(file) => {
 					// engine.on('download', function(chunck) {
-
+					//	console.log(chunck);
 					// })
 
 					pathing = '/tmp/films/'+file.path;
