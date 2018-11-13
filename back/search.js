@@ -39,7 +39,6 @@ function checkforvues(movies, query, api, callback)
 }
 function render(movies, query, api)
 {
-	console.log(req.session.first)
 	if (!empty(req.body.srch) || req.session.first == '1')
 	{
 		req.session.first = 0;

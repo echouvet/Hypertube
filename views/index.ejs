@@ -86,7 +86,7 @@
 		var position = 1;
 		var time = 2;
 		var sort = '<%-sort%>';
-		$(window).scroll(function () { console.log(delay); 
+		$(window).scroll(function () {
 			var scrollPercent = Math.round(($(window).scrollTop()) / ($(document).height() - $(window).height()) * 100);
 			if (scrollPercent >= 100 && delay == 1) {
 				delay = 0;

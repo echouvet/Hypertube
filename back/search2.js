@@ -145,73 +145,15 @@ async function yts(query, number){
 	}
 }
 
-async function thepiratebay(query, number) {
-
-	try {
-		if (empty(query) || query === "undefined")
-			var result = await PirateBay.topTorrents(200)
-		else
-		{
-			var result = await PirateBay.search(query, {
-		    	category: 'video',
-				orderBy: 'name',
-				sortBy: 'desc',
-				filter: { verified: true }
-	  		})
-		}
-	  	const piratemovies = result.map(elem => {
-	  		elem.name = elem.name.replace(/\./g, ' ');
-	  		return({
-				id: elem.id,
-				title: elem.name,
-		        uploaddate: elem.uploadDate,
-		        size: elem.size,
-		        link: elem.link,
-		        category: elem.subcategory.name,
-		   		magnet: elem.magnetLink,
-		   		cover: 'img/piratebay.png'
-			})});
-		render(piratemovies, query, 2, number)
-	} catch (err) {res.redirect('/error/TPB catch ' + err); }
-}
-
 var query = eschtml(req.body.query)
 var number = eschtml(req.body.number);
 if (req.body.srch == undefined)
 	req.body.srch = 'yts';
 if (req.body.sort == undefined && req.body.genres == undefined && req.body.quality == undefined && req.body.filtrerating == undefined)
 	req.body.sort = 4;
-switch (req.body.srch) {
-	case 'xto' :
-		if (!empty(query))
-			apixtorrent(query, number);
-		else
-		{
-			req.body.srch = 'yts'
-			isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 2000}).then(r => {
-			if (r == true) 
-				yts(query, number);
-			else
-				res.redirect('/error/YTS is momentarily down, please try again later');
-  			})
-		}
-		break;
-    case 'tpb' :
-	    thepiratebay(query, number);
-	    break;
-    case 'yts' :
-	    isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 2000}).then(r => {
-    	if (r == true) 
-    		yts(query, number);
-    	else
-    		res.redirect('/error/YTS is momentarily down, please try again later');
-    })
-	    break;
-	default :
-		isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 2000}).then(r => {
-    	if (r == true)
-    		yts(query, number);
-    	else
-			thepiratebay(query, number);
-    })
-}
+isReachable('https://yts.am/api/v2/list_movies.json', {timeout: 2000}).then(r => {
+	if (r == true) 
+		yts(query, number);
+	else
+		res.redirect('/error/YTS is momentarily down, please try again later');
+})
