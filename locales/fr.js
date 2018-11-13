@@ -118,7 +118,8 @@
 	"Minimum rating": "Note minimum",
 	"Quality": "Qualité",
 	"Size": "Taille",
-	"Sorry, Top Movies are not available for 1337x": "Sorry, Top Movies are not available for 1337x",
-	"Only English and French are available on here": "Only English and French are available on here",
-	" File must be .png, .jpeg, or .jpg": " File must be .png, .jpeg, or .jpg"
+	"Sorry, Top Movies are not available for 1337x": "Désolé, il n'y pas de Top Movies pour 1337X",
+	"Only English and French are available on here": "Seul le français et l'anglais sont disponibles",
+	" File must be .png, .jpeg, or .jpg": " Le format doit être .png, .jpeg, ou .jpg",
+	"Please dont break my URL": "Merci de ne pas casser mon URL"
 }

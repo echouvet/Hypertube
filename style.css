@@ -211,11 +211,6 @@ hr
 	max-width: 13.33333%;
 	} }
 
-@media (min-width: 2000.98px) { .srchpic {
-	max-height: 14vw; 
-	min-height: 12vw;
-	max-width: 8.333333%;
-	} }
 @media (max-width: 760px) { #filter {
 		left: 0px;
 	} }
