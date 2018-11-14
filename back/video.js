@@ -49,7 +49,7 @@ if (req.params.hash !== undefined)
 									'-error-resilient 1'
 								])
 								.on('error', (err) => {
-									console.log(err);
+									;
 								})
 			}
 			res.setHeader('Content-Length', file.length);
@@ -72,7 +72,7 @@ if (req.params.hash !== undefined)
 									'-error-resilient 1'
 								])
 								.on('error', (err) => {
-									console.log(err);
+									;
 								})
 			}
 			res.statusCode = 206;

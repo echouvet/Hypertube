@@ -109,7 +109,14 @@
 								if (response.data.movies[i].vue) { var border='border:3px solid green;'} else {border=''}
 								total += '<div class="srchpic text-center listfilm1 post" id='+((10 * time) + i)+' style="background-color: black;'+border+'">'
 								total += '<form action="/cinema" method="POST">'
-								total += '<input type="hidden"  value='+((10 * time) + i - 10)+' id="i" name="i">'
+								if (time <= 2)
+								{
+									d = (10 * time) + i - 10;
+								}
+								else {
+									d = (10 * time) + i;
+								}
+								total += '<input type="hidden"  value='+d+' id="i" name="i">'
 								if (response.data.api != 1) {
 									total += '<h5 style="padding-top:4px;"><i>'+response.data.movies[i].title+'</i></h5>'
 								}
