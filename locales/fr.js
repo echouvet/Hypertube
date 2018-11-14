@@ -121,5 +121,7 @@
 	"Sorry, Top Movies are not available for 1337x": "Désolé, il n'y pas de Top Movies pour 1337X",
 	"Only English and French are available on here": "Seul le français et l'anglais sont disponibles",
 	" File must be .png, .jpeg, or .jpg": " Le format doit être .png, .jpeg, ou .jpg",
-	"Please dont break my URL": "Merci de ne pas casser mon URL"
+	"Please dont break my URL": "Merci de ne pas casser mon URL",
+	"Loading nexts movies...": "Chargement des films suivants...",
+	"Please wait a few moment.": "Merci d'attendre un moment."
 }

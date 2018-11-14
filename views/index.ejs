@@ -65,6 +65,7 @@
 				</div>
 			<% i++; } %>
 		</div>
+		<div id="loading" style="color:red; text-align: center; display: none;"><%= __("Loading nexts movies...") %></div>
 	<% if (search == undefined) {var search;};if (q == undefined) {var q;}} %>
 </body>
 <script>
@@ -89,6 +90,7 @@
 		$(window).scroll(function () {
 			var scrollPercent = Math.round(($(window).scrollTop()) / ($(document).height() - $(window).height()) * 100);
 			if (scrollPercent >= 100 && delay == 1) {
+				if (time < 15) { $('#loading').show(300); };
 				delay = 0;
 				$.ajax({
 					url: '/search2',
@@ -173,6 +175,7 @@
 						var position = time;
 						time++;
 						delay = 1;
+						$('#loading').hide(300);
 					}
 				})
 			}

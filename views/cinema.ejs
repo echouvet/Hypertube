@@ -78,10 +78,10 @@
 						<% } %>
 		</div>
 	</div>
-	<div class="col-10 offset-1 comments">
+	<div class="col-10 offset-1 comments" style="padding: 10px;">
 		<h1 style="margin:1rem;"><% if (typeof coms != 'undefined' && coms) { %>
 			<% var i=0;while(coms[i]){i++;} %><% } else { var i = 0; } %><i><span id="changeNumber"><%-i%></span></i> <%= __("Comments") %></h1><hr/>
-		<div class="container" id="scrollcom" style="max-height: 50rem; overflow-y: auto;">
+		<div class="col-12" id="scrollcom" style="max-height: 50rem; overflow-y: auto;">
 		<% if (i > 0) { %>
 		<% coms.forEach(function(com) { %>
 			<div class="col-12" style="background-color: #171717; padding: 15px; overflow: hidden; margin-bottom:5px;">
@@ -96,7 +96,7 @@
 				<input type="text" class="form-control text-center col-10" id="comment" placeholder="<%= __("Your comment...")%>">
 				<input type="submit" class="text-center col-2" style="font-weight: bold; color:white; background-color: #171717;" value="<%= __("Send") %>" name="sub" id="send">
 		</div>
-		<div id="wait" class="text-right" style="margin: 0 auto; color:red; display: none;">Please wait a few moment.</div>
+		<div id="wait" class="text-right" style="margin: 0 auto; color:red; display: none;"><%= __("Please wait a few moment.") %></div>
 	</div>
 	<% if (typeof suggestions != 'undefined' && suggestions) { %>
 	<div class="col-10 offset-1 comments" style="padding-bottom: 2rem;">
@@ -131,7 +131,7 @@
 		      }
 		    });
 		});
-		$("#send").unbind().click(function postCom() {
+		$("#send").click(function postCom() {
 			var movie_id = <% if (typeof id != 'undefined') { %><%-id%><%} else {%>'0'<%}%>;
 			var comment = document.getElementById("comment").value;
 				comment = escapeHtml(comment);
