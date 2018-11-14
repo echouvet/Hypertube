@@ -90,7 +90,7 @@
 		$(window).scroll(function () {
 			var scrollPercent = Math.round(($(window).scrollTop()) / ($(document).height() - $(window).height()) * 100);
 			if (scrollPercent >= 100 && delay == 1) {
-				if (time < 15) { $('#loading').show(300); };
+				if (time < 30) { $('#loading').show(300); };
 				delay = 0;
 				$.ajax({
 					url: '/search2',
@@ -100,7 +100,7 @@
 					},
 					success: function(response){
 						var i = 0;
-						if (time < 15 && response && response.data && response.data.movies)
+						if (time < 30 && response && response.data && response.data.movies)
 						{
 							while (response.data.movies[i]) 
 							{

@@ -123,5 +123,6 @@
 	" File must be .png, .jpeg, or .jpg": " Le format doit être .png, .jpeg, ou .jpg",
 	"Please dont break my URL": "Merci de ne pas casser mon URL",
 	"Loading nexts movies...": "Chargement des films suivants...",
-	"Please wait a few moment.": "Merci d'attendre un moment."
+	"Please wait a few moment.": "Merci d'attendre un moment.",
+	"No movies found": "Pas de film trouvé"
 }
