@@ -19,7 +19,7 @@
 			<% var i = 0; while (movies[i]) { var title = movies[i].title.toString().replace("/",'_'); %>
 					<div class="srchpic text-center listfilm1 post" id="<%- i %>" style="background-color: black;<% if (movies[i].vue) { %> border:3px solid green; <% } %>">
 						<form action="/cinema" method="POST">
-						<input type="hidden"  value='<%=i%>' id="i" name="i">
+						<input type="hidden"  value='<%=movies[i].id%>' id="i" name="i">
 						<% if (api != 1) { %>
 							<h5 style="padding-top:4px;"><i><%- movies[i].title %></i></h5>
 						<% } %>
@@ -84,7 +84,6 @@
 	var api = '<%-api%>'
 	if (api != '' && '<%-api%>' == 1)
 	{
-		var position = 1;
 		var time = 2;
 		var sort = '<%-sort%>';
 		$(window).scroll(function () {
@@ -109,14 +108,7 @@
 								if (response.data.movies[i].vue) { var border='border:3px solid green;'} else {border=''}
 								total += '<div class="srchpic text-center listfilm1 post" id='+((10 * time) + i)+' style="background-color: black;'+border+'">'
 								total += '<form action="/cinema" method="POST">'
-								if (time <= 2)
-								{
-									d = (10 * time) + i - 10;
-								}
-								else {
-									d = (10 * time) + i;
-								}
-								total += '<input type="hidden"  value='+d+' id="i" name="i">'
+								total += '<input type="hidden"  value='+response.data.movies[i].id+' id="i" name="i">'
 								if (response.data.api != 1) {
 									total += '<h5 style="padding-top:4px;"><i>'+response.data.movies[i].title+'</i></h5>'
 								}
@@ -178,9 +170,8 @@
 								i++;
 							}
 							sort = response.data.sort;
+							time++;
 						}
-						var position = time;
-						time++;
 						delay = 1;
 						$('#loading').hide(300);
 					}

@@ -16,11 +16,14 @@ if (empty(req.session.movies))
 else
 {
 	a = eschtml(req.body.i)
-	if (empty(req.session.movies[a]))
+	req.session.movies.forEach(elem => {
+		if (elem.id == eschtml(req.body.i))
+			movies = elem;
+	})
+	if (empty(movies))
 		res.redirect('/error/Could not find the movie')
 	else
 	{
-		movies = req.session.movies[a];
 		id = eschtml(movies.id);
 		title = eschtml(encodeURI(movies.title));
 		api = req.session.api;
@@ -146,11 +149,13 @@ else
 							.then(res => { return res.json(); })
 							.then(json => { 
 							res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, suggestions: json.data.movies, api, pathSub: pathSub, a: a})
+							movies = [];
 							})
 							.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
 						else
 						{
 							res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, pathSub: pathSub, a: a})
+							movies = [];
 						}
 					}
 					else
@@ -167,10 +172,14 @@ else
 								.then(res => { return res.json(); })
 								.then(json => { 
 									res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, suggestions: json.data.movies, api, id: rows[0].id, coms:coms, pathSub: pathSub, a: a})
+									movies = [];
 								})
 								.catch(err => { if (err) res.redirect('/error/YTS catch' + err); }) }
 							else
+							{
 								res.render('cinema.ejs', {profile: req.session.profile, title: title, movie: movies, path: path1, hash: hash, api, id: rows[0].id, coms:coms, pathSub: pathSub, a: a})
+								movies = [];
+							}
 						});
 					}
 				})

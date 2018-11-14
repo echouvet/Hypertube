@@ -39,7 +39,8 @@ function checkforvues(movies, query, api, callback)
 }
 function render(movies, query, api, number)
 {
-	req.session.movies = req.session.movies.concat(movies);
+	if (req.session.movies[req.session.movies.length - 1].id != movies[movies.length - 1].id)
+		req.session.movies = req.session.movies.concat(movies);
 	checkforvues(movies, query, api, (cmovies) => {
 		if (empty(cmovies) || empty(movies))
 			res.redirect('/error/No movies found')

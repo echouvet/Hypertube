@@ -119,5 +119,10 @@
 	"Choose file...": "Choose file...",
 	"Your account was successfully created !": "Your account was successfully created !",
 	"You must fill in every field to create an account": "You must fill in every field to create an account",
-	" You can only update your language preference whilst not using a local account": " You can only update your language preference whilst not using a local account"
+	" You can only update your language preference whilst not using a local account": " You can only update your language preference whilst not using a local account",
+	"Loading nexts movies...": "Loading nexts movies...",
+	"Please wait a few moment.": "Please wait a few moment.",
+	"Could not find the movie": "Could not find the movie",
+	"TPB catch TypeError: Cannot read property &#039;1&#039; of null": "TPB catch TypeError: Cannot read property &#039;1&#039; of null",
+	"No movies found": "No movies found"
 }

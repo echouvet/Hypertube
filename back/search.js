@@ -173,9 +173,10 @@ async function thepiratebay(query) {
 
 function mapxtorrent(rawmovies)
 {
-	var movies = rawmovies.map(elem => {
+	var movies = rawmovies.map((elem, i) => {
 		return xtorrent.info(elem.href).then(function (info) {
 			return({
+				id: i,
 				title: elem.title,
 				href: elem.href,
 				size: info.size,

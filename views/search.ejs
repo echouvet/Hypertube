@@ -14,7 +14,7 @@
 			<% var i = 0; while (movies[i]) { var title = movies[i].title.toString().replace("/",'_'); %>
 				<div class="srchpic text-center listfilm2" id="<%- i %>" style="background-color: black;<% if (movies[i].vue) { %> border:3px solid green; <% } %>">
 						<form action="/cinema" method="POST">
-						<input type="hidden"  value='<%=i%>' id="i" name="i">
+						<input type="hidden"  value='<%=movies[i].id%>' id="i" name="i">
 						<input type="image" src="<%- movies[i].cover %>" alt="Submit Form" class="col-12" style="padding:0">
 						<h5 style="padding-top:4px;"><i><%- movies[i].title %></i></h5>
 						<div style="background-color: #e9ecef; padding: 2px; color:black;">
