@@ -9,7 +9,7 @@ input[type="image"]:hover, a:hover {
 
 body {
 	background-image: url('img/Background.jpg'); 
-	margin-bottom: 20vh;
+	margin-bottom: 100px;
 }
 
 .adv-search:hover .search
