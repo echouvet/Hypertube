@@ -21,8 +21,8 @@
 		   
 		<video id="player" preload="auto" controls name="media" style="width: 90vw;">
 			<source id="okay" src="<%-path%>" type="video/mp4">
-				<track label="<%-pathSub[2]%>" kind="subtitles" srclang="<%-pathSub[2]%>" src="<%-pathSub[0]%>" default>
-				<track label="<%-pathSub[3]%>" kind="subtitles" srclang="<%-pathSub[3]%>" src="<%-pathSub[1]%>">
+				<track label="<%-pathSub[2]%>" type="text/vtt" kind="subtitles" srclang="<%-pathSub[2]%>" src="<%-pathSub[0]%>" default>
+				<track label="<%-pathSub[3]%>" type="text/vtt" kind="subtitles" srclang="<%-pathSub[3]%>" src="<%-pathSub[1]%>">
 		</video>
 		<script>
 
