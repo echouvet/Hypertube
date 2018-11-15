@@ -73,17 +73,13 @@ app.use((req, res, next) => {
         res.redirect('/error/Please dont break my URL')
 })
 .use((req, res, next) => {
-
     con.query('SELECT path FROM movies WHERE last < NOW() - INTERVAL 1 MONTH', (err, rows) => {
         if (err) throw err;
-        if (rows[0] != undefined)
+        if (rows[0])
         {
-            var i = 0;
-            while (rows[i])
-            {
-                fs.unlink(rows[i].path);
-                i++;
-            }
+            rows.forEach(elem => {
+                fs.unlink(elem.path);
+            })
         }
         con.query('DELETE FROM movies WHERE last < NOW() - INTERVAL 1 MONTH', (err) => {
             if (err) throw err;
