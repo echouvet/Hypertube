@@ -124,5 +124,11 @@
 	"Please wait a few moment.": "Please wait a few moment.",
 	"Could not find the movie": "Could not find the movie",
 	"TPB catch TypeError: Cannot read property &#039;1&#039; of null": "TPB catch TypeError: Cannot read property &#039;1&#039; of null",
-	"No movies found": "No movies found"
+	"No movies found": "No movies found",
+	"Please dont break my URL": "Please dont break my URL",
+	"oauth42 request error 401 : invalid_grant": "oauth42 request error 401 : invalid_grant",
+	"request in oauth.js401 : null": "request in oauth.js401 : null",
+	"coucou je suis une erreur": "coucou je suis une erreur",
+	"Your e-mail is not valid": "Your e-mail is not valid",
+	"YTS catch TypeError: Cannot read property &#039;map&#039; of undefined": "YTS catch TypeError: Cannot read property &#039;map&#039; of undefined"
 }

@@ -8,3 +8,5 @@ if (!empty(req.body.comment))
 	 [req.session.profile.id, req.session.profile.login, movie_id, comment],
 	 (err) => { if (err) {throw err; res.redirect('/error/SQL error ' + err);} })
 }
+else
+	res.redirect('/');

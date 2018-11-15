@@ -1,3 +1,4 @@
+
 var express = require('express')
 	app = express()
     http = require("http")
@@ -156,9 +157,6 @@ app.use((req, res, next) => {
 
 .post('/cinema', (req, res) =>  {
     eval(fs.readFileSync(__dirname+"/back/cinema.js")+'')
-})
-.post('/getPath', (req, res) =>  {
-    eval(fs.readFileSync(__dirname+"/back/getpath.js")+'')
 })
 .all('/my_profile', (req, res) =>  {
     eval(fs.readFileSync(__dirname + "/back/my_profile.js")+'')
