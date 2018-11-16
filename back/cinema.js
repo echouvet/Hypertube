@@ -1,3 +1,5 @@
+var en = 0;
+var fr = 0;
 function getQuality(torrents, quality) {
 	let a = 0;
 	if (!empty(quality) && !empty(torrents))
@@ -127,24 +129,42 @@ else
 			.then(function(){
 				if (req.session.profile.language == 'en')
 				{
-					pathSub[0] = '/tmp/subtitles/'+hash+'en.vtt'
-					pathSub[1] = '/tmp/subtitles/'+hash+'fr.vtt'
-					pathSub[2] = 'en'
-					pathSub[3] = 'fr'
+					if (en == 1)
+					{
+						pathSub[0] = '/tmp/subtitles/'+hash+'en.vtt'
+						pathSub[2] = 'en'
+					}
+					if (fr == 1)
+					{
+						pathSub[1] = '/tmp/subtitles/'+hash+'fr.vtt'
+						pathSub[3] = 'fr'
+					}
 				}
 				else if (req.session.profile.language == 'fr')
 				{
-					pathSub[0] = '/tmp/subtitles/'+hash+'fr.vtt'
-					pathSub[1] = '/tmp/subtitles/'+hash+'en.vtt'
-					pathSub[3] = 'en'
-					pathSub[2] = 'fr'
+					if (en == 1)
+					{
+						pathSub[1] = '/tmp/subtitles/'+hash+'en.vtt'
+						pathSub[3] = 'en'
+					}
+					if (fr == 1)
+					{
+						pathSub[0] = '/tmp/subtitles/'+hash+'fr.vtt'
+						pathSub[2] = 'fr'
+					}
 				}
 				else
 				{
-					pathSub[0] = '/tmp/subtitles/'+hash+'en.vtt'
-					pathSub[1] = '/tmp/subtitles/'+hash+'fr.vtt'
-					pathSub[2] = 'en'
-					pathSub[3] = 'fr'
+					if (en == 1)
+					{
+						pathSub[0] = '/tmp/subtitles/'+hash+'en.vtt'
+						pathSub[2] = 'en'
+					}
+					if (fr == 1)
+					{
+						pathSub[1] = '/tmp/subtitles/'+hash+'fr.vtt'
+						pathSub[3] = 'fr'
+					}
 				}
 				con.query('SELECT * FROM movies WHERE hash = ?', [hash], (err, rows) => {
 					if (err) res.redirect('/error/SQL error ' + err);
