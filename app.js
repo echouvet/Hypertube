@@ -1,6 +1,7 @@
 
 var express = require('express')
-	app = express()
+    app = express()
+var path = require('path')
     http = require("http")
     server = http.createServer(app);
     mysql = require('mysql')
@@ -46,7 +47,9 @@ var express = require('express')
         saveUninitialized: true
     });
     app.use(sessionMiddleware);
-    app.use(express.static(__dirname)); 
+    app.use('/views/resources', express.static(path.join(__dirname, 'views/resources')));
+    app.use('/img', express.static(path.join(__dirname, 'img')));
+    app.use('/tmp', express.static(path.join(__dirname, 'tmp')));
     app.use(bodyParser.urlencoded({ extended: true }))
     app.set('view engine', 'ejs');
     
@@ -72,7 +75,8 @@ app.use((req, res, next) => {
     else
         res.redirect('/error/Please dont break my URL')
 })
-.use((req, res, next) => {
+
+app.use((req, res, next) => {
     con.query('SELECT path FROM movies WHERE last < NOW() - INTERVAL 1 MONTH', (err, rows) => {
         if (err) throw err;
         if (rows[0])
