@@ -75,20 +75,26 @@ else
 		}
 		function dl_sub(subtitles, hash) {
 			const path = __dirname + '/tmp/subtitles/'+hash+subtitles.langcode+'.vtt';
-			axios({
+			return axios({
 				method: 'get',
 				url: subtitles.url
 			}).then(data => {
-				fs.access(path, fs.constants.F_OK, (err) => {
-					if (err) {
-						const s = new Readable();
+				return new Promise((resolve) => {
+					fs.access(path, fs.constants.F_OK, (err) => {
+						if (err) {
+							const s = new Readable();
+							const file = fs.createWriteStream(path)
+	
+							s.push(data.data);
+							s.push(null);
+							s
+							.pipe(srtToVtt())
+							.pipe(file)
 
-						s.push(data.data);
-						s.push(null);
-						s
-						.pipe(srtToVtt())
-						.pipe(fs.createWriteStream(path))
-					}
+							file.on('open', resolve)
+						} else
+							resolve();
+					})
 				})
 			}).catch(err => {
 				;
@@ -96,28 +102,29 @@ else
 		}
 		function adding_sub_bdd(hash, title)
 		{
-			var pathSub = new Array();
-			OpenSubtitles.search({
+			return OpenSubtitles.search({
 				query: title,
 			})
 			.then(subtitles => {
+				const promises = []
 				if (subtitles.en)
 				{
-					dl_sub(subtitles.en, hash);
 					en = 1;
+					promises.push(dl_sub(subtitles.en, hash));
 				}
 				if (subtitles.fr)
 				{
-					dl_sub(subtitles.fr, hash);
 					fr = 1;
+					promises.push(dl_sub(subtitles.fr, hash));
 				}
+				return Promise.all(promises);
 			})
-			return (pathSub);
 		}
 		insertMovieBdd(hash, movies, api)
 		setTimeout(function (){
-			pathSub = adding_sub_bdd(hash, movies.title)
-			setTimeout(function(){
+			pathSub = [];
+			adding_sub_bdd(hash, movies.title)
+			.then(function(){
 				if (req.session.profile.language == 'en')
 				{
 					pathSub[0] = '/tmp/subtitles/'+hash+'en.vtt'
@@ -183,7 +190,7 @@ else
 						});
 					}
 				})
-			}, 1500);
+			});
 		}, 1500);
 	}
 }
