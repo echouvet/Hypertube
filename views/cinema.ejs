@@ -5,7 +5,7 @@
 			<% if (movie.torrents) { %>
 			<div class="quality"> Choose your quality :
 			<% movie.torrents.forEach(function(element) { %>
-				<form action="/cinema" method='POST' style="display:inline-flex;"> <!-- Ici meme faille que en bas -->
+				<form action="/cinema" method='POST' style="display:inline-flex;">
 					<input type='hidden' value='<%- a%>' id='movie' name='i'>
 					<input type="hidden"  value='<%= api %>' id="api" name="api">
 					<input type='submit' value="<%= element['quality'] %>" id='quality' name='quality'>
@@ -21,26 +21,9 @@
 		   
 		<video id="player" preload="auto" controls name="media" style="width: 90vw;">
 			<source id="okay" src="<%-path%>" type="video/mp4">
-				<track label="<%-pathSub[2]%>" type="text/vtt" kind="subtitles" srclang="<%-pathSub[2]%>" src="<%-pathSub[0]%>" default>
-				<track label="<%-pathSub[3]%>" type="text/vtt" kind="subtitles" srclang="<%-pathSub[3]%>" src="<%-pathSub[1]%>">
+				<track label="<%-pathSub[2]%>" kind="subtitles" srclang="<%-pathSub[2]%>" src="<%-pathSub[0]%>"   default>
+				<track label="<%-pathSub[3]%>" kind="subtitles" srclang="<%-pathSub[3]%>" src="<%-pathSub[1]%>" >
 		</video>
-		<script>
-
-				movie = '<%-eschtml(JSON.stringify(movie))%>'
-				hash = '<%- hash%>'
-				path = '<%- path %>';
-				$.ajax({
-					url: '/video/',
-					type: "GET",
-					data: {hash: hash},
-					datatype: 'JSON',
-					success: function(result)
-					{
-					},
-					error: function(err, Status){
-                }
-				});
-			</script>
 
 	</div>
 	<div class="col-10 offset-1 infos">

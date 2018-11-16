@@ -118,14 +118,14 @@ else
 		setTimeout(function (){
 			pathSub = adding_sub_bdd(hash, movies.title)
 			setTimeout(function(){
-				if (req.session.language == 'en')
+				if (req.session.profile.language == 'en')
 				{
 					pathSub[0] = '/tmp/subtitles/'+hash+'en.vtt'
 					pathSub[1] = '/tmp/subtitles/'+hash+'fr.vtt'
 					pathSub[2] = 'en'
 					pathSub[3] = 'fr'
 				}
-				else if (req.session.language == 'fr')
+				else if (req.session.profile.language == 'fr')
 				{
 					pathSub[0] = '/tmp/subtitles/'+hash+'fr.vtt'
 					pathSub[1] = '/tmp/subtitles/'+hash+'en.vtt'

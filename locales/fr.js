@@ -124,5 +124,6 @@
 	"Please dont break my URL": "Merci de ne pas casser mon URL",
 	"Loading nexts movies...": "Chargement des films suivants...",
 	"Please wait a few moment.": "Merci d'attendre un moment.",
-	"No movies found": "Pas de film trouvé"
+	"No movies found": "Pas de film trouvé",
+	"YTS is momentarily down, please try again later": "YTS is momentarily down, please try again later"
 }

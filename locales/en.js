@@ -130,5 +130,8 @@
 	"request in oauth.js401 : null": "request in oauth.js401 : null",
 	"coucou je suis une erreur": "coucou je suis une erreur",
 	"Your e-mail is not valid": "Your e-mail is not valid",
-	"YTS catch TypeError: Cannot read property &#039;map&#039; of undefined": "YTS catch TypeError: Cannot read property &#039;map&#039; of undefined"
+	"YTS catch TypeError: Cannot read property &#039;map&#039; of undefined": "YTS catch TypeError: Cannot read property &#039;map&#039; of undefined",
+	"Only jpeg, jpg, and png images aloud": "Only jpeg, jpg, and png images aloud",
+	"YTS is momentarily down, please try again later": "YTS is momentarily down, please try again later",
+	"You can only update your language preference whilst not using a local account": "You can only update your language preference whilst not using a local account"
 }
