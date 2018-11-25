@@ -1,6 +1,6 @@
 # Hypertube
 Ce projet est une application web permettant à un utilisateur de rechercher et visionner des vidéos.
-Le lecteur est directement intégré au site, et les vidéos sont téléchargées au travers du protocole BitTorrent.
+Le lecteur est directement intégré au site, et les vidéos sont téléchargées au travers un protocole BitTorrent.
 
 Le sujet du projet 42 se trouve a la racine dans le fichier Sujet.pdf
 
